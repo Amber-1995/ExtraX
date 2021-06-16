@@ -1,5 +1,8 @@
 #include "TestScene.h"
 #include "../Scripts/Scripts.h"
+#include "../GameObjects/GameObject.h"
+#include "../Components/Components.h"
+
 
 XX::TestScene::TestScene()
 {

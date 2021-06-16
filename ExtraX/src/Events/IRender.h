@@ -2,7 +2,7 @@
 #ifndef _IRENDER_H_
 #define _IRENDER_H_
 
-#include <vector>
+#include <list>
 
 namespace XX
 {
@@ -11,9 +11,9 @@ namespace XX
 	public:
 		virtual void Render() = 0;
 
-		void Init();
+		void Addto();
 
-		void Uninit();
+		void Remove();
 
 		void Set2DMode();
 
@@ -34,7 +34,9 @@ namespace XX
 		virtual ~Renderer();
 
 	private:
-		std::vector<IRender*> _i_renders;
+		std::list<IRender*> _i_renders;
+		std::list<IRender*>::iterator _current;
+		std::list<IRender*>::iterator _next;
 
 		Renderer();
 

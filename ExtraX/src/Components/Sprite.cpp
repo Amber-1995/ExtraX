@@ -72,7 +72,6 @@ void XX::Sprite::Render()
 	Set2DMode();
 
 	ExtraX::graphics.device_context->IASetInputLayout(_vertex_layout);
-
 	ExtraX::graphics.device_context->VSSetShader(_vertex_shader, nullptr, 0);
 	ExtraX::graphics.device_context->PSSetShader(_pixel_shader, nullptr, 0);
 

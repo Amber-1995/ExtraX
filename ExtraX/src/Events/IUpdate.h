@@ -2,7 +2,7 @@
 #ifndef _IUPDATE_H_
 #define _IUPDATE_H_
 
-#include <vector>
+#include <list>
 
 namespace XX
 {
@@ -10,8 +10,8 @@ namespace XX
 	{
 	public:
 		virtual void Update() = 0;
-		void Init();
-		void Uninit();
+		void Addto();
+		void Remove();
 	};
 
 	class Updater
@@ -25,7 +25,9 @@ namespace XX
 		virtual ~Updater();
 
 	private:
-		std::vector<IUpdate*> _i_updates;
+		std::list<IUpdate*> _i_updates;
+		std::list<IUpdate*>::iterator _current;
+		std::list<IUpdate*>::iterator _next;
 
 		Updater();
 

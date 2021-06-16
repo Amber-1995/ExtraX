@@ -2,41 +2,30 @@
 #include "../XX.h"
 #include "../Components/Component.h"
 
-void XX::IUpdate::Init()
+void XX::IUpdate::Addto()
 {
-	ExtraX::updater._i_updates.push_back(this);
+	ExtraX::updater._i_updates.push_front(this);
 }
 
-void XX::IUpdate::Uninit()
+void XX::IUpdate::Remove()
 {
-	auto i = ExtraX::updater._i_updates.begin();
-	auto end = ExtraX::updater._i_updates.end();
-	for (i; i != end; i++) {
-		if (*i == this){
-			ExtraX::updater._i_updates.erase(i);
-			break;
-		}
+	if (ExtraX::updater._next!=ExtraX::updater._i_updates.end() &&
+		this == (*ExtraX::updater._next)) {
+		ExtraX::updater._next++;
 	}
+	ExtraX::updater._i_updates.remove(this);
 }
 
 void XX::Updater::Update()
 {
-	auto i = _i_updates.begin();
+	_current = _i_updates.begin();
+	_next = std::next(_current);
 	auto end = _i_updates.end();
-	for (i; i != end; i++) {
-		(*i)->Update();
-	}
-	i = _i_updates.begin();
-	end = _i_updates.end();
-	while (i != end) {
-		Component* c = dynamic_cast<Component*>(*i);
-		if (c->deleted) {
-			_i_updates.erase(i++);
-			break;
-		}
-		else{
-			i++;
-		}
+	while (_current != end)
+	{
+		(*_current)->Update();
+		_current = _next;
+		if (_next != end)_next++;
 	}
 }
 
@@ -45,7 +34,7 @@ XX::Updater::~Updater()
 }
 
 XX::Updater::Updater():
-	_i_updates(0)
+	_i_updates()
 {
-	_i_updates.reserve(1024);
+
 }

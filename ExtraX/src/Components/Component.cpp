@@ -1,14 +1,13 @@
 #include "Component.h"
+#include "../GameObjects/GameObject.h"
 #include "../Events/IUpdate.h"
 #include "../Events/IRender.h"
 
 XX::Component::Component() :
 	game_object(_game_object),
 	active(_active),
-	deleted(_deleted),
 	_game_object(nullptr),
-	_active(true),
-	_deleted(false)
+	_active(true)
 {
 
 }
@@ -27,9 +26,11 @@ void XX::Component::SetActive(bool&& active)
 	_active = active;
 }
 
-void XX::Component::Delete()
+void XX::Component::Destroy()
 {
-	_deleted = true;
+	game_object->RemoveComponent(this);
+	UninstallEvents();
+	delete this;
 }
 
 void XX::Component::SetGameObject(GameObject* game_object)
@@ -37,15 +38,28 @@ void XX::Component::SetGameObject(GameObject* game_object)
 	_game_object = game_object;
 }
 
-void XX::Component::InitEvents()
+void XX::Component::InstallEvents()
 {
 	IUpdate* iupdate = dynamic_cast<IUpdate*>(this);
 	if (iupdate) {
-		iupdate->Init();
+		iupdate->Addto();
 	}
 
 	IRender* irender = dynamic_cast<IRender*>(this);
 	if (irender) {
-		irender->Init();
+		irender->Addto();
+	}
+}
+
+void XX::Component::UninstallEvents()
+{
+	IUpdate* iupdate = dynamic_cast<IUpdate*>(this);
+	if (iupdate) {
+		iupdate->Remove();
+	}
+
+	IRender* irender = dynamic_cast<IRender*>(this);
+	if (irender) {
+		irender->Remove();
 	}
 }

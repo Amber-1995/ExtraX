@@ -3,14 +3,14 @@
 #define _SCENE_H_
 
 #include "../Data/ExtraXType.h"
-#include <vector>
+#include <list>
 
 namespace XX
 {
 	class Scene
 	{
 	public:
-		std::vector<GameObject*> const& game_objects;
+		std::list<GameObject*> const& game_objects;
 
 		Scene();
 
@@ -25,7 +25,7 @@ namespace XX
 		void RemoveGameObject(GameObject* game_obeject);
 
 	private:
-		std::vector<GameObject*> _game_objects;
+		std::list<GameObject*> _game_objects;
 
 	};
 }

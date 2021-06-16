@@ -161,13 +161,11 @@ void XX::Graphics::Init(HWND window, int width, int height)
 
 
 	bufferDesc.ByteWidth = sizeof(MATERIAL);
-
 	_device->CreateBuffer(&bufferDesc, NULL, &_material_buffer);
 	_device_context->VSSetConstantBuffers(3, 1, &_material_buffer);
 
 
 	bufferDesc.ByteWidth = sizeof(LIGHT);
-
 	_device->CreateBuffer(&bufferDesc, NULL, &_light_buffer);
 	_device_context->VSSetConstantBuffers(4, 1, &_light_buffer);
 	_device_context->PSSetConstantBuffers(4, 1, &_light_buffer);

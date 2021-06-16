@@ -2,7 +2,7 @@
 #ifndef _GAMEOBJECT_H_
 #define _GAMEOBJECT_H_
 #include "../Data/ExtraXType.h"
-#include <vector>
+#include <list>
 #include <string>
 namespace XX
 {
@@ -19,7 +19,7 @@ namespace XX
 
 		Transform*& transform;
 
-		std::vector<Component*> const& components;
+		std::list<Component*> const& components;
 
 		GameObject();
 
@@ -40,9 +40,11 @@ namespace XX
 
 		Transform* _transform;
 
-		std::vector<Component*> _components;
+		std::list<Component*> _components;
 
 		void SetScene(Scene* scene);
+
+		void InstallComponentsEvents();
 
 	};
 }
