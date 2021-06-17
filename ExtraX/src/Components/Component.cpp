@@ -45,9 +45,14 @@ void XX::Component::InstallEvents()
 		iupdate->Addto();
 	}
 
-	IRender* irender = dynamic_cast<IRender*>(this);
-	if (irender) {
-		irender->Addto();
+	IRender3D* irender3d = dynamic_cast<IRender3D*>(this);
+	if (irender3d) {
+		irender3d->Addto();
+	}
+
+	IRender2D* irender2d = dynamic_cast<IRender2D*>(this);
+	if (irender2d) {
+		irender2d->Addto();
 	}
 }
 
@@ -58,8 +63,13 @@ void XX::Component::UninstallEvents()
 		iupdate->Remove();
 	}
 
-	IRender* irender = dynamic_cast<IRender*>(this);
-	if (irender) {
-		irender->Remove();
+	IRender3D* irender3d = dynamic_cast<IRender3D*>(this);
+	if (irender3d) {
+		irender3d->Remove();
+	}
+
+	IRender2D* irender2d = dynamic_cast<IRender2D*>(this);
+	if (irender2d) {
+		irender2d->Remove();
 	}
 }

@@ -10,7 +10,7 @@ namespace XX
 	class Camera : public Component
 	{
 	public:
-		static Camera* const& current_camera;
+		static Camera* const& main_camera;
 		Camera();
 
 		virtual ~Camera();
@@ -18,7 +18,7 @@ namespace XX
 		void Update() const;
 
 	private:
-		static Camera* _current_camera;
+		static Camera* _main_camera;
 	};
 }
 

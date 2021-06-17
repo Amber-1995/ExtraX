@@ -15,7 +15,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{fd80f391-d5ac-40f9-a975-8aa61e1f1ebb}</ProjectGuid>
     <RootNamespace>ExtraX</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -97,6 +97,8 @@
     <ClCompile Include="src\Components\Model.cpp" />
     <ClCompile Include="src\Components\Sprite.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
+    <ClCompile Include="src\Data\Shader.cpp" />
+    <ClCompile Include="src\Data\Texture.cpp" />
     <ClCompile Include="src\Data\XXTable.cpp" />
     <ClCompile Include="src\Events\IRender.cpp" />
     <ClCompile Include="src\Events\IUpdate.cpp" />
@@ -120,6 +122,9 @@
     <ClInclude Include="src\Components\Sprite.h" />
     <ClInclude Include="src\Components\Transform.h" />
     <ClInclude Include="src\Data\ExtraXType.h" />
+    <ClInclude Include="src\Data\Resource.h" />
+    <ClInclude Include="src\Data\Shader.h" />
+    <ClInclude Include="src\Data\Texture.h" />
     <ClInclude Include="src\Data\XXTable.h" />
     <ClInclude Include="src\Events\Events.h" />
     <ClInclude Include="src\Events\IRender.h" />

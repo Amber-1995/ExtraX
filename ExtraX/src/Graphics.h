@@ -2,7 +2,11 @@
 #ifndef _GRAPHICS_H_
 #define _GRAPHICS_H_
 
+#pragma warning(push)
+#pragma warning(disable:4005)
 #include <d3d11.h>
+#pragma warning(pop)
+
 #include "Data/ExtraXType.h"
 
 namespace XX

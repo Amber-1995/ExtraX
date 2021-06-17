@@ -5,8 +5,7 @@ XX::Sprite::Sprite():
 	_vertex_buffer(nullptr),
 	_texture(nullptr),
 	_vertex_shader(nullptr),
-	_pixel_shader(nullptr),
-	_vertex_layout(nullptr)
+	_pixel_shader(nullptr)
 {
 	VERTEX_3D vertex[4];
 
@@ -42,43 +41,28 @@ XX::Sprite::Sprite():
 
 	ExtraX::graphics.device->CreateBuffer(&bd, &sd, &_vertex_buffer);
 
-	D3DX11CreateShaderResourceViewFromFile(
-		ExtraX::graphics.device,
-		"Assets\\Textures\\kk.jpg",
-		nullptr,
-		nullptr,
-		&_texture,
-		nullptr
-	);
+	_texture = Texture::Load("Assets\\Textures\\kk.jpg");
+	_vertex_shader = VertexShader::Load("Assets\\Shaders\\unlitTextureVS.cso");
+	_pixel_shader = PixelShader::Load("Assets\\Shaders\\unlitTexturePS.cso");
 
-	assert(_texture);
-
-	ExtraX::graphics.CreateVertexShader(&_vertex_shader, &_vertex_layout, "Assets\\Shaders\\unlitTextureVS.cso");
-	ExtraX::graphics.CreatePixelShader(&_pixel_shader, "Assets\\Shaders\\unlitTexturePS.cso");
 }
 
 XX::Sprite::~Sprite()
 {
 	_vertex_buffer->Release();
-	_texture->Release();
 
-	_vertex_layout->Release();
-	_vertex_shader->Release();
-	_pixel_shader->Release();
 }
 
-void XX::Sprite::Render()
+void XX::Sprite::Render2D()
 {
-	Set2DMode();
-
-	ExtraX::graphics.device_context->IASetInputLayout(_vertex_layout);
-	ExtraX::graphics.device_context->VSSetShader(_vertex_shader, nullptr, 0);
-	ExtraX::graphics.device_context->PSSetShader(_pixel_shader, nullptr, 0);
+	_vertex_shader->Apply();
+	_pixel_shader->Apply();
+	_texture->Apply();
 
 	UINT stride = sizeof(VERTEX_3D);
 	UINT offset = 0;
 	ExtraX::graphics.device_context->IASetVertexBuffers(0, 1, &_vertex_buffer, &stride, &offset);
-	ExtraX::graphics.device_context->PSSetShaderResources(0, 1, &_texture);
+	
 	ExtraX::graphics.device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	ExtraX::graphics.device_context->Draw(4, 0);

@@ -3,28 +3,28 @@
 #define _SPRITE_H_
 #include "Component.h"
 #include "../Events/IRender.h"
+#include "../Data/ExtraXType.h"
 
 namespace XX
 {
-	class Sprite : public Component,public IRender
+	class Sprite : public Component,public IRender2D
 	{
 	public:
 		Sprite();
 
 		virtual ~Sprite();
 
-		void Render() override;
+		void Render2D() override;
 	private:
 
 		ID3D11Buffer* _vertex_buffer;
 
-		ID3D11ShaderResourceView* _texture;
+		Texture* _texture;
 
-		ID3D11VertexShader* _vertex_shader;
+		VertexShader* _vertex_shader;
 
-		ID3D11PixelShader* _pixel_shader;
+		PixelShader* _pixel_shader;
 
-		ID3D11InputLayout* _vertex_layout;
 	};
 }
 

@@ -40,7 +40,7 @@ namespace XX
 		unsigned int	SubsetNum;
 	};
 
-	class Model : public Component,public IRender
+	class Model : public Component,public IRender3D
 	{
 	public:
 		Model(std::string file_name);
@@ -51,7 +51,7 @@ namespace XX
 
 		virtual ~Model();
 
-		void Render() override;
+		void Render3D() override;
 
 	private:
 		ID3D11Buffer* m_VertexBuffer;

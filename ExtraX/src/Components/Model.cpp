@@ -92,9 +92,8 @@ XX::Model::~Model()
 	delete[] m_SubsetArray;
 }
 
-void XX::Model::Render()
+void XX::Model::Render3D()
 {
-	SetCameraMode();
 
 	D3DXMATRIX world, scale, rot, trans;
 	D3DXMatrixScaling(&scale, game_object->transform->scale.x, game_object->transform->scale.y, game_object->transform->scale.z);

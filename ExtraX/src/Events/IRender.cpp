@@ -3,50 +3,91 @@
 #include "../Components/Component.h"
 #include "../Components/Camera.h"
 
-void XX::IRender::Addto()
+
+void XX::IRender2D::Addto()
 {
-	ExtraX::renderer._i_renders.push_back(this);
+	ExtraX::renderer2d._i_render2ds.push_back(this);
+
 }
 
-void XX::IRender::Remove()
+void XX::IRender2D::Remove()
 {
-	if (ExtraX::renderer._next!= ExtraX::renderer._i_renders.end() && 
-		this == (*ExtraX::renderer._next)) {
-		ExtraX::renderer._next++;
+	if (ExtraX::renderer2d._next != ExtraX::renderer2d._i_render2ds.end() &&
+		this == (*ExtraX::renderer2d._next)) {
+		ExtraX::renderer2d._next++;
 	}
-	ExtraX::renderer._i_renders.remove(this);
+	ExtraX::renderer2d._i_render2ds.remove(this);
 }
 
-void XX::IRender::Set2DMode()
+void XX::IRender3D::Addto()
 {
-	ExtraX::graphics.SetWorldViewProjection2D();
+	ExtraX::renderer3d._i_render3ds.push_back(this);
 }
 
-void XX::IRender::SetCameraMode()
+void XX::IRender3D::Remove()
 {
-	XX::Camera::current_camera->Update();
+	if (ExtraX::renderer3d._next!= ExtraX::renderer3d._i_render3ds.end() && 
+		this == (*ExtraX::renderer3d._next)) {
+		ExtraX::renderer3d._next++;
+	}
+	ExtraX::renderer3d._i_render3ds.remove(this);
 }
 
-void XX::Renderer::Render()
+
+void XX::Renderer3D::Render()
 {
-	_current = _i_renders.begin();
+	Camera::main_camera->Update();
+
+	_current = _i_render3ds.begin();
 	_next = std::next(_current);
-	auto end = _i_renders.end();
+	auto end = _i_render3ds.end();
 	while (_current != end)
 	{
-		(*_current)->Render();
+		(*_current)->Render3D();
 		_current = _next;
 		if (_next != end)_next++;
 	}
 }
 
-XX::Renderer::~Renderer()
+
+
+XX::Renderer3D::Renderer3D():
+	_i_render3ds()
+{
+	
+}
+
+XX::Renderer3D::~Renderer3D()
 {
 
 }
 
-XX::Renderer::Renderer():
-	_i_renders()
+
+
+void XX::Renderer2D::Render()
 {
-	
+	ExtraX::graphics.SetWorldViewProjection2D();
+
+	_current = _i_render2ds.begin();
+	_next = std::next(_current);
+	auto end = _i_render2ds.end();
+	while (_current != end)
+	{
+		(*_current)->Render2D();
+		_current = _next;
+		if (_next != end)_next++;
+	}
+}
+
+
+
+XX::Renderer2D::Renderer2D():
+	_i_render2ds()
+{
+
+}
+
+XX::Renderer2D::~Renderer2D()
+{
+
 }

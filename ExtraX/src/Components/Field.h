@@ -4,10 +4,11 @@
 
 #include "Component.h"
 #include "../Events/IRender.h"
+#include "../Data/ExtraXType.h"
 
 namespace XX
 {
-	class Field : public Component,public IRender
+	class Field : public Component,public IRender3D
 	{
 	public:
 		Field();
@@ -15,18 +16,16 @@ namespace XX
 		Field& operator=(const Field&) = delete;
 		virtual ~Field();
 
-		void Render() override;
+		void Render3D() override;
 	private:
 		D3DXVECTOR3 _position;
 		D3DXVECTOR3 _rotation;
 		D3DXVECTOR3 _scale;
 
 		ID3D11Buffer* _vertex_buffer;
-		ID3D11ShaderResourceView* _texture;
-
-		ID3D11VertexShader* _vertex_shader;
-		ID3D11PixelShader* _pixel_shader;
-		ID3D11InputLayout* _vertex_layout;
+		Texture* _texture;
+		VertexShader* _vertex_shader;
+		PixelShader* _pixel_shader;
 	};
 }
 

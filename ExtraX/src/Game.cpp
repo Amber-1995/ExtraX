@@ -38,7 +38,9 @@ int XX::Game::Run()
 
 			XX::ExtraX::graphics.Begin();
 
-			XX::ExtraX::renderer.Render();
+			XX::ExtraX::renderer3d.Render();
+
+			XX::ExtraX::renderer2d.Render();
 
 			XX::ExtraX::graphics.End();
 		}

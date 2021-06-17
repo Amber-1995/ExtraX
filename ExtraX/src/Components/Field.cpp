@@ -10,8 +10,7 @@ XX::Field::Field() :
 	_vertex_buffer(nullptr),
 	_texture(nullptr),
 	_vertex_shader(nullptr),
-	_pixel_shader(nullptr),
-	_vertex_layout(nullptr)
+	_pixel_shader(nullptr)
 {
 	VERTEX_3D vertex[4];
 
@@ -48,28 +47,17 @@ XX::Field::Field() :
 
 	ExtraX::graphics.device->CreateBuffer(&bd, &sd, &_vertex_buffer);
 
-	D3DX11CreateShaderResourceViewFromFile(
-		ExtraX::graphics.device,
-		"Assets\\Textures\\ground.png",
-		nullptr,
-		nullptr,
-		&_texture,
-		nullptr
-	);
-
-	assert(_texture);
-
-	ExtraX::graphics.CreateVertexShader(&_vertex_shader, &_vertex_layout, "Assets\\Shaders\\vertexLightingVS.cso");
-	ExtraX::graphics.CreatePixelShader(&_pixel_shader, "Assets\\Shaders\\vertexLightingPS.cso");
+	_texture = Texture::Load("Assets\\Textures\\ground.png");
+	_vertex_shader = VertexShader::Load("Assets\\Shaders\\vertexLightingVS.cso");
+	_pixel_shader = PixelShader::Load("Assets\\Shaders\\vertexLightingPS.cso");
 }
 
 XX::Field::~Field()
 {
 }
 
-void XX::Field::Render()
+void XX::Field::Render3D()
 {
-	SetCameraMode();
 
 	D3DXMATRIX world, scale, rot, trans;
 	D3DXMatrixScaling(&scale, game_object->transform->scale.x, game_object->transform->scale.y, game_object->transform->scale.z);
@@ -78,10 +66,9 @@ void XX::Field::Render()
 	world = scale * rot * trans;
 	ExtraX::graphics.SetWorldMatrix(&world);
 
-	ExtraX::graphics.device_context->IASetInputLayout(_vertex_layout);
-	ExtraX::graphics.device_context->VSSetShader(_vertex_shader, nullptr, 0);
-	ExtraX::graphics.device_context->PSSetShader(_pixel_shader, nullptr, 0);
-
+	_vertex_shader->Apply();
+	_pixel_shader->Apply();
+	_texture->Apply();
 
 	UINT stride = sizeof(VERTEX_3D);
 	UINT offset = 0;
@@ -91,10 +78,6 @@ void XX::Field::Render()
 	ZeroMemory(&material, sizeof(MATERIAL));
 	material.diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	ExtraX::graphics.SetMaterial(material);
-
-
-	ExtraX::graphics.device_context->PSSetShaderResources(0, 1, &_texture);
 	ExtraX::graphics.device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
 	ExtraX::graphics.device_context->Draw(4, 0);
 }

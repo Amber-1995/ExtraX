@@ -12,7 +12,8 @@ namespace XX
 	public:
 		static Graphics graphics;
 		static Updater updater;
-		static Renderer renderer;
+		static Renderer3D renderer3d;
+		static Renderer2D renderer2d;
 
 	};
 }

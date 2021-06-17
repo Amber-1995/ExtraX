@@ -1,12 +1,12 @@
 #include "Camera.h"
 #include "../XX.h"
 
-XX::Camera* const& XX::Camera::current_camera = _current_camera;
-XX::Camera* XX::Camera::_current_camera = nullptr;
+XX::Camera* const& XX::Camera::main_camera = _main_camera;
+XX::Camera* XX::Camera::_main_camera = nullptr;
 
 XX::Camera::Camera()
 {
-	_current_camera = this;
+	_main_camera = this;
 }
 
 XX::Camera::~Camera()

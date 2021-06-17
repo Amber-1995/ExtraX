@@ -6,43 +6,71 @@
 
 namespace XX
 {
-	class IRender
+	class IRender2D
 	{
 	public:
-		virtual void Render() = 0;
+		virtual void Render2D() = 0;
 
 		void Addto();
 
 		void Remove();
 
-		void Set2DMode();
+	};
 
-		void SetCameraMode();
 
-	private:
+	class IRender3D
+	{
+	public:
+		virtual void Render3D() = 0;
+
+		void Addto();
+
+		void Remove();
 
 	};
 
-	class Renderer
+	class Renderer2D
 	{
-	friend class IRender;
+		friend class IRender2D;
+		friend class ExtraX;
+
+	public:
+		void Render();
+
+		virtual ~Renderer2D();
+
+	private:
+		std::list<IRender2D*> _i_render2ds;
+		std::list<IRender2D*>::iterator _current;
+		std::list<IRender2D*>::iterator _next;
+
+		Renderer2D();
+
+		Renderer2D(const Renderer2D&) = delete;
+
+		Renderer2D& operator=(const Renderer2D&) = delete;
+	};
+
+	class Renderer3D
+	{
+	friend class IRender3D;
 	friend class ExtraX;
 
 	public:
 		void Render();
 
-		virtual ~Renderer();
+		virtual ~Renderer3D();
 
 	private:
-		std::list<IRender*> _i_renders;
-		std::list<IRender*>::iterator _current;
-		std::list<IRender*>::iterator _next;
+		std::list<IRender3D*> _i_render3ds;
+		std::list<IRender3D*>::iterator _current;
+		std::list<IRender3D*>::iterator _next;
 
-		Renderer();
+		Renderer3D();
 
-		Renderer(const Renderer&) = delete;
+		Renderer3D(const Renderer3D&) = delete;
 
-		Renderer& operator=(const Renderer&) = delete;
+		Renderer3D& operator=(const Renderer3D&) = delete;
 	};
 }
 
