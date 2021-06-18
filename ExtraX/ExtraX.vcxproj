@@ -94,11 +94,15 @@
     <ClCompile Include="src\Components\Camera.cpp" />
     <ClCompile Include="src\Components\Component.cpp" />
     <ClCompile Include="src\Components\Field.cpp" />
-    <ClCompile Include="src\Components\Model.cpp" />
+    <ClCompile Include="src\Components\Mesh.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\Components\Sprite.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
     <ClCompile Include="src\Data\Shader.cpp" />
     <ClCompile Include="src\Data\Texture.cpp" />
+    <ClCompile Include="src\Data\Vector.cpp" />
     <ClCompile Include="src\Data\XXTable.cpp" />
     <ClCompile Include="src\Events\IRender.cpp" />
     <ClCompile Include="src\Events\IUpdate.cpp" />
@@ -118,13 +122,17 @@
     <ClInclude Include="src\Components\Component.h" />
     <ClInclude Include="src\Components\Components.h" />
     <ClInclude Include="src\Components\Field.h" />
-    <ClInclude Include="src\Components\Model.h" />
+    <ClInclude Include="src\Components\Mesh.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="src\Components\Sprite.h" />
     <ClInclude Include="src\Components\Transform.h" />
     <ClInclude Include="src\Data\ExtraXType.h" />
     <ClInclude Include="src\Data\Resource.h" />
     <ClInclude Include="src\Data\Shader.h" />
     <ClInclude Include="src\Data\Texture.h" />
+    <ClInclude Include="src\Data\Vector.h" />
     <ClInclude Include="src\Data\XXTable.h" />
     <ClInclude Include="src\Events\Events.h" />
     <ClInclude Include="src\Events\IRender.h" />

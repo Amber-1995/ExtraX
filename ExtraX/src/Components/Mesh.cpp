@@ -1,13 +1,14 @@
-#include "Model.h"
+#include "Mesh.h"
 #include "../XX.h"
 #include "../GameObjects/GameObject.h"
 #include "../Components/Transform.h"
 
+#include <D3DX11.h>
 #include <stdio.h>
 #include <shlwapi.h>
 #pragma comment(lib, "shlwapi.lib")
 
-XX::Model::Model(std::string file_name)
+XX::Mesh::Mesh(std::string file_name)
 {
 	MODEL model;
 	LoadObj(file_name.c_str(), &model);
@@ -79,7 +80,7 @@ XX::Model::Model(std::string file_name)
 	delete[] model.SubsetArray;
 }
 
-XX::Model::~Model()
+XX::Mesh::~Mesh()
 {
 	m_VertexBuffer->Release();
 	m_IndexBuffer->Release();
@@ -92,15 +93,9 @@ XX::Model::~Model()
 	delete[] m_SubsetArray;
 }
 
-void XX::Model::Render3D()
+void XX::Mesh::Render3D()
 {
-
-	D3DXMATRIX world, scale, rot, trans;
-	D3DXMatrixScaling(&scale, game_object->transform->scale.x, game_object->transform->scale.y, game_object->transform->scale.z);
-	D3DXMatrixRotationYawPitchRoll(&rot, game_object->transform->rotation.x, game_object->transform->rotation.y, game_object->transform->rotation.z);
-	D3DXMatrixTranslation(&trans, game_object->transform->position.x, game_object->transform->position.y, game_object->transform->position.z);
-	world = scale * rot * trans;
-	ExtraX::graphics.SetWorldMatrix(&world);
+	game_object->transform->SetMatrix();
 
 
 
@@ -130,7 +125,8 @@ void XX::Model::Render3D()
 	}
 }
 
-void XX::Model::LoadObj(const char* FileName, MODEL* Model)
+
+void XX::Mesh::LoadObj(const char* FileName, MODEL* Model)
 {
 	char dir[MAX_PATH];
 	strcpy(dir, FileName);
@@ -366,7 +362,9 @@ void XX::Model::LoadObj(const char* FileName, MODEL* Model)
 	delete[] materialArray;
 }
 
-void XX::Model::LoadMaterial(const char* FileName, MODEL_MATERIAL** MaterialArray, unsigned int* MaterialNum)
+
+
+void XX::Mesh::LoadMaterial(const char* FileName, MODEL_MATERIAL** MaterialArray, unsigned int* MaterialNum)
 {
 
 	char dir[MAX_PATH];

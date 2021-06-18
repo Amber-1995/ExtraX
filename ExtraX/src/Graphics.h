@@ -22,6 +22,11 @@ namespace XX
 
 		ID3D11DeviceContext* const& device_context;
 
+		const int& width;
+
+		const int& height;
+
+
 		void Init(HWND window, int width, int height);
 
 		virtual ~Graphics();
@@ -33,13 +38,12 @@ namespace XX
 		void SetDepthEnable(bool enable) const;
 
 		void SetWorldViewProjection2D() const;
-	
 
-		void SetWorldMatrix(D3DXMATRIX* world_matrix) const;
-	
-		void SetViewMatrix(D3DXMATRIX* view_matrix) const;
-	
-		void SetProjectionMatrix(D3DXMATRIX* projection_matrix) const;
+		void SetWorldMatrix(const DirectX::XMMATRIX& world_matrix) const;
+
+		void SetViewMatrix(const DirectX::XMMATRIX& view_matrix) const;
+
+		void SetProjectionMatrix(const DirectX::XMMATRIX& projection_matrix) const;
 
 		void SetMaterial(MATERIAL material) const;
 

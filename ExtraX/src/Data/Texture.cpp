@@ -1,8 +1,17 @@
 #include "Texture.h"
 #include "../XX.h"
+#include <D3DX11.h>
 
 
 
+
+
+std::wstring ToWide(const std::string& narrow)
+{
+	wchar_t wide[512];
+	mbstowcs_s(nullptr, wide, narrow.c_str(), _TRUNCATE);
+	return wide;
+}
 
 void XX::Texture::Apply()
 {
@@ -13,6 +22,7 @@ void XX::Texture::Apply()
 XX::Texture::Texture(const std::string& file_name):
 	_texture(nullptr)
 {
+	
 	D3DX11CreateShaderResourceViewFromFile(
 		ExtraX::graphics.device,
 		file_name.c_str(),

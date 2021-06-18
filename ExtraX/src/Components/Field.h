@@ -18,9 +18,6 @@ namespace XX
 
 		void Render3D() override;
 	private:
-		D3DXVECTOR3 _position;
-		D3DXVECTOR3 _rotation;
-		D3DXVECTOR3 _scale;
 
 		ID3D11Buffer* _vertex_buffer;
 		Texture* _texture;

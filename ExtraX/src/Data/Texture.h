@@ -4,6 +4,7 @@
 
 #include "Resource.h"
 
+
 namespace XX
 {
 	class Texture : public Resource<Texture>
@@ -12,6 +13,7 @@ namespace XX
 		void Apply() override;
 
 	private:
+
 		ID3D11ShaderResourceView* _texture;
 
 		Texture(const std::string& file_name);

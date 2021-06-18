@@ -4,6 +4,7 @@
 
 #include "Component.h"
 #include "../Events/IUpdate.h"
+#include <DirectXMath.h>
 
 namespace XX
 {
@@ -11,14 +12,18 @@ namespace XX
 	{
 	public:
 		static Camera* const& main_camera;
+
 		Camera();
 
 		virtual ~Camera();
 
-		void Update() const;
+		void Update();
 
 	private:
 		static Camera* _main_camera;
+
+		DirectX::XMMATRIX _view_matrix;
+		DirectX::XMMATRIX _projection_matrix;
 	};
 }
 

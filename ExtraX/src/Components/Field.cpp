@@ -4,9 +4,6 @@
 #include "../Components/Transform.h"
 
 XX::Field::Field() :
-	_position(0, 0, 0),
-	_rotation(0, 0, 0),
-	_scale(1, 1, 1),
 	_vertex_buffer(nullptr),
 	_texture(nullptr),
 	_vertex_shader(nullptr),
@@ -59,13 +56,8 @@ XX::Field::~Field()
 void XX::Field::Render3D()
 {
 
-	D3DXMATRIX world, scale, rot, trans;
-	D3DXMatrixScaling(&scale, game_object->transform->scale.x, game_object->transform->scale.y, game_object->transform->scale.z);
-	D3DXMatrixRotationYawPitchRoll(&rot, game_object->transform->rotation.x, game_object->transform->rotation.y, game_object->transform->rotation.z);
-	D3DXMatrixTranslation(&trans, game_object->transform->position.x, game_object->transform->position.y, game_object->transform->position.z);
-	world = scale * rot * trans;
-	ExtraX::graphics.SetWorldMatrix(&world);
-
+	
+	game_object->transform->SetMatrix();
 	_vertex_shader->Apply();
 	_pixel_shader->Apply();
 	_texture->Apply();

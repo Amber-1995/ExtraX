@@ -8,8 +8,12 @@ XX::TestScene::TestScene()
 {
 	GameObject* camera = new GameObject();
 	{
+		camera->transform->position = XXVector3(0, 10, -15);
 		Camera* c = new Camera();
 		camera->AddComponent(c);
+
+		PlayerController* pc = new PlayerController();
+		camera->AddComponent(pc);
 	}
 	AddGameObject(camera);
 
@@ -23,7 +27,6 @@ XX::TestScene::TestScene()
 
 	GameObject* field = new GameObject();
 	{
-
 		Field* f = new Field();
 		field->AddComponent(f);
 	}
@@ -32,20 +35,19 @@ XX::TestScene::TestScene()
 	GameObject* player = new GameObject();
 	{
 		player->tag = "player";
-		player->transform->position.z -= 5;
-		Model* m = new Model("Assets\\models\\torus\\torus.obj");
+		player->transform->position = XXVector3(0, 0, -5);
+		Mesh* m = new Mesh("Assets\\models\\torus\\torus.obj");
 		player->AddComponent(m);
 
-		PlayerController* pc = new PlayerController();
-		player->AddComponent(pc);
+		
 	}
 	AddGameObject(player);
 
 	GameObject* enemy1 = new GameObject();
 	{
 		enemy1->tag = "enemy";
-		enemy1->transform->position.z += 5;
-		Model* m = new Model("Assets\\models\\torus\\torus.obj");
+		enemy1->transform->position = XXVector3(0, 0, 5);
+		Mesh* m = new Mesh("Assets\\models\\torus\\torus.obj");
 		enemy1->AddComponent(m);
 	}
 	AddGameObject(enemy1);
@@ -53,9 +55,8 @@ XX::TestScene::TestScene()
 	GameObject* enemy2 = new GameObject();
 	{
 		enemy2->tag = "enemy";
-		enemy2->transform->position.z += 5;
-		enemy2->transform->position.x += 5;
-		Model* m = new Model("Assets\\models\\torus\\torus.obj");
+		enemy2->transform->position = XXVector3(5, 0, 5);
+		Mesh* m = new Mesh("Assets\\models\\torus\\torus.obj");
 		enemy2->AddComponent(m);
 	}
 	AddGameObject(enemy2);
@@ -63,9 +64,8 @@ XX::TestScene::TestScene()
 	GameObject* enemy3 = new GameObject();
 	{
 		enemy3->tag = "enemy";
-		enemy3->transform->position.z += 5;
-		enemy3->transform->position.x -= 5;
-		Model* m = new Model("Assets\\models\\torus\\torus.obj");
+		enemy3->transform->position = XXVector3(-5, 0, 5);
+		Mesh* m = new Mesh("Assets\\models\\torus\\torus.obj");
 		enemy3->AddComponent(m);
 	}
 	AddGameObject(enemy3);

@@ -3,6 +3,7 @@
 #define _EXTRA_X_TYPE_H_
 
 
+
 #pragma warning(push)
 #pragma warning(disable:4005)
 
@@ -14,10 +15,14 @@
 
 #pragma warning(pop)
 
+
+#include <functional>
+
 #include "Texture.h"
 #include "Shader.h"
+#include "Vector.h"
 
-using namespace DirectX;
+
 
 namespace XX
 {
@@ -51,6 +56,9 @@ namespace XX
 		D3DXCOLOR	diffuse;
 		D3DXCOLOR	ambient;
 	};
+
+
+	
 
 
 	class Scene;

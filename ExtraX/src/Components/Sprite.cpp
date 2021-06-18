@@ -1,5 +1,7 @@
 #include "Sprite.h"
 #include "../XX.h"
+#include "Transform.h"
+#include "../GameObjects/GameObject.h"
 
 XX::Sprite::Sprite():
 	_vertex_buffer(nullptr),
@@ -29,6 +31,7 @@ XX::Sprite::Sprite():
 	vertex[3].diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[3].tex_coord = D3DXVECTOR2(1.0f, 1.0f);
 
+
 	D3D11_BUFFER_DESC bd{};
 	bd.Usage = D3D11_USAGE_DEFAULT;
 	bd.ByteWidth = sizeof(VERTEX_3D) * 4;
@@ -55,6 +58,7 @@ XX::Sprite::~Sprite()
 
 void XX::Sprite::Render2D()
 {
+	game_object->transform->SetMatrix();
 	_vertex_shader->Apply();
 	_pixel_shader->Apply();
 	_texture->Apply();

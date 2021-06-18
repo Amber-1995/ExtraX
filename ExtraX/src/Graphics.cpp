@@ -136,7 +136,6 @@ void XX::Graphics::Init(HWND window, int width, int height)
 
 	ID3D11SamplerState* samplerState = NULL;
 	_device->CreateSamplerState(&samplerDesc, &samplerState);
-
 	_device_context->PSSetSamplers(0, 1, &samplerState);
 
 
@@ -226,43 +225,36 @@ void XX::Graphics::SetDepthEnable(bool enable) const
 
 void XX::Graphics::SetWorldViewProjection2D() const
 {
-	D3DXMATRIX world;
-	D3DXMatrixIdentity(&world);
-	D3DXMatrixTranspose(&world, &world);
+	DirectX::XMMATRIX world = DirectX::XMMatrixIdentity();
+	world = DirectX::XMMatrixTranspose(world);
+	_device_context->UpdateSubresource(_world_buffer, 0, nullptr, &world, 0, 0);
 
-	_device_context->UpdateSubresource(_world_buffer, 0, NULL, &world, 0, 0);
+	DirectX::XMMATRIX view = DirectX::XMMatrixIdentity();
+	view = DirectX::XMMatrixTranspose(view);
+	_device_context->UpdateSubresource(_view_buffer, 0, nullptr, &view, 0, 0);
 
-	D3DXMATRIX view;
-	D3DXMatrixIdentity(&view);
-	D3DXMatrixTranspose(&view, &view);
-	_device_context->UpdateSubresource(_view_buffer, 0, NULL, &view, 0, 0);
-
-	D3DXMATRIX projection;
-	D3DXMatrixOrthoOffCenterLH(&projection, 0.0f, (FLOAT)_width, (FLOAT)_height, 0.0f, 0.0f, 1.0f);
-	D3DXMatrixTranspose(&projection, &projection);
+	DirectX::XMMATRIX projection;
+	projection = DirectX::XMMatrixOrthographicOffCenterLH(0.0f, (FLOAT)_width, (FLOAT)_height, 0.0f, 0.0f, 1.0f);
+	projection = DirectX::XMMatrixTranspose(projection);
 	_device_context->UpdateSubresource(_projection_buffer, 0, NULL, &projection, 0, 0);
-
 }
 
-void XX::Graphics::SetWorldMatrix(D3DXMATRIX* world_matrix) const
+void XX::Graphics::SetWorldMatrix(const DirectX::XMMATRIX& world_matrix) const
 {
-	D3DXMATRIX world;
-	D3DXMatrixTranspose(&world, world_matrix);
-	_device_context->UpdateSubresource(_world_buffer, 0, NULL, &world, 0, 0);
+	DirectX::XMMATRIX matrix = DirectX::XMMatrixTranspose(world_matrix);
+	_device_context->UpdateSubresource(_world_buffer, 0, NULL, &matrix, 0, 0);
 }
 
-void XX::Graphics::SetViewMatrix(D3DXMATRIX* view_matrix) const
+void XX::Graphics::SetViewMatrix(const DirectX::XMMATRIX& view_matrix) const
 {
-	D3DXMATRIX view;
-	D3DXMatrixTranspose(&view, view_matrix);
-	_device_context->UpdateSubresource(_view_buffer, 0, NULL, &view, 0, 0);
+	DirectX::XMMATRIX matrix = DirectX::XMMatrixTranspose(view_matrix);
+	_device_context->UpdateSubresource(_view_buffer, 0, NULL, &matrix, 0, 0);
 }
 
-void XX::Graphics::SetProjectionMatrix(D3DXMATRIX* projection_matrix) const
+void XX::Graphics::SetProjectionMatrix(const DirectX::XMMATRIX& projection_matrix) const
 {
-	D3DXMATRIX projection;
-	D3DXMatrixTranspose(&projection, projection_matrix);
-	_device_context->UpdateSubresource(_projection_buffer, 0, NULL, &projection, 0, 0);
+	DirectX::XMMATRIX matrix = DirectX::XMMatrixTranspose(projection_matrix);
+	_device_context->UpdateSubresource(_projection_buffer, 0, NULL, &matrix, 0, 0);
 }
 
 void XX::Graphics::SetMaterial(MATERIAL material) const
@@ -328,6 +320,8 @@ void XX::Graphics::CreatePixelShader(ID3D11PixelShader** pixel_shader, const cha
 XX::Graphics::Graphics() :
 	device(_device),
 	device_context(_device_context),
+	width(_width),
+	height(_height),
 	_width(0),
 	_height(0),
 	_feature_level(D3D_FEATURE_LEVEL_11_0),

@@ -40,16 +40,16 @@ namespace XX
 		unsigned int	SubsetNum;
 	};
 
-	class Model : public Component,public IRender3D
+	class Mesh : public Component,public IRender3D
 	{
 	public:
-		Model(std::string file_name);
+		Mesh(std::string file_name);
 
-		Model(const Model&) = delete;
+		Mesh(const Mesh&) = delete;
 
-		Model& operator=(const Model&) = delete;
+		Mesh& operator=(const Mesh&) = delete;
 
-		virtual ~Model();
+		virtual ~Mesh();
 
 		void Render3D() override;
 

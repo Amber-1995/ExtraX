@@ -5,7 +5,7 @@
 
 void XX::BulletController::Update()
 {
-	game_object->transform->position.z += 0.1f;
+	game_object->transform->position += XXVector3(0.0f,0.0f,0.1f);
 
 	if (game_object->transform->position.z > 10)
 	{
@@ -16,8 +16,8 @@ void XX::BulletController::Update()
 
 	for (GameObject* i : game_object->scene->game_objects)
 	{
-		auto v = game_object->transform->position - i->transform->position;;
-		auto l = D3DXVec3Length(&v);
+		XXVector3 v = game_object->transform->position - i->transform->position;
+		float l = v.GetLength();
 		if (l < 1) {
 			if (i->tag == "enemy")
 			{

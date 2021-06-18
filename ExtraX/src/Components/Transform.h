@@ -9,11 +9,28 @@ namespace XX
 	class Transform : public Component
 	{
 	public:
-		D3DXVECTOR3 position;
-		D3DXVECTOR3 rotation;
-		D3DXVECTOR3 scale;
+		XXVector3P position;
+		XXVector3P rotation;
+		XXVector3P scale;
 
 		Transform();
+
+		XXVector3 Forward();
+		XXVector3 Up();
+		XXVector3 Right();
+
+		void SetMatrix();
+
+	private:
+		DirectX::XMVECTOR _position;
+		DirectX::XMVECTOR _rotation;
+		DirectX::XMVECTOR _scale;
+		DirectX::XMMATRIX _matrix;
+
+	
+
+		void _Refresh();
+
 
 	};
 }
