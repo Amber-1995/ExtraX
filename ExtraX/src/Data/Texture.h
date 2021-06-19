@@ -3,7 +3,7 @@
 #define _TEXTURE_H_
 
 #include "Resource.h"
-
+#include "ExtraXType.h"
 
 namespace XX
 {
@@ -12,19 +12,19 @@ namespace XX
 	public:
 		void Apply() override;
 
+		virtual ~Texture() = default;
 	private:
+		ID3D11ShaderResourceViewPtr _texture;
 
-		ID3D11ShaderResourceView* _texture;
+		ID3D11ResourcePtr _texture_resource;
 
 		Texture(const std::string& file_name);
-
-		virtual ~Texture() = default;
 
 		friend class Resource<Texture>;
 	};
 
-	std::map<std::string, Texture*> Texture::_resources;
-
+	typedef std::shared_ptr<Texture> TexturePtr;
+	std::unordered_map<std::string, TexturePtr> Texture::_resources;
 }
 
 

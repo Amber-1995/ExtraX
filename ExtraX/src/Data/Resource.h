@@ -2,42 +2,45 @@
 #ifndef _RESOURCE_H_
 #define _RESOURCE_H_
 
-#pragma warning(push)
-#pragma warning(disable:4005)
-#include <d3d11.h>
-#pragma warning(pop)
 
-#include <map>
+#include <d3d11.h>
+#include <unordered_map>
 #include <string>
+#include <filesystem>
+#include <memory>
 
 namespace XX
 {
-	template<class T >
+	template<class T>
 	class Resource
 	{
 	public:
-		static T* Load(std::string file_name);
+		static std::shared_ptr<T> Load(std::string file_name);
 
 		virtual void Apply() = 0;
-
 	protected:
-		static std::map<std :: string, T*> _resources;
+		static std::unordered_map<std::string, std::shared_ptr<T>> _resources;
+
 	};
 
 	template<class T>
-	inline T* Resource<T>::Load(std::string file_name)
+	inline std::shared_ptr<T> Resource<T>::Load(std::string file_name)
 	{
-		if (_resources.count(file_name) != 0)
-		{
-			return _resources[file_name];
+		std::wstring wide = std::filesystem::absolute(file_name);
+		char narrow[1024];
+		wcstombs_s(nullptr, narrow, wide.c_str(), _TRUNCATE);
+		std::string full_path = narrow;
+
+		auto target = _resources.find(full_path);
+		if (target != _resources.end()){
+			return target->second;
 		}
 
-		T* new_texture = new T(file_name);
-		_resources[file_name] = new_texture;
+		std::shared_ptr<T> res(new T(file_name));
+		_resources[full_path] = res;
 
-		return new_texture;
+		return res;
 	}
-
 }
 
 #endif // !_RESOURCE_H_

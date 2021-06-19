@@ -3,7 +3,12 @@
 #include "Transform.h"
 #include "../GameObjects/GameObject.h"
 
+
+using namespace DirectX;
+
+
 XX::Camera* const& XX::Camera::main_camera = _main_camera;
+
 XX::Camera* XX::Camera::_main_camera = nullptr;
 
 XX::Camera::Camera()
@@ -19,16 +24,17 @@ XX::Camera::Camera()
 
 XX::Camera::~Camera()
 {
+
 }
 
 void XX::Camera::Update()
 {
-	DirectX::XMFLOAT3 e = game_object->transform->position;
-	DirectX::XMVECTOR eye = DirectX::XMLoadFloat3(&e);
-	DirectX::XMFLOAT3 f = game_object->transform->position + game_object->transform->Forward();
-	DirectX::XMVECTOR focus = DirectX::XMLoadFloat3(&f);
-	DirectX::XMFLOAT3 u(0.0f, 1.0f, 0.0f);
-	DirectX::XMVECTOR up = DirectX::XMLoadFloat3(&u);
+	XMFLOAT3 e = game_object->transform->position;
+	XMVECTOR eye = DirectX::XMLoadFloat3(&e);
+	XMFLOAT3 f = game_object->transform->position + game_object->transform->Forward();
+	XMVECTOR focus = DirectX::XMLoadFloat3(&f);
+	XMFLOAT3 u(0.0f, 1.0f, 0.0f);
+	XMVECTOR up = DirectX::XMLoadFloat3(&u);
 
 	_view_matrix = DirectX::XMMatrixLookAtLH(
 		eye,

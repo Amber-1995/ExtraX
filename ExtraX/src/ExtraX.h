@@ -8,7 +8,7 @@
 #include "GameWindow.h"
 #include "Components/Components.h"
 #include "Events/Events.h"
-#include "Data/ExtraXType.h"
+#include "Data/Data.h"
 #include "GameObjects/GameObject.h"
 
 

@@ -47,15 +47,15 @@
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)\bin\int\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)\bin\out\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\bin\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)\bin\int\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)\bin\out\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\bin\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -64,11 +64,12 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>winmm.lib;d3d11.lib;d3dx9d.lib;d3dx11d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;d3d11.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -80,13 +81,14 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>winmm.lib;d3d11.lib;d3dx9.lib;d3dx11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;d3d11.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -96,14 +98,19 @@
     <ClCompile Include="src\Components\Field.cpp" />
     <ClCompile Include="src\Components\Mesh.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\Components\Sprite.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
+    <ClCompile Include="src\Data\Color.cpp" />
+    <ClCompile Include="src\Data\Model.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\Data\Shader.cpp" />
     <ClCompile Include="src\Data\Texture.cpp" />
     <ClCompile Include="src\Data\Vector.cpp" />
-    <ClCompile Include="src\Data\XXTable.cpp" />
+    <ClCompile Include="src\Data\Table.cpp" />
     <ClCompile Include="src\Events\IRender.cpp" />
     <ClCompile Include="src\Events\IUpdate.cpp" />
     <ClCompile Include="src\Game.cpp" />
@@ -124,16 +131,22 @@
     <ClInclude Include="src\Components\Field.h" />
     <ClInclude Include="src\Components\Mesh.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="src\Components\Sprite.h" />
     <ClInclude Include="src\Components\Transform.h" />
+    <ClInclude Include="src\Data\Color.h" />
+    <ClInclude Include="src\Data\Data.h" />
     <ClInclude Include="src\Data\ExtraXType.h" />
+    <ClInclude Include="src\Data\Model.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="src\Data\Resource.h" />
     <ClInclude Include="src\Data\Shader.h" />
     <ClInclude Include="src\Data\Texture.h" />
     <ClInclude Include="src\Data\Vector.h" />
-    <ClInclude Include="src\Data\XXTable.h" />
+    <ClInclude Include="src\Data\Table.h" />
     <ClInclude Include="src\Events\Events.h" />
     <ClInclude Include="src\Events\IRender.h" />
     <ClInclude Include="src\Events\IUpdate.h" />

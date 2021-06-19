@@ -1,6 +1,6 @@
 #pragma once
 #include "../Components/Component.h"
-#include "../Events/IUpdate.h"
+#include "../Events/Events.h"
 
 
 namespace XX

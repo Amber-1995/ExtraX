@@ -3,8 +3,8 @@
 #define _FIELD_H_
 
 #include "Component.h"
-#include "../Events/IRender.h"
-#include "../Data/ExtraXType.h"
+#include "../Events/Events.h"
+#include "../Data/Data.h"
 
 namespace XX
 {
@@ -20,9 +20,9 @@ namespace XX
 	private:
 
 		ID3D11Buffer* _vertex_buffer;
-		Texture* _texture;
-		VertexShader* _vertex_shader;
-		PixelShader* _pixel_shader;
+		TexturePtr _texture;
+		VertexShaderPtr _vertex_shader;
+		PixelShaderPtr _pixel_shader;
 	};
 }
 

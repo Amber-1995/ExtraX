@@ -2,12 +2,7 @@
 #ifndef _GRAPHICS_H_
 #define _GRAPHICS_H_
 
-#pragma warning(push)
-#pragma warning(disable:4005)
-#include <d3d11.h>
-#pragma warning(pop)
-
-#include "Data/ExtraXType.h"
+#include "Data/Data.h"
 
 namespace XX
 {
@@ -29,7 +24,7 @@ namespace XX
 
 		void Init(HWND window, int width, int height);
 
-		virtual ~Graphics();
+		virtual ~Graphics() = default;
 
 		void Begin() const;
 
@@ -45,9 +40,9 @@ namespace XX
 
 		void SetProjectionMatrix(const DirectX::XMMATRIX& projection_matrix) const;
 
-		void SetMaterial(MATERIAL material) const;
+		void SetMaterial(XXMaterial material) const;
 
-		void SetLight(LIGHT light) const;
+		void SetLight(XXLight light) const;
 
 		void CreateVertexShader(ID3D11VertexShader** vertex_shader, ID3D11InputLayout** vertex_layout, const char* file_name) const;
 
@@ -61,29 +56,29 @@ namespace XX
 
 		D3D_FEATURE_LEVEL  _feature_level;
 
-		ID3D11Device* _device;
+		ID3D11DevicePtr _device;
 
-		ID3D11DeviceContext* _device_context;
+		ID3D11DeviceContextPtr _device_context;
 
-		IDXGISwapChain* _swap_chain;
+		IDXGISwapChainPtr _swap_chain;
 
-		ID3D11RenderTargetView* _render_target_view;
+		ID3D11RenderTargetViewPtr _render_target_view;
 
-		ID3D11DepthStencilView* _depth_stencil_view;
+		ID3D11DepthStencilViewPtr _depth_stencil_view;
 
-		ID3D11Buffer* _world_buffer;
+		ID3D11BufferPtr _world_buffer;
 
-		ID3D11Buffer* _view_buffer;
+		ID3D11BufferPtr _view_buffer;
 
-		ID3D11Buffer* _projection_buffer;
+		ID3D11BufferPtr _projection_buffer;
 
-		ID3D11Buffer* _material_buffer;
+		ID3D11BufferPtr _material_buffer;
 
-		ID3D11Buffer* _light_buffer;
+		ID3D11BufferPtr _light_buffer;
 
-		ID3D11DepthStencilState* _depth_state_enable;
+		ID3D11DepthStencilStatePtr _depth_state_enable;
 
-		ID3D11DepthStencilState* _depth_state_disable;
+		ID3D11DepthStencilStatePtr _depth_state_disable;
 
 		Graphics();
 		Graphics(const Graphics&) = delete;

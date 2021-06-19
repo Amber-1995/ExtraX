@@ -1,7 +1,9 @@
 #include "BulletController.h"
-#include "../GameObjects/GameObject.h"
-#include "../Components/Transform.h"
+
 #include "../Scenes/Scene.h"
+#include "../GameObjects/GameObject.h"
+#include "../Components/Components.h"
+
 
 void XX::BulletController::Update()
 {

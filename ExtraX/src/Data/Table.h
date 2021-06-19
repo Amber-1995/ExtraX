@@ -8,11 +8,12 @@ namespace XX
 	class XXTable
 	{
 	private:
-		struct _Unit
+		struct
 		{
 			bool is_using;
 			T data;
-		};
+		} _unit;
+
 
 	};
 }

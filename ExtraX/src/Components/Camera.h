@@ -3,8 +3,11 @@
 #define _CAMERA_H_
 
 #include "Component.h"
-#include "../Events/IUpdate.h"
-#include <DirectXMath.h>
+#include "../Events/Events.h"
+#include "../Data/Data.h"
+
+
+using DirectX::XMMATRIX;
 
 namespace XX
 {
@@ -22,8 +25,8 @@ namespace XX
 	private:
 		static Camera* _main_camera;
 
-		DirectX::XMMATRIX _view_matrix;
-		DirectX::XMMATRIX _projection_matrix;
+		XMMATRIX _view_matrix;
+		XMMATRIX _projection_matrix;
 	};
 }
 

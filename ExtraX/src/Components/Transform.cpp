@@ -46,9 +46,14 @@ XX::XXVector3 XX::Transform::Right()
 	return XXVector3(uint.x, uint.y, uint.z);
 }
 
-void XX::Transform::SetMatrix()
+void XX::Transform::SetWorldMatrix()
 {
 	ExtraX::graphics.SetWorldMatrix(_matrix);
+}
+
+void XX::Transform::SetWorldMatrix(const XMMATRIX& offset)
+{
+	ExtraX::graphics.SetWorldMatrix(_matrix * offset);
 }
 
 void XX::Transform::_Refresh()

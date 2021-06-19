@@ -1,8 +1,11 @@
 #include "PlayerController.h"
+
+#include "../Scenes//Scene.h"
 #include "../GameObjects/GameObject.h"
 #include "../Components/Components.h"
+
 #include "BulletController.h"
-#include "../Scenes//Scene.h"
+
 
 
 
@@ -31,7 +34,7 @@ void XX::PlayerController::Update()
 		game_object->transform->position += XXVector3(0.1f, 0.0f, 0.0f);
 	}
 
-	/*if ((GetKeyState('W') & 0x80) && cd <= 0)
+	if ((GetKeyState('W') & 0x80) && cd <= 0)
 	{
 		GameObject* bullet = new GameObject();
 		{
@@ -49,5 +52,5 @@ void XX::PlayerController::Update()
 		cd = 10;
 	}
 
-	cd -= 1;*/
+	cd -= 1;
 }

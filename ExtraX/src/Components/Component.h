@@ -3,7 +3,7 @@
 #ifndef _COMPONENT_H_
 #define _COMPONENT_H_
 
-#include "../Data/ExtraXType.h"
+#include "../Data/Data.h"
 
 namespace XX
 {

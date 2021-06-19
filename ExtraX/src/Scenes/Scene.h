@@ -2,7 +2,7 @@
 #ifndef _SCENE_H_
 #define _SCENE_H_
 
-#include "../Data/ExtraXType.h"
+#include "../Data/Data.h"
 #include <list>
 
 namespace XX

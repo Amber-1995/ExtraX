@@ -2,69 +2,64 @@
 #ifndef _EXTRA_X_TYPE_H_
 #define _EXTRA_X_TYPE_H_
 
-
-
-#pragma warning(push)
-#pragma warning(disable:4005)
-
 #include <d3d11.h>
-#include <d3dx11.h>
-#include <d3dx9.h>
 #include <DirectXMath.h>
 #include <DirectXPackedVector.h>
+#include <wrl.h>
 
-#pragma warning(pop)
-
-
-#include <functional>
-
-#include "Texture.h"
-#include "Shader.h"
 #include "Vector.h"
+#include "Color.h"
 
 
 
 namespace XX
 {
-	struct VERTEX_3D
+	struct XXVertex3D
 	{
-		D3DXVECTOR3 position;
-		D3DXVECTOR3 normal;
-		D3DXVECTOR4 diffuse;
-		D3DXVECTOR2 tex_coord;
+		XXVector3 position;
+		XXVector3 normal;
+		XXVector4 diffuse;
+		XXVector2 tex_coord;
 	};
 
-
-
-	struct MATERIAL
+	struct XXMaterial
 	{
-		D3DXCOLOR	ambient;
-		D3DXCOLOR	diffuse;
-		D3DXCOLOR	specular;
-		D3DXCOLOR	emission;
-		float		shininess;
-		float		dummy[3];
+		XXColor	ambient;
+		XXColor	diffuse;
+		XXColor	specular;
+		XXColor	emission;
+		float	shininess;
+		float	dummy[3];
 	};
 
-
-
-	struct LIGHT
+	struct XXLight
 	{
-		BOOL		enable;
-		BOOL		dummy[3];
-		D3DXVECTOR4	direction;
-		D3DXCOLOR	diffuse;
-		D3DXCOLOR	ambient;
+		int		enable;
+		int		dummy[3];
+		XXVector4	direction;
+		XXColor		diffuse;
+		XXColor		ambient;
 	};
-
-
-	
-
 
 	class Scene;
 	class GameObject;
 	class Component;
 	class Transform;
+
+	typedef Microsoft::WRL::ComPtr<ID3D11Device> ID3D11DevicePtr;
+	typedef Microsoft::WRL::ComPtr<ID3D11DeviceContext> ID3D11DeviceContextPtr;
+	typedef Microsoft::WRL::ComPtr<IDXGISwapChain> IDXGISwapChainPtr;
+	typedef Microsoft::WRL::ComPtr<ID3D11RenderTargetView> ID3D11RenderTargetViewPtr;
+	typedef Microsoft::WRL::ComPtr<ID3D11DepthStencilView> ID3D11DepthStencilViewPtr;
+	typedef Microsoft::WRL::ComPtr<ID3D11Buffer> ID3D11BufferPtr;
+	typedef Microsoft::WRL::ComPtr<ID3D11DepthStencilState> ID3D11DepthStencilStatePtr;
+	typedef Microsoft::WRL::ComPtr<ID3D11Texture2D> ID3D11Texture2DPtr;
+	typedef Microsoft::WRL::ComPtr<ID3D11VertexShader> ID3D11VertexShaderPtr;
+	typedef Microsoft::WRL::ComPtr<ID3D11InputLayout> ID3D11InputLayoutPtr;
+	typedef Microsoft::WRL::ComPtr<ID3D11PixelShader> ID3D11PixelShaderPtr;
+	typedef Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ID3D11ShaderResourceViewPtr;
+	typedef Microsoft::WRL::ComPtr<ID3D11Resource> ID3D11ResourcePtr;
+
 }
 
 

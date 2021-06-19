@@ -1,8 +1,12 @@
 #pragma once
 #ifndef _TRANSFORM_H_
 #define _TRANSFORM_H_
-#include "../Data/ExtraXType.h"
+#include "../Data/Data.h"
 #include "Component.h"
+
+
+using DirectX::XMVECTOR;
+using DirectX::XMMATRIX;
 
 namespace XX
 {
@@ -19,19 +23,17 @@ namespace XX
 		XXVector3 Up();
 		XXVector3 Right();
 
-		void SetMatrix();
+		void SetWorldMatrix();
+
+		void SetWorldMatrix(const XMMATRIX& offset);
 
 	private:
-		DirectX::XMVECTOR _position;
-		DirectX::XMVECTOR _rotation;
-		DirectX::XMVECTOR _scale;
-		DirectX::XMMATRIX _matrix;
-
-	
+		XMVECTOR _position;
+		XMVECTOR _rotation;
+		XMVECTOR _scale;
+		XMMATRIX _matrix;
 
 		void _Refresh();
-
-
 	};
 }
 

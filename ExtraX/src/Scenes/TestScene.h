@@ -1,6 +1,9 @@
 #pragma once
-#include "Scene.h"
+#ifndef TS
+#define TS
 
+
+#include "Scene.h"
 
 namespace XX
 {
@@ -8,6 +11,14 @@ namespace XX
 	{
 	public:
 		TestScene();
-		
+
 	};
 }
+
+
+
+#endif // !TS
+
+
+
+
