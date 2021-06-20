@@ -44,9 +44,11 @@ XX::Sprite::Sprite():
 
 	ExtraX::graphics.device->CreateBuffer(&bd, &sd, &_vertex_buffer);
 
-	_texture = Texture::Load("Assets\\Textures\\kk.jpg");
+	_texture = Texture::Load("Assets\\Textures\\kjc.png");
 	_vertex_shader = VertexShader::Load("Assets\\Shaders\\unlitTextureVS.cso");
 	_pixel_shader = PixelShader::Load("Assets\\Shaders\\unlitTexturePS.cso");
+
+
 
 }
 
@@ -63,6 +65,7 @@ void XX::Sprite::Render2D()
 	_pixel_shader->Apply();
 	_texture->Apply();
 
+
 	UINT stride = sizeof(XXVertex3D);
 	UINT offset = 0;
 	ExtraX::graphics.device_context->IASetVertexBuffers(0, 1, &_vertex_buffer, &stride, &offset);
@@ -70,4 +73,6 @@ void XX::Sprite::Render2D()
 	ExtraX::graphics.device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	ExtraX::graphics.device_context->Draw(4, 0);
+
+	
 }

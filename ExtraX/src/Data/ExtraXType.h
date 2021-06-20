@@ -60,6 +60,10 @@ namespace XX
 	typedef Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ID3D11ShaderResourceViewPtr;
 	typedef Microsoft::WRL::ComPtr<ID3D11Resource> ID3D11ResourcePtr;
 
+	typedef std::shared_ptr<Scene> ScenePtr;
+	typedef std::shared_ptr<GameObject> GameObjectPtr;
+	typedef std::shared_ptr<Component> ComponentPtr;
+	typedef std::shared_ptr<Transform> TransformPtr;
 }
 
 

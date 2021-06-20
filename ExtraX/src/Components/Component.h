@@ -9,8 +9,6 @@ namespace XX
 {
 	class Component
 	{
-	friend class GameObject;
-
 	public:
 		GameObject* const& game_object;
 
@@ -22,13 +20,20 @@ namespace XX
 
 		Component& operator=(const Component&) = delete;
 
-		virtual ~Component();
+		virtual ~Component() = default;
 
 		void SetActive(bool& active);
 
 		void SetActive(bool&& active);
 
+		void Awake();
+
 		void Destroy();
+
+		ComponentPtr Get();
+
+		template<class T = Component, class...ARGS>
+		static std::shared_ptr<T> Create(ARGS...args);
 
 	private:
 		GameObject* _game_object;
@@ -37,10 +42,21 @@ namespace XX
 
 		void SetGameObject(GameObject* game_object);
 
-		void InstallEvents();
+		void _InstallEvents();
 
-		void UninstallEvents();
+		void _UninstallEvents();
+
+		friend class GameObject;
 	};
+
+
+
+	template<class T, class ...ARGS>
+	inline std::shared_ptr<T> Component::Create(ARGS ...args)
+	{
+		return std::shared_ptr<T>(new T(args...));
+	}
+
 }
 
 #endif // !_COMPONENT_H_

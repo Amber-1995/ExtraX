@@ -22,10 +22,7 @@ XX::Camera::Camera()
 	_projection_matrix = DirectX::XMMatrixPerspectiveFovLH(1.0f, w / h, 1.0f, 5000.0f);
 }
 
-XX::Camera::~Camera()
-{
 
-}
 
 void XX::Camera::Update()
 {

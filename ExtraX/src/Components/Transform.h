@@ -17,7 +17,7 @@ namespace XX
 		XXVector3P rotation;
 		XXVector3P scale;
 
-		Transform();
+		virtual ~Transform() = default;
 
 		XXVector3 Forward();
 		XXVector3 Up();
@@ -33,7 +33,11 @@ namespace XX
 		XMVECTOR _scale;
 		XMMATRIX _matrix;
 
+		Transform();
+
 		void _Refresh();
+
+		friend class Component;
 	};
 }
 

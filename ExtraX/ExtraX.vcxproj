@@ -147,6 +147,7 @@
     <ClInclude Include="src\Data\Texture.h" />
     <ClInclude Include="src\Data\Vector.h" />
     <ClInclude Include="src\Data\Table.h" />
+    <ClInclude Include="src\Events\Event.h" />
     <ClInclude Include="src\Events\Events.h" />
     <ClInclude Include="src\Events\IRender.h" />
     <ClInclude Include="src\Events\IUpdate.h" />

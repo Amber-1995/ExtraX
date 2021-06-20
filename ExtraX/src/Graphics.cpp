@@ -24,11 +24,12 @@ void XX::Graphics::Init(HWND window, int width, int height)
 	swapChainDesc.SampleDesc.Quality = 0;
 	swapChainDesc.Windowed = TRUE;
 
-	hr = D3D11CreateDeviceAndSwapChain(NULL,
+	hr = D3D11CreateDeviceAndSwapChain(
+		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
-		NULL,
+		nullptr,
 		0,
-		NULL,
+		nullptr,
 		0,
 		D3D11_SDK_VERSION,
 		&swapChainDesc,
@@ -39,13 +40,13 @@ void XX::Graphics::Init(HWND window, int width, int height)
 	);
 
 	// レンダーターゲットビュー作成
-	ID3D11Texture2DPtr renderTarget = NULL;
+	ID3D11Texture2DPtr renderTarget;
 	_swap_chain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)renderTarget.GetAddressOf());
-	_device->CreateRenderTargetView(renderTarget.Get(), NULL, _render_target_view.GetAddressOf());
+	_device->CreateRenderTargetView(renderTarget.Get(), nullptr, _render_target_view.GetAddressOf());
 	
 
 	// デプスステンシルバッファ作成
-	ID3D11Texture2DPtr depthStencile = NULL;
+	ID3D11Texture2DPtr depthStencile;
 	D3D11_TEXTURE2D_DESC textureDesc{};
 	textureDesc.Width = swapChainDesc.BufferDesc.Width;
 	textureDesc.Height = swapChainDesc.BufferDesc.Height;
@@ -57,7 +58,7 @@ void XX::Graphics::Init(HWND window, int width, int height)
 	textureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 	textureDesc.CPUAccessFlags = 0;
 	textureDesc.MiscFlags = 0;
-	_device->CreateTexture2D(&textureDesc, NULL, &depthStencile);
+	_device->CreateTexture2D(&textureDesc, NULL, depthStencile.GetAddressOf());
 
 	// デプスステンシルビュー作成
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc{};
@@ -192,7 +193,7 @@ void XX::Graphics::Begin() const
 {
 	float clearColor[4] = { 0.3f, 0.2f, 0.6f, 1.0f };
 	_device_context->ClearRenderTargetView(_render_target_view.Get(), clearColor);
-	_device_context->ClearDepthStencilView(_depth_stencil_view.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
+	_device_context->ClearDepthStencilView(_depth_stencil_view.Get(), D3D11_CLEAR_DEPTH|D3D11_CLEAR_STENCIL, 1.0f, 0);
 }
 
 void XX::Graphics::End() const

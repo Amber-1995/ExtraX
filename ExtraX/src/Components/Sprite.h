@@ -10,13 +10,11 @@ namespace XX
 	class Sprite : public Component,public IRender2D
 	{
 	public:
-		Sprite();
-
 		virtual ~Sprite();
 
 		void Render2D() override;
-	private:
 
+	private:
 		ID3D11Buffer* _vertex_buffer;
 
 		TexturePtr _texture;
@@ -25,9 +23,12 @@ namespace XX
 
 		PixelShaderPtr _pixel_shader;
 
-		
+		Sprite();
 
+		friend class Component;
 	};
+
+	typedef std::shared_ptr<Sprite> SpritePtr;
 }
 
 #endif // !_SPRITE_H_

@@ -9,4 +9,5 @@ namespace XX
 	{
 		void Update() override;
 	};
+	typedef std::shared_ptr<PlayerController> PlayerControllerPtr;
 }

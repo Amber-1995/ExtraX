@@ -12,8 +12,16 @@ XX::Component::Component() :
 
 }
 
-XX::Component::~Component()
+
+void XX::Component::Awake()
 {
+	_InstallEvents();
+}
+
+void XX::Component::Destroy()
+{
+	_UninstallEvents();
+	game_object->RemoveComponent(this);
 }
 
 void XX::Component::SetActive(bool& active)
@@ -26,19 +34,12 @@ void XX::Component::SetActive(bool&& active)
 	_active = active;
 }
 
-void XX::Component::Destroy()
-{
-	game_object->RemoveComponent(this);
-	UninstallEvents();
-	delete this;
-}
-
 void XX::Component::SetGameObject(GameObject* game_object)
 {
 	_game_object = game_object;
 }
 
-void XX::Component::InstallEvents()
+void XX::Component::_InstallEvents()
 {
 	IUpdate* iupdate = dynamic_cast<IUpdate*>(this);
 	if (iupdate) {
@@ -56,7 +57,7 @@ void XX::Component::InstallEvents()
 	}
 }
 
-void XX::Component::UninstallEvents()
+void XX::Component::_UninstallEvents()
 {
 	IUpdate* iupdate = dynamic_cast<IUpdate*>(this);
 	if (iupdate) {
@@ -72,4 +73,16 @@ void XX::Component::UninstallEvents()
 	if (irender2d) {
 		irender2d->Remove();
 	}
+}
+
+XX::ComponentPtr XX::Component::Get()
+{
+	auto i = _game_object->_components.begin();
+	auto end = _game_object->_components.end();
+	for (i; i != end; i++){
+		if ((*i).get() == this) {
+			return *i;
+		}
+	}
+	return ComponentPtr();
 }

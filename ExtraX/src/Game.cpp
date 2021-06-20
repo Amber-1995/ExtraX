@@ -17,8 +17,8 @@ XX::Game::~Game()
 int XX::Game::Run()
 {
 	
-	new TestScene();
-
+	TestScene* s = new TestScene();
+	s->Awake();
 	
 
 	MSG msg{};

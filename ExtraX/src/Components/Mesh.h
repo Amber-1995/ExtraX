@@ -12,21 +12,22 @@ namespace XX
 	class Mesh : public Component,public IRender3D
 	{
 	public:
-		Mesh(std::string file_name);
-
-		Mesh(const Mesh&) = delete;
-
-		Mesh& operator=(const Mesh&) = delete;
-
 		virtual ~Mesh();
 
 		void Render3D() override;
 
 	private:
-		
 		ModelPtr _model;
 
+		Mesh(std::string file_name);
+		Mesh(const Mesh&) = delete;
+		Mesh& operator=(const Mesh&) = delete;
+
+		friend class Component;
+
 	};
+
+	typedef std::shared_ptr<Mesh> MeshPtr;
 }
 
 

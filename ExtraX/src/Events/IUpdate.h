@@ -4,6 +4,7 @@
 
 #include <list>
 
+
 namespace XX
 {
 	class IUpdate
@@ -12,28 +13,31 @@ namespace XX
 		virtual void Update() = 0;
 		void Addto();
 		void Remove();
+		virtual ~IUpdate() = default;
 	};
+	typedef std::shared_ptr<IUpdate> IUpdatePtr;
+
 
 	class Updater
 	{
-	friend class IUpdate;
-	friend class ExtraX;
-
 	public:
 		void Update();
 
 		virtual ~Updater();
 
 	private:
-		std::list<IUpdate*> _i_updates;
-		std::list<IUpdate*>::iterator _current;
-		std::list<IUpdate*>::iterator _next;
+		std::list<IUpdatePtr> _i_updates;
+		std::list<IUpdatePtr>::iterator _current;
+		std::list<IUpdatePtr>::iterator _next;
 
 		Updater();
 
 		Updater(const Updater&) = delete;
 
 		Updater& operator=(const Updater&) = delete;
+
+		friend class IUpdate;
+		friend class ExtraX;
 	};
 }
 

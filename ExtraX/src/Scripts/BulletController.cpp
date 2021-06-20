@@ -16,7 +16,7 @@ void XX::BulletController::Update()
 	}
 
 
-	for (GameObject* i : game_object->scene->game_objects)
+	for (GameObjectPtr i : game_object->scene->game_objects)
 	{
 		XXVector3 v = game_object->transform->position - i->transform->position;
 		float l = v.GetLength();

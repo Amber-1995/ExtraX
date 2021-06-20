@@ -16,9 +16,7 @@ namespace XX
 	public:
 		static Camera* const& main_camera;
 
-		Camera();
-
-		virtual ~Camera();
+		virtual ~Camera() = default;
 
 		void Update();
 
@@ -26,8 +24,15 @@ namespace XX
 		static Camera* _main_camera;
 
 		XMMATRIX _view_matrix;
+
 		XMMATRIX _projection_matrix;
+
+		Camera();
+
+		friend class Component;
 	};
+
+	typedef std::shared_ptr<Camera> CameraPtr;
 }
 
 #endif // !_CAMERA_H_

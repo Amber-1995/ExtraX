@@ -10,7 +10,7 @@ namespace XX
 	class Scene
 	{
 	public:
-		std::list<GameObject*> const& game_objects;
+		std::list<GameObjectPtr> const& game_objects;
 
 		Scene();
 
@@ -20,14 +20,31 @@ namespace XX
 
 		virtual ~Scene();
 
-		void AddGameObject(GameObject* game_obeject);
+		void Awake();
+
+		void Destroy();
+
+		void AddGameObject(GameObjectPtr game_obeject);
 
 		void RemoveGameObject(GameObject* game_obeject);
 
+		template<class T = Scene, class ...ARGS>
+		static ScenePtr Create(ARGS ...args);
+
 	private:
-		std::list<GameObject*> _game_objects;
+		std::list<GameObjectPtr> _game_objects;
+
+		bool _is_awake;
+
+		//ScenePtr _Get();
 
 	};
+
+	template<class T, class ...ARGS>
+	inline ScenePtr Scene::Create(ARGS ...args)
+	{
+		return ScenePtr(new T(args...));
+	}
 }
 
 

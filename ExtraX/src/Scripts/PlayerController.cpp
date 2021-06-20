@@ -36,15 +36,16 @@ void XX::PlayerController::Update()
 
 	if ((GetKeyState('W') & 0x80) && cd <= 0)
 	{
-		GameObject* bullet = new GameObject();
+		GameObjectPtr bullet = GameObject::Create();
 		{
 			bullet->tag = "bullet";
 			bullet->transform->scale = { 0.5f,0.5f,0.5f };
 			bullet->transform->position = game_object->transform->position;
-			Mesh* m = new Mesh("Assets\\models\\torus\\torus.obj");
+
+			auto m = Component::Create<Mesh>("Assets\\models\\torus\\torus.obj");
 			bullet->AddComponent(m);
 
-			BulletController* bc = new BulletController();
+			auto bc = Component::Create < BulletController>();
 			bullet->AddComponent(bc);
 		}
 		game_object->scene->AddGameObject(bullet);
