@@ -3,40 +3,33 @@
 #define _IUPDATE_H_
 
 #include <list>
-
-
+#include "Event.h"
 namespace XX
 {
-	class IUpdate
+	class IUpdate : public Event<IUpdate>
 	{
 	public:
+		IUpdate();
+
 		virtual void Update() = 0;
-		void Addto();
-		void Remove();
-		virtual ~IUpdate() = default;
+
+		void Fun() override {}
 	};
-	typedef std::shared_ptr<IUpdate> IUpdatePtr;
 
-
-	class Updater
+	class Updater : public EventManager<IUpdate>
 	{
 	public:
+		virtual ~Updater() = default;
+
 		void Update();
 
-		virtual ~Updater();
-
 	private:
-		std::list<IUpdatePtr> _i_updates;
-		std::list<IUpdatePtr>::iterator _current;
-		std::list<IUpdatePtr>::iterator _next;
-
-		Updater();
+		Updater() = default;
 
 		Updater(const Updater&) = delete;
 
 		Updater& operator=(const Updater&) = delete;
 
-		friend class IUpdate;
 		friend class ExtraX;
 	};
 }

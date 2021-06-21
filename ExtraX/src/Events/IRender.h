@@ -31,9 +31,6 @@ namespace XX
 
 	class Renderer2D
 	{
-		friend class IRender2D;
-		friend class ExtraX;
-
 	public:
 		void Render();
 
@@ -49,13 +46,13 @@ namespace XX
 		Renderer2D(const Renderer2D&) = delete;
 
 		Renderer2D& operator=(const Renderer2D&) = delete;
+
+		friend class IRender2D;
+		friend class ExtraX;
 	};
 
 	class Renderer3D
 	{
-	friend class IRender3D;
-	friend class ExtraX;
-
 	public:
 		void Render();
 
@@ -71,6 +68,9 @@ namespace XX
 		Renderer3D(const Renderer3D&) = delete;
 
 		Renderer3D& operator=(const Renderer3D&) = delete;
+
+		friend class IRender3D;
+		friend class ExtraX;
 	};
 }
 

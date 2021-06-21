@@ -6,7 +6,7 @@
 
 void XX::IRender2D::Addto()
 {
-	ExtraX::renderer2d._i_render2ds.push_back(this);
+	ExtraX::renderer2d._i_render2ds.push_front(this);
 
 }
 
@@ -21,7 +21,7 @@ void XX::IRender2D::Remove()
 
 void XX::IRender3D::Addto()
 {
-	ExtraX::renderer3d._i_render3ds.push_back(this);
+	ExtraX::renderer3d._i_render3ds.push_front(this);
 }
 
 void XX::IRender3D::Remove()

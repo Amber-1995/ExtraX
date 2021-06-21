@@ -48,14 +48,14 @@
     <IntDir>$(SolutionDir)\bin\int\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)\bin\out\$(Platform)\$(Configuration)\</OutDir>
     <IncludePath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\bin\Debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\lib\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)\bin\int\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)\bin\out\$(Platform)\$(Configuration)\</OutDir>
     <IncludePath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\bin\Release;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\lib\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
