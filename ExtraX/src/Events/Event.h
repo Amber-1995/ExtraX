@@ -2,8 +2,8 @@
 #ifndef _EVENT_H_
 #define _EVENT_H_
 
-#include <list>
 #include <memory>
+#include "../Data/Data.h"
 
 namespace XX
 {
@@ -14,24 +14,21 @@ namespace XX
 	template<class T>
 	class EventManager
 	{
+	public:
+		EventManager():_events(1024){}
+
 	private:
 		void Add(T* event)
 		{
-			_events.push_back(event);
+			_events.Add(event);
 		}
 		void Remove(T* event)
 		{
-			if (_next != _events.end() &&
-				event == (*_next)) {
-				_next++;
-			}
-			_events.remove(event);
+			_events.Remove(event);
 		}
 
 	protected:
-		typename std::list<T*> _events;
-		typename std::list<T*>::iterator _current;
-		typename std::list<T*>::iterator _next;
+		typename XXTable<T*> _events;
 
 		friend class Event<T>;
 	};

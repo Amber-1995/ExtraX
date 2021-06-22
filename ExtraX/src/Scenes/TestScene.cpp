@@ -50,8 +50,8 @@ XX::TestScene::TestScene()
 		auto m= Component::Create< Mesh>("Assets\\models\\torus\\torus.obj");
 		player->AddComponent(m);
 
-		/*PlayerControllerPtr pc = Component::Create<PlayerController>();
-		player->AddComponent(pc);*/
+		PlayerControllerPtr pc = Component::Create<PlayerController>();
+		player->AddComponent(pc);
 	}
 	AddGameObject(player);
 

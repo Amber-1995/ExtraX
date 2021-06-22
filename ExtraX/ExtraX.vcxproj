@@ -114,7 +114,6 @@
     <ClCompile Include="src\Data\Shader.cpp" />
     <ClCompile Include="src\Data\Texture.cpp" />
     <ClCompile Include="src\Data\Vector.cpp" />
-    <ClCompile Include="src\Data\Table.cpp" />
     <ClCompile Include="src\Events\IRender.cpp" />
     <ClCompile Include="src\Events\IUpdate.cpp" />
     <ClCompile Include="src\Game.cpp" />

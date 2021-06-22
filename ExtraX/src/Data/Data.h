@@ -6,7 +6,7 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "Model.h"
-
+#include "Table.h"
 
 
 #endif // !_DATA_H_
