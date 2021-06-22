@@ -5,63 +5,55 @@
 #include <list>
 #include <memory>
 
-
 namespace XX
 {
-	template<class T>
-	class EventManager;
 
+	template<class T>
+	class Event;
+
+	template<class T>
+	class EventManager
+	{
+	private:
+		void Add(T* event)
+		{
+			_events.push_back(event);
+		}
+		void Remove(T* event)
+		{
+			if (_next != _events.end() &&
+				event == (*_next)) {
+				_next++;
+			}
+			_events.remove(event);
+		}
+
+	protected:
+		typename std::list<T*> _events;
+		typename std::list<T*>::iterator _current;
+		typename std::list<T*>::iterator _next;
+
+		friend class Event<T>;
+	};
 
 	template<class T>
 	class Event
 	{
 	public:
-		Event(const EventManager<T>& event_manager);
-		void Addto();
-		void Remove();
-
-		virtual void  Fun() = 0;
-
-	private:
-		const EventManager<T>& _event_manager;
-	};
-
-
-	template<class T>
-	class EventManager
-	{
-	protected:
-		typename std::template list<T*> _events;
-		typename std::template list<T*>::iterator _current;
-		typename std::template list<T*>::iterator _next;
-
-		friend class Event<T>;
-		friend class ExtraX;
-	};
-
-	template<class T>
-	inline Event<T>::Event(const EventManager<T>& event_manager):
-		_event_manager(event_manager)
-	{
-
-	}
-
-	template<class T>
-	inline void Event<T>::Addto()
-	{
-		_event_manager._events.push_front(this);
-	}
-
-	template<class T>
-	inline void Event<T>::Remove()
-	{
-		if (_event_manager._next != _event_manager._events.end() &&
-			this == (*_event_manager._next)) {
-			//_event_manager._next++;
+		void Addto()
+		{
+			_event_manager->Add(dynamic_cast<T*>(this));
 		}
-		//_event_manager._events.remove(dynamic_cast<T*>(this));
-	}
 
+		void Remove()
+		{
+			_event_manager->Remove(dynamic_cast<T*>(this));
+		}
+
+		virtual void Fun() = 0;
+	private:
+		static typename EventManager<T>* _event_manager;
+	};
 }
 
 

@@ -1,6 +1,7 @@
 #include "PlayerController.h"
 
-#include "../Scenes//Scene.h"
+#include "../XX.h"
+#include "../Scenes/Scene.h"
 #include "../GameObjects/GameObject.h"
 #include "../Components/Components.h"
 
@@ -51,6 +52,13 @@ void XX::PlayerController::Update()
 		game_object->scene->AddGameObject(bullet);
 		
 		cd = 10;
+	}
+
+	if ((GetKeyState('Q') & 0x80) && cd <= 0)
+	{
+		static bool state = true;
+		ExtraX::graphics.SetFullscreenState(state);
+		state = !state;
 	}
 
 	cd -= 1;

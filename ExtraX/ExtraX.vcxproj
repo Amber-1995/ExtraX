@@ -93,6 +93,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\App.cpp" />
+    <ClCompile Include="src\Components\Billboard.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\Components\Camera.cpp" />
     <ClCompile Include="src\Components\Component.cpp" />
     <ClCompile Include="src\Components\Field.cpp" />
@@ -121,10 +125,15 @@
     <ClCompile Include="src\Scenes\TestScene.cpp" />
     <ClCompile Include="src\Scenes\TestScene.h" />
     <ClCompile Include="src\Scripts\BulletController.cpp" />
+    <ClCompile Include="src\Scripts\CameraController.cpp" />
     <ClCompile Include="src\Scripts\PlayerController.cpp" />
     <ClCompile Include="src\XX.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\Billboard.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="src\Components\Camera.h" />
     <ClInclude Include="src\Components\Component.h" />
     <ClInclude Include="src\Components\Components.h" />
@@ -158,6 +167,7 @@
     <ClInclude Include="src\Graphics.h" />
     <ClInclude Include="src\Scenes\Scene.h" />
     <ClInclude Include="src\Scripts\BulletController.h" />
+    <ClInclude Include="src\Scripts\CameraController.h" />
     <ClInclude Include="src\Scripts\PlayerController.h" />
     <ClInclude Include="src\Scripts\Scripts.h" />
     <ClInclude Include="src\XX.h" />

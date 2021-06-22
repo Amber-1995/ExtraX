@@ -48,6 +48,7 @@ namespace XX
 
 		void CreatePixelShader(ID3D11PixelShader** pixel_shader, const char* file_name) const;
 
+		void SetFullscreenState(bool state);
 
 	private:
 		int _width;

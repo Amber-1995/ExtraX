@@ -4,12 +4,6 @@
 
 
 
-XX::IUpdate::IUpdate():
-	Event<IUpdate>(ExtraX::updater)
-{
-
-}
-
 void XX::Updater::Update()
 {
 	_current = _events.begin();
@@ -21,8 +15,7 @@ void XX::Updater::Update()
 		_current = _next;
 		if (_next != end)_next++;
 	}
+
 }
-
-
 
 

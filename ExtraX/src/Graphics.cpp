@@ -3,6 +3,18 @@
 #include <assert.h>
 #include <io.h>
 
+XX::Graphics::Graphics() :
+	device(*_device.GetAddressOf()),
+	device_context(*_device_context.GetAddressOf()),
+	width(_width),
+	height(_height),
+	_width(0),
+	_height(0),
+	_feature_level(D3D_FEATURE_LEVEL_11_0)
+{
+
+}
+
 void XX::Graphics::Init(HWND window, int width, int height)
 {
 	_width = width;
@@ -23,6 +35,7 @@ void XX::Graphics::Init(HWND window, int width, int height)
 	swapChainDesc.SampleDesc.Count = 1;
 	swapChainDesc.SampleDesc.Quality = 0;
 	swapChainDesc.Windowed = TRUE;
+	swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
 	hr = D3D11CreateDeviceAndSwapChain(
 		nullptr,
@@ -131,8 +144,8 @@ void XX::Graphics::Init(HWND window, int width, int height)
 	// サンプラーステート設定
 	D3D11_SAMPLER_DESC samplerDesc{};
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
 
 	ID3D11SamplerState* samplerState = NULL;
@@ -185,7 +198,6 @@ void XX::Graphics::Init(HWND window, int width, int height)
 	material.diffuse = XXColor(1.0f, 1.0f, 1.0f, 1.0f);
 	material.ambient = XXColor(1.0f, 1.0f, 1.0f, 1.0f);
 	SetMaterial(material);
-
 }
 
 
@@ -303,14 +315,9 @@ void XX::Graphics::CreatePixelShader(ID3D11PixelShader** pixel_shader, const cha
 	delete[] buffer;
 }
 
-XX::Graphics::Graphics() :
-	device(*_device.GetAddressOf()),
-	device_context(*_device_context.GetAddressOf()),
-	width(_width),
-	height(_height),
-	_width(0),
-	_height(0),
-	_feature_level(D3D_FEATURE_LEVEL_11_0)
-{
 
+
+void XX::Graphics::SetFullscreenState(bool state)
+{
+	_swap_chain->SetFullscreenState(state, nullptr);
 }

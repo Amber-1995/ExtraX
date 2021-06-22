@@ -7,15 +7,21 @@
 
 namespace XX
 {
-	class Sprite : public Component,public IRender2D
+	class Sprite : public Component
 	{
 	public:
-		virtual ~Sprite();
+		const float& width;
 
-		void Render2D() override;
+		const float& height;
 
-	private:
-		ID3D11Buffer* _vertex_buffer;
+		virtual ~Sprite() = default;
+
+		void Resize(float width, float height);
+
+	protected:
+		ID3D11BufferPtr _vertex_buffer;
+
+		ID3D11BufferPtr _index_buffer;
 
 		TexturePtr _texture;
 
@@ -23,12 +29,38 @@ namespace XX
 
 		PixelShaderPtr _pixel_shader;
 
-		Sprite();
+		float _width;
+
+		float _height;
+
+		DirectX::XMMATRIX _adj_matrix;
+
+		Sprite(float width, float height, const std::string& texture_file = DEFAULT_TEXTRUE);
+
+	};
+
+	class Sprite2D : public Sprite, public IRender2D
+	{
+	public:
+		void Render2D() override;
+
+	private:
+		Sprite2D(float width, float height, const std::string& texture_file = DEFAULT_TEXTRUE);
 
 		friend class Component;
 	};
 
-	typedef std::shared_ptr<Sprite> SpritePtr;
+	class Sprite3D : public Sprite, public IRender3D
+	{
+	public:
+		void Render3D() override;
+
+	protected:
+		Sprite3D(float width, float height, const std::string& texture_file = DEFAULT_TEXTRUE);
+
+		friend class Component;
+	};
+
 }
 
 #endif // !_SPRITE_H_

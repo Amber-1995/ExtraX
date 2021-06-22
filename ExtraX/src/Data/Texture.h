@@ -4,6 +4,7 @@
 
 #include "Resource.h"
 #include "ExtraXType.h"
+#include <string>
 
 namespace XX
 {

@@ -7,5 +7,6 @@
 #include "Mesh.h"
 #include "Sprite.h"
 #include "Transform.h"
+#include "Billboard.h"
 
 #endif // !_COMPONENTS_H_

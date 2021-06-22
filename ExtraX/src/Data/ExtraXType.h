@@ -11,6 +11,8 @@
 #include "Color.h"
 
 
+#define DEFAULT_TEXTRUE "Assets\\Textures\\default.png"
+
 
 namespace XX
 {
@@ -59,6 +61,8 @@ namespace XX
 	typedef Microsoft::WRL::ComPtr<ID3D11PixelShader> ID3D11PixelShaderPtr;
 	typedef Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ID3D11ShaderResourceViewPtr;
 	typedef Microsoft::WRL::ComPtr<ID3D11Resource> ID3D11ResourcePtr;
+	typedef Microsoft::WRL::ComPtr<ID3D11Buffer> ID3D11BufferPtr;
+
 
 	typedef std::shared_ptr<Scene> ScenePtr;
 	typedef std::shared_ptr<GameObject> GameObjectPtr;

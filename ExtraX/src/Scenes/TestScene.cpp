@@ -10,33 +10,35 @@ XX::TestScene::TestScene()
 	auto camera = GameObject::Create();
 	{
 		camera->transform->position = XXVector3(0, 10, -15);
-		camera->transform->rotation = XXVector3(0.5, 0, 0);
+		camera->transform->rotation = XXVector3(0.5f, 0, 0);
 
 		auto c = Component::Create<Camera>();
 		camera->AddComponent(c);
+
+		auto cc = Component::Create <CameraController>();
+		camera->AddComponent(cc);
 	}
 	AddGameObject(camera);
 
 	auto p2d = GameObject::Create();
 	{
-		p2d->transform->position = XXVector3(100, 100, 0.5);
-		auto s = Component::Create<Sprite>();
+		p2d->transform->position = XXVector3(50.0f, 50.0f, 0.0f);
+		auto s = Component::Create<Sprite2D>(100.0f,100.0f,"Assets\\Textures\\06.jpg");
 		p2d->AddComponent(s);
 	}
 	AddGameObject(p2d);
 
-	auto p2d2 = GameObject::Create();
+	auto p3d = GameObject::Create();
 	{
-		p2d2->transform->position = XXVector3(150, 150, 1);
-		auto s = Component::Create<Sprite>();
-		p2d2->AddComponent(s);
+		p3d->transform->position = XXVector3(5.0f, 0.0f, 0.0f);
+		auto s = Component::Create<Billboard>(10.0f, 10.0f, "Assets\\Textures\\06.jpg");
+		p3d->AddComponent(s);
 	}
-	AddGameObject(p2d2);
-
+	AddGameObject(p3d);
 
 	GameObjectPtr field = GameObject::Create();
 	{
-		auto f= Component::Create<Field>();
+		auto f= Component::Create<Field>(20,20, "Assets\\Textures\\ground.png");
 		field->AddComponent(f);
 	}
 	AddGameObject(field);
@@ -48,35 +50,35 @@ XX::TestScene::TestScene()
 		auto m= Component::Create< Mesh>("Assets\\models\\torus\\torus.obj");
 		player->AddComponent(m);
 
-		PlayerControllerPtr pc(new PlayerController());
-		player->AddComponent(pc);
+		/*PlayerControllerPtr pc = Component::Create<PlayerController>();
+		player->AddComponent(pc);*/
 	}
 	AddGameObject(player);
 
-	/*GameObjectPtr enemy1(new GameObject());
+	GameObjectPtr enemy1 = GameObject::Create();
 	{
 		enemy1->tag = "enemy";
 		enemy1->transform->position = XXVector3(0, 0, 5);
-		MeshPtr m(new Mesh("Assets\\models\\torus\\torus.obj"));
+		MeshPtr m = Component::Create < Mesh>("Assets\\models\\torus\\torus.obj");
 		enemy1->AddComponent(m);
 	}
 	AddGameObject(enemy1);
 
-	GameObjectPtr enemy2(new GameObject());
+	GameObjectPtr enemy2 = GameObject::Create();
 	{
 		enemy2->tag = "enemy";
 		enemy2->transform->position = XXVector3(5, 0, 5);
-		MeshPtr m(new Mesh("Assets\\models\\torus\\torus.obj"));
+		MeshPtr m = Component::Create < Mesh>("Assets\\models\\torus\\torus.obj");
 		enemy2->AddComponent(m);
 	}
 	AddGameObject(enemy2);
 
-	GameObjectPtr enemy3(new GameObject());
+	GameObjectPtr enemy3 = GameObject::Create();
 	{
 		enemy3->tag = "enemy";
 		enemy3->transform->position = XXVector3(-5, 0, 5);
-		MeshPtr m(new Mesh("Assets\\models\\torus\\torus.obj"));
+		MeshPtr m = Component::Create < Mesh>("Assets\\models\\torus\\torus.obj");
 		enemy3->AddComponent(m);
 	}
-	AddGameObject(enemy3);*/
+	AddGameObject(enemy3);
 }

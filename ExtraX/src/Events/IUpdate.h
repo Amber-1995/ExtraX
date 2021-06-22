@@ -9,10 +9,9 @@ namespace XX
 	class IUpdate : public Event<IUpdate>
 	{
 	public:
-		IUpdate();
-
 		virtual void Update() = 0;
 
+	private:
 		void Fun() override {}
 	};
 
@@ -25,9 +24,7 @@ namespace XX
 
 	private:
 		Updater() = default;
-
 		Updater(const Updater&) = delete;
-
 		Updater& operator=(const Updater&) = delete;
 
 		friend class ExtraX;

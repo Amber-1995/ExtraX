@@ -4,8 +4,6 @@
 
 
 
-
-
 void XX::Texture::Apply()
 {
 	ExtraX::graphics.device_context->PSSetShaderResources(0, 1, _texture.GetAddressOf());
@@ -29,6 +27,9 @@ XX::Texture::Texture(const std::string& file_name):
 			image_data.GetMetadata(),
 			_texture_resource.GetAddressOf()
 		);
+	}
+	else {
+		throw std::exception("Textrue load failure!");
 	}
 
 	D3D11_SHADER_RESOURCE_VIEW_DESC desc = {};

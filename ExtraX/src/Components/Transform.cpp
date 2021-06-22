@@ -5,7 +5,10 @@ XX::Transform::Transform() :
 	position(_position, [this]() {_Refresh(); }, 0, 0, 0),
 	rotation(_rotation, [this]() {_Refresh(); }, 0, 0, 0),
 	scale(_scale, [this]() {_Refresh(); }, 1, 1, 1),
-	_matrix(DirectX::XMMatrixIdentity())
+	_world_matrix(DirectX::XMMatrixIdentity()),
+	_t_matrix(DirectX::XMMatrixIdentity()),
+	_r_matrix(DirectX::XMMatrixIdentity()),
+	_s_matrix(DirectX::XMMatrixIdentity())
 {
 
 }
@@ -48,19 +51,47 @@ XX::XXVector3 XX::Transform::Right()
 
 void XX::Transform::SetWorldMatrix()
 {
-	ExtraX::graphics.SetWorldMatrix(_matrix);
+	ExtraX::graphics.SetWorldMatrix(_world_matrix);
 }
 
 void XX::Transform::SetWorldMatrix(const XMMATRIX& offset)
 {
-	ExtraX::graphics.SetWorldMatrix(_matrix * offset);
+	ExtraX::graphics.SetWorldMatrix(offset * _world_matrix);
+}
+
+XMMATRIX XX::Transform::GetMatrix(TRANSFORM_MATRIX matrix_type)
+{
+	switch (matrix_type)
+	{
+	case TRANSFORM_TRANSLATION_MATRIX:
+	{
+		return _t_matrix;
+		break;
+	}
+	case TRANSFORM_ROTATION_MATRIX:
+	{
+		return _r_matrix;
+		break;
+	}
+	case TRANSFORM_SCALING_MATRIX:
+	{
+		return _s_matrix;
+		break;
+	}
+	default:
+	{
+		return DirectX::XMMatrixIdentity();
+		break;
+	}
+	}
+	return DirectX::XMMatrixIdentity();
 }
 
 void XX::Transform::_Refresh()
 {
-	DirectX::XMMATRIX t = DirectX::XMMatrixTranslationFromVector(_position);
-	DirectX::XMMATRIX r = DirectX::XMMatrixRotationRollPitchYawFromVector(_rotation);
-	DirectX::XMMATRIX s = DirectX::XMMatrixScalingFromVector(_scale);
+	_t_matrix = DirectX::XMMatrixTranslationFromVector(_position);
+	_r_matrix = DirectX::XMMatrixRotationRollPitchYawFromVector(_rotation);
+	_s_matrix = DirectX::XMMatrixScalingFromVector(_scale);
 
-	_matrix = s * r * t;
+	_world_matrix = _s_matrix * _r_matrix * _t_matrix;
 }

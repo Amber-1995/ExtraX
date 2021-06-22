@@ -16,8 +16,13 @@ namespace XX
 		void Render3D() override;
 
 	private:
+		int _row;
 
-		ID3D11Buffer* _vertex_buffer;
+		int _column;
+
+		ID3D11BufferPtr _vertex_buffer;
+
+		ID3D11BufferPtr _index_buffer;
 
 		TexturePtr _texture;
 
@@ -25,7 +30,7 @@ namespace XX
 
 		PixelShaderPtr _pixel_shader;
 
-		Field();
+		Field(int row, int column, const std::string texture_file = DEFAULT_TEXTRUE);
 		Field(const Field&) = delete;
 		Field& operator=(const Field&) = delete;
 

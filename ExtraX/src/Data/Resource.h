@@ -36,6 +36,7 @@ namespace XX
 			return target->second;
 		}
 
+
 		std::shared_ptr<T> res(new T(file_name));
 		_resources[full_path] = res;
 

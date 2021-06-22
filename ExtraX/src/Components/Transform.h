@@ -10,6 +10,13 @@ using DirectX::XMMATRIX;
 
 namespace XX
 {
+	enum TRANSFORM_MATRIX
+	{
+		TRANSFORM_TRANSLATION_MATRIX,
+		TRANSFORM_ROTATION_MATRIX,
+		TRANSFORM_SCALING_MATRIX
+	};
+
 	class Transform : public Component
 	{
 	public:
@@ -27,11 +34,17 @@ namespace XX
 
 		void SetWorldMatrix(const XMMATRIX& offset);
 
+		XMMATRIX GetMatrix(TRANSFORM_MATRIX matrix_type);
+
 	private:
 		XMVECTOR _position;
 		XMVECTOR _rotation;
 		XMVECTOR _scale;
-		XMMATRIX _matrix;
+
+		XMMATRIX _t_matrix;
+		XMMATRIX _r_matrix;
+		XMMATRIX _s_matrix;
+		XMMATRIX _world_matrix;
 
 		Transform();
 

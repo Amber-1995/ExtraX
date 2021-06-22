@@ -54,11 +54,18 @@ LRESULT XX::GameWindow::_WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 {
 	switch (uMsg)
 	{
-	case WM_DESTROY:
+	case WM_DESTROY: 
+	{
 		PostQuitMessage(0);
 		break;
+	}
 
+	case WM_SIZE:
+	{
+		break;
+	}
 	case WM_KEYDOWN:
+	{
 		switch (wParam)
 		{
 		case VK_ESCAPE:
@@ -66,7 +73,7 @@ LRESULT XX::GameWindow::_WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 			break;
 		}
 		break;
-
+	}
 	default:
 		break;
 	}
