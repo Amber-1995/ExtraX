@@ -13,9 +13,11 @@ namespace XX
 
 		std::string name;
 
+		const bool& active;
+
 		Scene* const& scene;
 
-		TransformPtr& transform;
+		TransformPtr const& transform;
 
 		std::list<ComponentPtr> const& components;
 
@@ -24,6 +26,11 @@ namespace XX
 		GameObject& operator=(const GameObject&) = delete;
 
 		virtual ~GameObject();
+
+		template<class T>
+		std::shared_ptr<T> GetComponent();
+
+		void SetActive(bool active);
 
 		void AddComponent(ComponentPtr component);
 
@@ -37,6 +44,8 @@ namespace XX
 		static GameObjectPtr Create(ARGS ...args);
 
 	private:
+		bool _active;
+
 		Scene* _scene;
 
 		TransformPtr _transform;
@@ -47,11 +56,22 @@ namespace XX
 
 		void SetScene(Scene* scene);
 
-		GameObjectPtr _Get();
 
 		friend class Scene;
 		friend class Component;
 	};
+
+	template<class T>
+	inline std::shared_ptr<T> GameObject::GetComponent()
+	{
+		for (ComponentPtr c : _components){
+
+			if (dynamic_cast<T*>(c.get())) {
+				return c;
+			}
+		}
+		return std::shared_ptr<T>();
+	}
 
 	template<class T, class ...ARGS>
 	inline GameObjectPtr GameObject::Create(ARGS ...args)

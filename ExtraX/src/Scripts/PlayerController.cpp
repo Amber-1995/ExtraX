@@ -54,12 +54,12 @@ void XX::PlayerController::Update()
 		cd = 10;
 	}
 
-	if ((GetKeyState('Q') & 0x80) && cd <= 0)
-	{
-		static bool state = true;
-		ExtraX::graphics.SetFullscreenState(state);
-		state = !state;
-	}
+	//if ((GetKeyState('Q') & 0x80) && cd <= 0)
+	//{
+	//	static bool state = true;
+	//	ExtraX::graphics.SetFullscreenState(state);
+	//	state = !state;
+	//}
 
 	cd -= 1;
 }

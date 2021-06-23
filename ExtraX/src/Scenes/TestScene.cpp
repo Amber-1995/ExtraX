@@ -30,9 +30,15 @@ XX::TestScene::TestScene()
 
 	auto p3d = GameObject::Create();
 	{
-		p3d->transform->position = XXVector3(5.0f, 0.0f, 0.0f);
-		auto s = Component::Create<Billboard>(10.0f, 10.0f, "Assets\\Textures\\06.jpg");
+		p3d->transform->position = XXVector3(0.0f, 5.0f, 0.0f);
+		auto s = Component::Create<Billboard>(10.0f, 10.0f);
 		p3d->AddComponent(s);
+
+		auto a = Component::Create<Animation2D>();
+		a->SetTarget(s);
+		a->AddAnimationClip("Assets\\Textures\\explosion.png", 4, 4, "test01", 0, 15, true, "test01");
+		a->SetEnterAnimation("test01");
+		p3d->AddComponent(a);
 	}
 	AddGameObject(p3d);
 

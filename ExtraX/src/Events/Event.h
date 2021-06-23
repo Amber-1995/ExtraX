@@ -15,7 +15,7 @@ namespace XX
 	class EventManager
 	{
 	public:
-		EventManager():_events(1024){}
+		EventManager():_events(3){}
 
 	private:
 		void Add(T* event)
@@ -47,9 +47,10 @@ namespace XX
 			_event_manager->Remove(dynamic_cast<T*>(this));
 		}
 
-		virtual void Fun() = 0;
+		
 	private:
 		static typename EventManager<T>* _event_manager;
+		virtual void _ForDynamicCast() {}
 	};
 }
 

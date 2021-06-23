@@ -6,6 +6,7 @@
 XX::GameObject::GameObject() :
 	tag("default"),
 	name("default"),
+	active(_active),
 	scene(_scene),
 	transform(_transform),
 	components(_components),
@@ -26,20 +27,10 @@ void XX::GameObject::SetScene(Scene* scene)
 	_scene = scene;
 }
 
-XX::GameObjectPtr XX::GameObject::_Get()
+void XX::GameObject::SetActive(bool active)
 {
-	auto i = _scene->game_objects.begin();
-	auto end = _scene->game_objects.end();
-	for (i; i != end; i++) {
-		if ((*i).get() == this) {
-			return *i;
-		}
-	}
-
-	return GameObjectPtr();
+	_active = active;
 }
-
-
 
 void XX::GameObject::AddComponent(ComponentPtr component)
 {

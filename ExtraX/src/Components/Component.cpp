@@ -24,15 +24,12 @@ void XX::Component::Destroy()
 	game_object->RemoveComponent(this);
 }
 
-void XX::Component::SetActive(bool& active)
+void XX::Component::SetActive(bool active)
 {
 	_active = active;
 }
 
-void XX::Component::SetActive(bool&& active)
-{
-	_active = active;
-}
+
 
 void XX::Component::SetGameObject(GameObject* game_object)
 {
@@ -75,14 +72,4 @@ void XX::Component::_UninstallEvents()
 	}
 }
 
-XX::ComponentPtr XX::Component::Get()
-{
-	auto i = _game_object->_components.begin();
-	auto end = _game_object->_components.end();
-	for (i; i != end; i++){
-		if ((*i).get() == this) {
-			return *i;
-		}
-	}
-	return ComponentPtr();
-}
+

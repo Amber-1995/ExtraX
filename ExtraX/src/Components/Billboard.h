@@ -13,7 +13,7 @@ namespace XX
 		void Render3D() override;
 
 	public:
-		Billboard(float width, float height, const std::string& texture_file);
+		Billboard(float width, float height, const std::string& texture_file = DEFAULT_TEXTRUE);
 
 		friend class Component;
 	};

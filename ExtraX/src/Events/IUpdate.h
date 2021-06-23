@@ -10,9 +10,6 @@ namespace XX
 	{
 	public:
 		virtual void Update() = 0;
-
-	private:
-		void Fun() override {}
 	};
 
 	class Updater : public EventManager<IUpdate>

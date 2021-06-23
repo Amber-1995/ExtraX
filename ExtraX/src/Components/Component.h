@@ -22,15 +22,11 @@ namespace XX
 
 		virtual ~Component() = default;
 
-		void SetActive(bool& active);
-
-		void SetActive(bool&& active);
+		void SetActive(bool active);
 
 		void Awake();
 
 		void Destroy();
-
-		ComponentPtr Get();
 
 		template<class T = Component, class...ARGS>
 		static std::shared_ptr<T> Create(ARGS...args);
@@ -45,6 +41,8 @@ namespace XX
 		void _InstallEvents();
 
 		void _UninstallEvents();
+
+		virtual void _ForDynamicCast(){}
 
 		friend class GameObject;
 	};

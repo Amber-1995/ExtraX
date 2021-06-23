@@ -13,10 +13,8 @@ namespace XX
 	private:
 		struct _Unit
 		{
-			bool is_using;
-			T data;
-
-			_Unit() :is_using(false){}
+			bool is_using = false;
+			T data = { 0 };
 		};
 		typedef typename std::shared_ptr<_Unit> _UnitPtr;
 
@@ -37,27 +35,29 @@ namespace XX
 		{
 			for (int i = 0; i < _width; i++)
 			{
-				for (int j = 0; i < _length; j++)
+				for (int j = 0; j < _length; j++)
 				{
-					if (!_table_header[i].get()[j].is_using)
+					if (!(_table_header[i].get()[j].is_using))
 					{
-						_table_header[i].get()[j].data = data;
 						_table_header[i].get()[j].is_using = true;
+						_table_header[i].get()[j].data = data;
 						return;
 					}
 				}
 			}
 			_NewColumn();
 			_table_header[_width - 1].get()[0].data = data;
+			_table_header[_width - 1].get()[0].is_using = true;
 		}
+
 		void Remove(T data)
 		{
-			for (int i = 0; i < _width; i++)
-			{
-				for (int j = 0; i < _length; j++)
-				{
-					if (_table_header[i].get()[j].data == data)
-					{
+			for (int i = 0; i < _width; i++){
+
+				for (int j = 0; j < _length; j++){
+
+					if (_table_header[i].get()[j].data == data){
+
 						_table_header[i].get()[j].is_using = false;
 						return;
 					}
@@ -82,10 +82,7 @@ namespace XX
 			_table_header.push_back(new_column);
 			_width++;
 		}
-
-	
 	};
-	
 }
 
 

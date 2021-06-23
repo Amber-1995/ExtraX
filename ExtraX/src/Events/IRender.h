@@ -11,9 +11,6 @@ namespace XX
 	{
 	public:
 		virtual void Render2D() = 0;
-
-	private:
-		void Fun() override {}
 	};
 
 
@@ -21,9 +18,6 @@ namespace XX
 	{
 	public:
 		virtual void Render3D() = 0;
-
-	private:
-		void Fun() override {}
 	};
 
 
