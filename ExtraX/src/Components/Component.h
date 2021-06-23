@@ -15,13 +15,9 @@ namespace XX
 		const bool& active;
 
 		Component();
-
 		Component(const Component&) = delete;
-
 		Component& operator=(const Component&) = delete;
-
-		virtual ~Component() = default;
-
+	
 		void SetActive(bool active);
 
 		void Awake();

@@ -16,8 +16,6 @@ namespace XX
 	public:
 		static Camera* const& main_camera;
 
-		virtual ~Camera() = default;
-
 		void Update();
 
 	private:
@@ -28,10 +26,11 @@ namespace XX
 		XMMATRIX _projection_matrix;
 
 		Camera();
+		Camera(const Camera&) = delete;
+		Camera& operator=(const Camera&) = delete;
 
 		friend class Component;
 	};
-
 	typedef std::shared_ptr<Camera> CameraPtr;
 }
 

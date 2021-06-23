@@ -105,6 +105,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="src\Components\Skybox.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\Components\Sprite.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
     <ClCompile Include="src\Data\Color.cpp" />
@@ -123,7 +127,6 @@
     <ClCompile Include="src\Graphics.cpp" />
     <ClCompile Include="src\Scenes\Scene.cpp" />
     <ClCompile Include="src\Scenes\TestScene.cpp" />
-    <ClCompile Include="src\Scenes\TestScene.h" />
     <ClCompile Include="src\Scripts\BulletController.cpp" />
     <ClCompile Include="src\Scripts\CameraController.cpp" />
     <ClCompile Include="src\Scripts\PlayerController.cpp" />
@@ -140,6 +143,10 @@
     <ClInclude Include="src\Components\Components.h" />
     <ClInclude Include="src\Components\Field.h" />
     <ClInclude Include="src\Components\Mesh.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="src\Components\Skybox.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -167,6 +174,7 @@
     <ClInclude Include="src\GameWindow.h" />
     <ClInclude Include="src\Graphics.h" />
     <ClInclude Include="src\Scenes\Scene.h" />
+    <ClInclude Include="src\Scenes\TestScene.h" />
     <ClInclude Include="src\Scripts\BulletController.h" />
     <ClInclude Include="src\Scripts\CameraController.h" />
     <ClInclude Include="src\Scripts\PlayerController.h" />

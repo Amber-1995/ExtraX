@@ -11,6 +11,20 @@ void XX::BulletController::Update()
 
 	if (game_object->transform->position.z > 10)
 	{
+		auto explosion = GameObject::Create();
+		{
+			explosion->transform->position = game_object->transform->position;
+			auto s = Component::Create<Billboard>(5.0f, 5.0f, "Assets\\Textures\\transparent.png");
+			explosion->AddComponent(s);
+
+			auto a = Component::Create<Animation2D>();
+			a->SetTarget(s);
+			a->AddAnimationClip("Assets\\Textures\\explosion.png", 4, 4, "explosion", 0, 15, true, "explosion");
+			a->SetEnterAnimation("explosion");
+			a->AddAnimationEvent("explosion", 15, [a](){a->game_object->Destroy(); });
+			explosion->AddComponent(a);
+		}
+		game_object->scene->AddGameObject(explosion);
 		game_object->Destroy();
 		return;
 	}
@@ -23,6 +37,23 @@ void XX::BulletController::Update()
 		if (l < 1) {
 			if (i->tag == "enemy")
 			{
+
+				auto explosion = GameObject::Create();
+				{
+					explosion->transform->position = game_object->transform->position;
+					auto s = Component::Create<Billboard>(5.0f, 5.0f, "Assets\\Textures\\transparent.png");
+					explosion->AddComponent(s);
+
+					auto a = Component::Create<Animation2D>();
+					a->SetTarget(s);
+					a->AddAnimationClip("Assets\\Textures\\explosion.png", 4, 4, "explosion", 0, 15, true, "explosion");
+					a->SetEnterAnimation("explosion");
+					a->AddAnimationEvent("explosion", 15, [a]() {a->game_object->Destroy(); });
+					explosion->AddComponent(a);
+				}
+				game_object->scene->AddGameObject(explosion);
+
+
 				game_object->Destroy();
 				i->Destroy();
 				return;

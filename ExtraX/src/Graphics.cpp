@@ -192,12 +192,7 @@ void XX::Graphics::Init(HWND window, int width, int height)
 	light.ambient = XXColor(0.2f, 0.2f, 0.2f, 1.0f);
 	light.diffuse = XXColor(1.0f, 1.0f, 1.0f, 1.0f);
 	SetLight(light);
-
-	// ƒ}ƒeƒŠƒAƒ‹‰Šú‰»
-	XXMaterial material{};
-	material.diffuse = XXColor(1.0f, 1.0f, 1.0f, 1.0f);
-	material.ambient = XXColor(1.0f, 1.0f, 1.0f, 1.0f);
-	SetMaterial(material);
+	SetMaterial();
 }
 
 
@@ -265,7 +260,7 @@ void XX::Graphics::SetLight(XXLight light) const
 	_device_context->UpdateSubresource(_light_buffer.Get(), 0, NULL, &light, 0, 0);
 }
 
-void XX::Graphics::CreateVertexShader(ID3D11VertexShader** vertex_shader, ID3D11InputLayout** vertex_layout, const char* file_name) const
+void XX::Graphics::CreateVertexShader(ID3D11VertexShader** vertex_shader, ID3D11InputLayout** vertex_layout, const char* file_name, const D3D11_INPUT_ELEMENT_DESC* layout, UINT elements_num) const
 {
 	FILE* file;
 	long int fsize;
@@ -279,18 +274,19 @@ void XX::Graphics::CreateVertexShader(ID3D11VertexShader** vertex_shader, ID3D11
 	_device->CreateVertexShader(buffer, fsize, NULL, vertex_shader);
 
 
-	D3D11_INPUT_ELEMENT_DESC layout[] =
-	{
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 4 * 3, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 4 * 6, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 4 * 10, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-	};
-	UINT numElements = ARRAYSIZE(layout);
+	//D3D11_INPUT_ELEMENT_DESC layout[] =
+	//{
+	//	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	//	{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 4 * 3, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	//	{ "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 4 * 6, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	//	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 4 * 10, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+	//};
+	//UINT numElements = ARRAYSIZE(layout);
+
 
 	_device->CreateInputLayout(
 		layout,
-		numElements,
+		elements_num,
 		buffer,
 		fsize,
 		vertex_layout
@@ -321,3 +317,22 @@ void XX::Graphics::SetFullscreenState(bool state)
 {
 	_swap_chain->SetFullscreenState(state, nullptr);
 }
+
+
+const XX::XXMaterial XX::Graphics::_defualt_material =
+{
+	{1.0f,1.0f,1.0f,1.0f},
+	{1.0f,1.0f,1.0f,1.0f},
+	{0.0f,0.0f,0.0f,0.0f},
+	{0.0f,0.0f,0.0f,0.0f},
+	0.0f,
+	{0.0f,0.0f,0.0f},
+};
+
+const D3D11_INPUT_ELEMENT_DESC XX::Graphics::_defualt_layout[4] =
+{
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 4 * 3, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 4 * 6, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 4 * 10, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+};

@@ -24,8 +24,6 @@ namespace XX
 		XXVector3P rotation;
 		XXVector3P scale;
 
-		virtual ~Transform() = default;
-
 		XXVector3 Forward();
 		XXVector3 Up();
 		XXVector3 Right();
@@ -47,6 +45,8 @@ namespace XX
 		XMMATRIX _world_matrix;
 
 		Transform();
+		Transform(const Transform&) = delete;
+		Transform& operator=(const Transform&) = delete;
 
 		void _Refresh();
 

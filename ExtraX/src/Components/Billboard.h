@@ -14,6 +14,8 @@ namespace XX
 
 	public:
 		Billboard(float width, float height, const std::string& texture_file = DEFAULT_TEXTRUE);
+		Billboard(const Billboard&) = delete;
+		Billboard& operator=(const Billboard&) = delete;
 
 		friend class Component;
 	};

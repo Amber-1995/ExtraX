@@ -74,13 +74,10 @@ XX::Field::Field(int row, int column, const std::string texture_file) :
 	_pixel_shader = PixelShader::Load("Assets\\Shaders\\vertexLightingPS.cso");
 }
 
-XX::Field::~Field()
-{
-}
+
 
 void XX::Field::Render3D()
 {
-	
 
 	game_object->transform->SetWorldMatrix();
 	_vertex_shader->Apply();
@@ -91,12 +88,8 @@ void XX::Field::Render3D()
 	UINT offset = 0;
 	ExtraX::graphics.device_context->IASetVertexBuffers(0, 1, _vertex_buffer.GetAddressOf(), &stride, &offset);
 	ExtraX::graphics.device_context->IASetIndexBuffer(_index_buffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-
-	XXMaterial material;
-	ZeroMemory(&material, sizeof(XXMaterial));
-	material.diffuse = XXColor(1.0f, 1.0f, 1.0f, 1.0f);
-	ExtraX::graphics.SetMaterial(material);
 	ExtraX::graphics.device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	ExtraX::graphics.SetMaterial();
 	int index_num = (_row) * (_column * 2 + 4);
 	ExtraX::graphics.device_context->DrawIndexed(index_num, 0, 0);
 	

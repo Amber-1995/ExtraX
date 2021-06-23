@@ -52,7 +52,6 @@ XX::Sprite::Sprite(float width, float height, const std::string& texture_file) :
 	_texture = Texture::Load(texture_file.c_str());
 	_vertex_shader = VertexShader::Load("Assets\\Shaders\\unlitTextureVS.cso");
 	_pixel_shader = PixelShader::Load("Assets\\Shaders\\unlitTexturePS.cso");
-
 	_adj_matrix = DirectX::XMMatrixScaling(_width, _height, 1.0f);
 	
 }
@@ -92,9 +91,7 @@ void XX::Sprite2D::Render2D()
 	UINT stride = sizeof(XXVertex3D);
 	UINT offset = 0;
 	ExtraX::graphics.device_context->IASetVertexBuffers(0, 1, _vertex_buffer.GetAddressOf(), &stride, &offset);
-
 	ExtraX::graphics.device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
 	ExtraX::graphics.device_context->Draw(4, 0);
 }
 
@@ -116,17 +113,14 @@ void XX::Sprite3D::Render3D()
 	UINT stride = sizeof(XXVertex3D);
 	UINT offset = 0;
 	ExtraX::graphics.device_context->IASetVertexBuffers(0, 1, _vertex_buffer.GetAddressOf(), &stride, &offset);
-
-	XXMaterial material;
-	ZeroMemory(&material, sizeof(XXMaterial));
-	material.diffuse = XXColor(1.0f, 1.0f, 1.0f, 1.0f);
-	ExtraX::graphics.SetMaterial(material);
 	ExtraX::graphics.device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	ExtraX::graphics.SetMaterial();
 	ExtraX::graphics.device_context->Draw(4, 0);
 }
 
 XX::Sprite3D::Sprite3D(float width, float height, const std::string& texture_file):
 	Sprite(width, height, texture_file)
 {
-
+	_vertex_shader = VertexShader::Load("Assets\\Shaders\\vertexLightingVS.cso");
+	_pixel_shader = PixelShader::Load("Assets\\Shaders\\vertexLightingPS.cso");
 }

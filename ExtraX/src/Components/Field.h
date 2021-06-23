@@ -11,8 +11,6 @@ namespace XX
 	class Field : public Component,public IRender3D
 	{
 	public:
-		virtual ~Field();
-
 		void Render3D() override;
 
 	private:

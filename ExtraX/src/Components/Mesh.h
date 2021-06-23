@@ -12,12 +12,14 @@ namespace XX
 	class Mesh : public Component,public IRender3D
 	{
 	public:
-		virtual ~Mesh();
-
 		void Render3D() override;
 
 	private:
 		ModelPtr _model;
+
+		VertexShaderPtr _vertex_shader;
+
+		PixelShaderPtr _pixel_shader;
 
 		Mesh(std::string file_name);
 		Mesh(const Mesh&) = delete;

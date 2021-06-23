@@ -5,30 +5,27 @@
 #include "Sprite.h"
 #include "Billboard.h"
 
-#include <vector>
+#include <map>
+#include <functional>
 
 namespace XX 
 {
-	struct Animation2DClip
-	{
-		std::string clip_name;
-		int clip_hash;
-
-		std::string next_clip_name;
-		int next_clip_hash;
-
-		bool has_exit_time;
-
-		int start_grid;
-		int end_grid;
-
-		TexturePtr texture;
-		int div_x;
-		int div_y;
-	};
+	
 
 	class Animation2D : public Component , public IUpdate
 	{
+	private:
+		struct Animation2DClip
+		{
+			TexturePtr texture;
+			int div_x;
+			int div_y;
+			int start_grid;
+			int end_grid;
+			bool has_exit_time;
+			std::string next_clip_name;
+		};
+
 	public:
 		void Update() override;
 
@@ -40,31 +37,32 @@ namespace XX
 			bool has_exit_time, const std::string& next_clip_name
 		);
 
-		void SetEnterAnimation(int clip_hash);
+		void AddAnimationEvent(const std::string& clip_name, int grid_num, std::function<void()> event_fun);
+		
 		void SetEnterAnimation(std::string clip_name);
 
-		void PlayeAnimation(int clip_hash);
 		void PlayeAnimation(std::string clip_name);
-		void PlayeAnimationForce(int clip_hash);
+
 		void PlayeAnimationForce(std::string clip_name);
 
 	private:
 		SpritePtr _target_sprite;
 
-		std::list<Animation2DClip> _animation_clip_list;
+		std::unordered_map<std::string,Animation2DClip> _animation_clips_map;
+		std::unordered_map < std::string, std::unordered_map<int, std::function<void()>>> _animation_events_map;
 
-		Animation2DClip _current_clip;
+		std::string _current_clip;
 
-		Animation2DClip _next_clip;
+		std::string _next_clip;
 		
 		float _current_grid;
 	
 		float _rate;
 		float _rate_scale;
 
-		bool _is_played;
-
 		Animation2D();
+		Animation2D(const Animation2D&) = delete;
+		Animation2D& operator=(const Animation2D&) = delete;
 
 		void _SetAnimation();
 

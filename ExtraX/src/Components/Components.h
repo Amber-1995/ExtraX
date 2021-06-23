@@ -9,4 +9,6 @@
 #include "Transform.h"
 #include "Billboard.h"
 #include "Aniamation.h"
+#include "Skybox.h"
+
 #endif // !_COMPONENTS_H_

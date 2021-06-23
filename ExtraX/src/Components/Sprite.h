@@ -14,8 +14,6 @@ namespace XX
 
 		const float& height;
 
-		virtual ~Sprite() = default;
-
 		void Resize(float width, float height);
 
 		void SetTexture(TexturePtr texture);
@@ -38,6 +36,8 @@ namespace XX
 		DirectX::XMMATRIX _adj_matrix;
 
 		Sprite(float width, float height, const std::string& texture_file = DEFAULT_TEXTRUE);
+		Sprite(const Sprite&) = delete;
+		Sprite& operator=(const Sprite&) = delete;
 
 	};
 	typedef std::shared_ptr<Sprite> SpritePtr;
@@ -45,10 +45,14 @@ namespace XX
 	class Sprite2D : public Sprite, public IRender2D
 	{
 	public:
+		virtual ~Sprite2D() = default;
+
 		void Render2D() override;
 
 	private:
 		Sprite2D(float width, float height, const std::string& texture_file = DEFAULT_TEXTRUE);
+		Sprite2D(const Sprite2D&) = delete;
+		Sprite2D& operator=(const Sprite2D&) = delete;
 
 		friend class Component;
 	};
@@ -57,10 +61,14 @@ namespace XX
 	class Sprite3D : public Sprite, public IRender3D
 	{
 	public:
+		virtual ~Sprite3D() = default;
+
 		void Render3D() override;
 
 	protected:
 		Sprite3D(float width, float height, const std::string& texture_file = DEFAULT_TEXTRUE);
+		Sprite3D(const Sprite3D&) = delete;
+		Sprite3D& operator=(const Sprite3D&) = delete;
 
 		friend class Component;
 	};

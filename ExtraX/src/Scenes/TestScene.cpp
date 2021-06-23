@@ -17,37 +17,23 @@ XX::TestScene::TestScene()
 
 		auto cc = Component::Create <CameraController>();
 		camera->AddComponent(cc);
+
+		auto skybox = Component::Create<Skybox>();
+		skybox->SetTexture(
+			"Assets\\Textures\\Skybox\\FluffballDayTop.jpg",
+			"Assets\\Textures\\Skybox\\FluffballDayBottom.jpg",
+			"Assets\\Textures\\Skybox\\FluffballDayLeft.jpg",
+			"Assets\\Textures\\Skybox\\FluffballDayRight.jpg",
+			"Assets\\Textures\\Skybox\\FluffballDayFront.jpg",
+			"Assets\\Textures\\Skybox\\FluffballDayBack.jpg"
+		);
+		camera->AddComponent(skybox);
+		
 	}
 	AddGameObject(camera);
 
-	auto p2d = GameObject::Create();
-	{
-		p2d->transform->position = XXVector3(50.0f, 50.0f, 0.0f);
-		auto s = Component::Create<Sprite2D>(100.0f,100.0f,"Assets\\Textures\\06.jpg");
-		p2d->AddComponent(s);
-	}
-	AddGameObject(p2d);
 
-	auto p3d = GameObject::Create();
-	{
-		p3d->transform->position = XXVector3(0.0f, 5.0f, 0.0f);
-		auto s = Component::Create<Billboard>(10.0f, 10.0f);
-		p3d->AddComponent(s);
-
-		auto a = Component::Create<Animation2D>();
-		a->SetTarget(s);
-		a->AddAnimationClip("Assets\\Textures\\explosion.png", 4, 4, "test01", 0, 15, true, "test01");
-		a->SetEnterAnimation("test01");
-		p3d->AddComponent(a);
-	}
-	AddGameObject(p3d);
-
-	GameObjectPtr field = GameObject::Create();
-	{
-		auto f= Component::Create<Field>(20,20, "Assets\\Textures\\ground.png");
-		field->AddComponent(f);
-	}
-	AddGameObject(field);
+	
 
 	GameObjectPtr player = GameObject::Create();
 	{
@@ -87,4 +73,11 @@ XX::TestScene::TestScene()
 		enemy3->AddComponent(m);
 	}
 	AddGameObject(enemy3);
+
+	GameObjectPtr field = GameObject::Create();
+	{
+		auto f = Component::Create<Field>(20, 20, "Assets\\Textures\\ground.png");
+		field->AddComponent(f);
+	}
+	AddGameObject(field);
 }
