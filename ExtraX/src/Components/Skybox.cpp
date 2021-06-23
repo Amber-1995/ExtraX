@@ -211,6 +211,11 @@ XX::Skybox::Skybox()
 		ExtraX::graphics.device->CreateBuffer(&bd, &sd, _vertex_buffer[5].GetAddressOf());
 	}
 
+
+	for (int i = 0; i < 6; i++){
+		_texture[i] = Texture::Load(DEFAULT_TEXTRUE);
+	}
+
 	_vertex_shader = VertexShader::Load("Assets\\Shaders\\unlitTextureVS.cso");
 	_pixel_shader = PixelShader::Load("Assets\\Shaders\\unlitTexturePS.cso");
 

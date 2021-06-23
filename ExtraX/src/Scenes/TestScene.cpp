@@ -19,21 +19,18 @@ XX::TestScene::TestScene()
 		camera->AddComponent(cc);
 
 		auto skybox = Component::Create<Skybox>();
-		skybox->SetTexture(
+		/*skybox->SetTexture(
 			"Assets\\Textures\\Skybox\\FluffballDayTop.jpg",
 			"Assets\\Textures\\Skybox\\FluffballDayBottom.jpg",
 			"Assets\\Textures\\Skybox\\FluffballDayLeft.jpg",
 			"Assets\\Textures\\Skybox\\FluffballDayRight.jpg",
 			"Assets\\Textures\\Skybox\\FluffballDayFront.jpg",
 			"Assets\\Textures\\Skybox\\FluffballDayBack.jpg"
-		);
+		);*/
 		camera->AddComponent(skybox);
 		
 	}
 	AddGameObject(camera);
-
-
-	
 
 	GameObjectPtr player = GameObject::Create();
 	{
