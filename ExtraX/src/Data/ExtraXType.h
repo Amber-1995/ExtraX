@@ -62,6 +62,7 @@ namespace XX
 	typedef Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ID3D11ShaderResourceViewPtr;
 	typedef Microsoft::WRL::ComPtr<ID3D11Resource> ID3D11ResourcePtr;
 	typedef Microsoft::WRL::ComPtr<ID3D11Buffer> ID3D11BufferPtr;
+	typedef Microsoft::WRL::ComPtr<ID3D11BlendState> ID3D11BlendStatePtr;
 
 
 	typedef std::shared_ptr<Scene> ScenePtr;

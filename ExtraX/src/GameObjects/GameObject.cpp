@@ -12,9 +12,11 @@ XX::GameObject::GameObject() :
 	components(_components),
 	_scene(nullptr),
 	_transform(),
-	_components()
+	_components(),
+	_active(true)
 {
 	_transform = Component::Create<Transform>();
+	AddComponent(_transform);
 }
 
 XX::GameObject::~GameObject()
@@ -45,11 +47,11 @@ void XX::GameObject::RemoveComponent(Component* component)
 	_components.remove_if([component](const ComponentPtr& g)->bool { return g.get() == component; });
 }
 
-void XX::GameObject::Awake()
+void XX::GameObject::Spwan()
 {
 	for (ComponentPtr c : _components)
 	{
-		c->Awake();
+		c->Spawn();
 	}
 }
 

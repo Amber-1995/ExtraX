@@ -67,6 +67,8 @@ namespace XX
 
 		ID3D11DepthStencilViewPtr _depth_stencil_view;
 
+		ID3D11BlendStatePtr _blend_state;
+
 		ID3D11BufferPtr _world_buffer;
 
 		ID3D11BufferPtr _view_buffer;

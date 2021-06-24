@@ -25,8 +25,9 @@ void XX::Billboard::Render3D()
 	ExtraX::graphics.device_context->IASetVertexBuffers(0, 1, _vertex_buffer.GetAddressOf(), &stride, &offset);
 	ExtraX::graphics.device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	ExtraX::graphics.SetMaterial();
-	ExtraX::graphics.device_context->Draw(4, 0);
 
+	
+	ExtraX::graphics.device_context->Draw(4, 0);
 }
 
 XX::Billboard::Billboard(float width, float height, const std::string& texture_file):

@@ -36,7 +36,7 @@ namespace XX
 
 		void RemoveComponent(Component* component);
 
-		void Awake();
+		void Spwan();
 
 		void Destroy();
 
@@ -64,10 +64,10 @@ namespace XX
 	template<class T>
 	inline std::shared_ptr<T> GameObject::GetComponent()
 	{
-		for (ComponentPtr c : _components){
+		for (auto& c : _components){
 
 			if (dynamic_cast<T*>(c.get())) {
-				return c;
+				return std::dynamic_pointer_cast<T>(c);
 			}
 		}
 		return std::shared_ptr<T>();

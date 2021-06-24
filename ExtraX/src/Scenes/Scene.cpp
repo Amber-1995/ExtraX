@@ -13,11 +13,11 @@ XX::Scene::~Scene()
 {
 }
 
-void XX::Scene::Awake()
+void XX::Scene::Spawn()
 {
 	for (GameObjectPtr g : _game_objects)
 	{
-		g->Awake();
+		g->Spwan();
 	}
 
 	_is_awake = true;
@@ -45,7 +45,7 @@ void XX::Scene::AddGameObject(GameObjectPtr game_object)
 	_game_objects.push_back(game_object);
 
 	if(_is_awake){
-		game_object->Awake();
+		game_object->Spwan();
 	}
 }
 

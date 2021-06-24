@@ -20,7 +20,7 @@ namespace XX
 
 		virtual ~Scene();
 
-		void Awake();
+		void Spawn();
 
 		void Destroy();
 

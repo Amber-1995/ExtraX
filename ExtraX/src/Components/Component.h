@@ -20,13 +20,19 @@ namespace XX
 	
 		void SetActive(bool active);
 
-		void Awake();
+		void Spawn();
 
 		void Destroy();
 
 		template<class T = Component, class...ARGS>
 		static std::shared_ptr<T> Create(ARGS...args);
 
+		virtual void Awake(){}
+		virtual void Start(){}
+		virtual void OnEnable(){}
+		virtual void OnDisable(){}
+		virtual void OnDestroy(){}
+		
 	private:
 		GameObject* _game_object;
 
@@ -37,8 +43,6 @@ namespace XX
 		void _InstallEvents();
 
 		void _UninstallEvents();
-
-		virtual void _ForDynamicCast(){}
 
 		friend class GameObject;
 	};

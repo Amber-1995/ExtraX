@@ -14,12 +14,20 @@ namespace XX
 	public:
 		void Render3D() override;
 
+		void AdjustTransform(
+			XXVector3 pos_offset,
+			XXVector3 rot_offset,
+			XXVector3 scl_oofset
+		);
+
 	private:
 		ModelPtr _model;
 
 		VertexShaderPtr _vertex_shader;
 
 		PixelShaderPtr _pixel_shader;
+
+		DirectX::XMMATRIX _adj_matrix;
 
 		Mesh(std::string file_name);
 		Mesh(const Mesh&) = delete;

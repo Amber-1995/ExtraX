@@ -1,6 +1,8 @@
 #include "Transform.h"
 #include "../XX.h"
 
+using namespace DirectX;
+
 XX::Transform::Transform() :
 	position(_position, [this]() {_Refresh(); }, 0, 0, 0),
 	rotation(_rotation, [this]() {_Refresh(); }, 0, 0, 0),
@@ -15,36 +17,37 @@ XX::Transform::Transform() :
 
 XX::XXVector3 XX::Transform::Forward()
 {
-	DirectX::XMFLOAT3 uint(0.0f, 0.0f, 1.0f);
-	DirectX::XMVECTOR vunit = DirectX::XMLoadFloat3(&uint);
-	DirectX::XMVECTOR rq = DirectX::XMQuaternionRotationRollPitchYawFromVector(_rotation);
-	DirectX::XMVECTOR ret = DirectX::XMVector3Rotate(vunit, rq);
+	XMFLOAT3 uint(0.0f, 0.0f, 1.0f);
+	XMVECTOR vunit = DirectX::XMLoadFloat3(&uint);
+	XMVECTOR rq = XMQuaternionRotationRollPitchYawFromVector(_rotation);
+	XMVECTOR ret = XMVector3Rotate(vunit, rq);
 	ret = DirectX::XMVector3Normalize(ret);
-	DirectX::XMStoreFloat3(&uint,ret);
+	XMStoreFloat3(&uint,ret);
 
 	return XXVector3(uint.x, uint.y, uint.z	);
 }
 
 XX::XXVector3 XX::Transform::Up()
 {
-	DirectX::XMFLOAT3 uint(0.0f, 1.0f, 0.0f);
-	DirectX::XMVECTOR vunit = DirectX::XMLoadFloat3(&uint);
-	DirectX::XMVECTOR rq = DirectX::XMQuaternionRotationRollPitchYawFromVector(_rotation);
-	DirectX::XMVECTOR ret = DirectX::XMVector3Rotate(vunit, rq);
-	ret = DirectX::XMVector3Normalize(ret);
-	DirectX::XMStoreFloat3(&uint, ret);
+
+	XMFLOAT3 uint(0.0f, 1.0f, 0.0f);
+	XMVECTOR vunit = XMLoadFloat3(&uint);
+	XMVECTOR rq = XMQuaternionRotationRollPitchYawFromVector(_rotation);
+	XMVECTOR ret = XMVector3Rotate(vunit, rq);
+	ret = XMVector3Normalize(ret);
+	XMStoreFloat3(&uint, ret);
 
 	return XXVector3(uint.x, uint.y, uint.z);
 }
 
 XX::XXVector3 XX::Transform::Right()
 {
-	DirectX::XMFLOAT3 uint(1.0f, 0.0f, 0.0f);
-	DirectX::XMVECTOR vunit = DirectX::XMLoadFloat3(&uint);
-	DirectX::XMVECTOR rq = DirectX::XMQuaternionRotationRollPitchYawFromVector(_rotation);
-	DirectX::XMVECTOR ret = DirectX::XMVector3Rotate(vunit, rq);
+	XMFLOAT3 uint(1.0f, 0.0f, 0.0f);
+	XMVECTOR vunit = XMLoadFloat3(&uint);
+	XMVECTOR rq = XMQuaternionRotationRollPitchYawFromVector(_rotation);
+	XMVECTOR ret = XMVector3Rotate(vunit, rq);
 	ret = DirectX::XMVector3Normalize(ret);
-	DirectX::XMStoreFloat3(&uint, ret);
+	XMStoreFloat3(&uint, ret);
 
 	return XXVector3(uint.x, uint.y, uint.z);
 }
@@ -89,9 +92,9 @@ XMMATRIX XX::Transform::GetMatrix(TRANSFORM_MATRIX matrix_type)
 
 void XX::Transform::_Refresh()
 {
-	_t_matrix = DirectX::XMMatrixTranslationFromVector(_position);
-	_r_matrix = DirectX::XMMatrixRotationRollPitchYawFromVector(_rotation);
-	_s_matrix = DirectX::XMMatrixScalingFromVector(_scale);
+	_t_matrix = XMMatrixTranslationFromVector(_position);
+	_r_matrix = XMMatrixRotationRollPitchYawFromVector(_rotation);
+	_s_matrix = XMMatrixScalingFromVector(_scale);
 
 	_world_matrix = _s_matrix * _r_matrix * _t_matrix;
 }

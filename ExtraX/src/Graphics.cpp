@@ -81,6 +81,7 @@ void XX::Graphics::Init(HWND window, int width, int height)
 	_device->CreateDepthStencilView(depthStencile.Get(), &depthStencilViewDesc, _depth_stencil_view.GetAddressOf());
 	_device_context->OMSetRenderTargets(1, _render_target_view.GetAddressOf(), _depth_stencil_view.Get());
 
+
 	// ビューポート設定
 	D3D11_VIEWPORT viewport;
 	viewport.Width = (FLOAT)width;
@@ -105,8 +106,8 @@ void XX::Graphics::Init(HWND window, int width, int height)
 
 	// ブレンドステート設定
 	D3D11_BLEND_DESC blendDesc{};
-	blendDesc.AlphaToCoverageEnable = FALSE;
-	blendDesc.IndependentBlendEnable = FALSE;
+	blendDesc.AlphaToCoverageEnable = TRUE;
+	blendDesc.IndependentBlendEnable = TRUE;
 	blendDesc.RenderTarget[0].BlendEnable = TRUE;
 	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
@@ -117,9 +118,8 @@ void XX::Graphics::Init(HWND window, int width, int height)
 	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 	float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
-	ID3D11BlendState* blendState = NULL;
-	_device->CreateBlendState(&blendDesc, &blendState);
-	_device_context->OMSetBlendState(blendState, blendFactor, 0xffffffff);
+	_device->CreateBlendState(&blendDesc, _blend_state.GetAddressOf());
+	_device_context->OMSetBlendState(_blend_state.Get(), blendFactor, 0xffffffff);
 
 
 
@@ -216,6 +216,7 @@ void XX::Graphics::SetDepthEnable(bool enable) const
 		_device_context->OMSetDepthStencilState(_depth_state_disable.Get(), NULL);
 }
 
+
 void XX::Graphics::SetWorldViewProjection2D() const
 {
 	DirectX::XMMATRIX world = DirectX::XMMatrixIdentity();
@@ -272,17 +273,6 @@ void XX::Graphics::CreateVertexShader(ID3D11VertexShader** vertex_shader, ID3D11
 	fclose(file);
 
 	_device->CreateVertexShader(buffer, fsize, NULL, vertex_shader);
-
-
-	//D3D11_INPUT_ELEMENT_DESC layout[] =
-	//{
-	//	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	//	{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 4 * 3, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	//	{ "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 4 * 6, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	//	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 4 * 10, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-	//};
-	//UINT numElements = ARRAYSIZE(layout);
-
 
 	_device->CreateInputLayout(
 		layout,

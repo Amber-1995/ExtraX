@@ -13,19 +13,26 @@ XX::Component::Component() :
 }
 
 
-void XX::Component::Awake()
+void XX::Component::Spawn()
 {
 	_InstallEvents();
+	Awake();
+	Start();
+	if (_active) OnEnable();
 }
 
 void XX::Component::Destroy()
 {
+	OnDestroy();
 	_UninstallEvents();
 	game_object->RemoveComponent(this);
 }
 
 void XX::Component::SetActive(bool active)
 {
+	if (active && !_active) OnEnable();
+	if (!active && _active) OnDisable();
+
 	_active = active;
 }
 

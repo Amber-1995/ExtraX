@@ -7,28 +7,16 @@
 
 void XX::BulletController::Update()
 {
-	game_object->transform->position += XXVector3(0.0f,0.0f,0.1f);
+	game_object->transform->position += dir *speed;
 
-	if (game_object->transform->position.z > 10)
+
+
+	if (_life < 0)
 	{
-		auto explosion = GameObject::Create();
-		{
-			explosion->transform->position = game_object->transform->position;
-			auto s = Component::Create<Billboard>(5.0f, 5.0f, "Assets\\Textures\\transparent.png");
-			explosion->AddComponent(s);
-
-			auto a = Component::Create<Animation2D>();
-			a->SetTarget(s);
-			a->AddAnimationClip("Assets\\Textures\\explosion.png", 4, 4, "explosion", 0, 15, true, "explosion");
-			a->SetEnterAnimation("explosion");
-			a->AddAnimationEvent("explosion", 15, [a](){a->game_object->Destroy(); });
-			explosion->AddComponent(a);
-		}
-		game_object->scene->AddGameObject(explosion);
 		game_object->Destroy();
 		return;
 	}
-
+	_life--;
 
 	for (GameObjectPtr i : game_object->scene->game_objects)
 	{
@@ -37,23 +25,6 @@ void XX::BulletController::Update()
 		if (l < 1) {
 			if (i->tag == "enemy")
 			{
-
-				auto explosion = GameObject::Create();
-				{
-					explosion->transform->position = game_object->transform->position;
-					auto s = Component::Create<Billboard>(5.0f, 5.0f, "Assets\\Textures\\transparent.png");
-					explosion->AddComponent(s);
-
-					auto a = Component::Create<Animation2D>();
-					a->SetTarget(s);
-					a->AddAnimationClip("Assets\\Textures\\explosion.png", 4, 4, "explosion", 0, 15, true, "explosion");
-					a->SetEnterAnimation("explosion");
-					a->AddAnimationEvent("explosion", 15, [a]() {a->game_object->Destroy(); });
-					explosion->AddComponent(a);
-				}
-				game_object->scene->AddGameObject(explosion);
-
-
 				game_object->Destroy();
 				i->Destroy();
 				return;
@@ -63,4 +34,23 @@ void XX::BulletController::Update()
 	}
 	
 	
+}
+
+void XX::BulletController::OnDestroy()
+{
+	auto explosion = GameObject::Create();
+	{
+		explosion->transform->position = game_object->transform->position;
+		auto s = Component::Create<Billboard>(5.0f, 5.0f, "Assets\\Textures\\transparent.png");
+		explosion->AddComponent(s);
+
+		auto a = Component::Create<Animation2D>();
+		a->SetTarget(s);
+		a->AddAnimationClip("Assets\\Textures\\explosion.png", 4, 4, "explosion", 0, 15, true, "explosion");
+		a->SetEnterAnimation("explosion");
+		a->AddAnimationEvent("explosion", 15, [a]() {a->game_object->Destroy(); });
+		explosion->AddComponent(a);
+	}
+	game_object->scene->AddGameObject(explosion);
+
 }
