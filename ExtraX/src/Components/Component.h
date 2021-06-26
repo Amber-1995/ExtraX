@@ -9,45 +9,42 @@ namespace XX
 {
 	class Component
 	{
+	/*====================コンストラクターとデストラクター====================*/
 	public:
-		GameObject* const& game_object;
-
-		const bool& active;
-
+		virtual ~Component() = default;
+	protected:
 		Component();
 		Component(const Component&) = delete;
 		Component& operator=(const Component&) = delete;
-	
-		void SetActive(bool active);
-
-		void Spawn();
-
-		void Destroy();
-
-		template<class T = Component, class...ARGS>
-		static std::shared_ptr<T> Create(ARGS...args);
-
-		virtual void Awake(){}
-		virtual void Start(){}
-		virtual void OnEnable(){}
-		virtual void OnDisable(){}
-		virtual void OnDestroy(){}
 		
+	/*================================メンバー================================*/
+	public:
+		GameObject* const& game_object;
+		const bool& active;
 	private:
 		GameObject* _game_object;
-
 		bool _active;
 
-		void SetGameObject(GameObject* game_object);
-
+	/*================================メソッド================================*/
+	public:
+		void SetActive(bool active);
+		void Spawn();
+		void Destroy();
+		template<class T = Component, class...ARGS>
+		static std::shared_ptr<T> Create(ARGS...args);
+		virtual void Awake() {}
+		virtual void Start() {}
+		virtual void OnEnable() {}
+		virtual void OnDisable() {}
+		virtual void OnDestroy() {}
+	private:
+		void _SetGameObject(GameObject* game_object);
 		void _InstallEvents();
-
 		void _UninstallEvents();
 
+	/*================================フレンド================================*/
 		friend class GameObject;
 	};
-
-
 
 	template<class T, class ...ARGS>
 	inline std::shared_ptr<T> Component::Create(ARGS ...args)

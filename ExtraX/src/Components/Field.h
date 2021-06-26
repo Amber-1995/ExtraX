@@ -10,28 +10,28 @@ namespace XX
 {
 	class Field : public Component,public IRender3D
 	{
+	/*====================コンストラクターとデストラクター====================*/
 	public:
-		void Render3D() override;
-
+		virtual ~Field() = default;
 	private:
-		int _row;
-
-		int _column;
-
-		ID3D11BufferPtr _vertex_buffer;
-
-		ID3D11BufferPtr _index_buffer;
-
-		TexturePtr _texture;
-
-		VertexShaderPtr _vertex_shader;
-
-		PixelShaderPtr _pixel_shader;
-
 		Field(int row, int column, const std::string texture_file = DEFAULT_TEXTRUE);
 		Field(const Field&) = delete;
 		Field& operator=(const Field&) = delete;
+	
+	/*================================メンバー================================*/
+	private:
+		int _row;
+		int _column;
+		VertexShaderPtr _vertex_shader;
+		PixelShaderPtr _pixel_shader;
+		MeshPtr _mesh;
+		XXMaterial _material;
 
+	/*================================メソッド================================*/
+	public:
+		void Render3D() override;
+
+	/*================================フレンド================================*/
 		friend class Component;
 	};
 

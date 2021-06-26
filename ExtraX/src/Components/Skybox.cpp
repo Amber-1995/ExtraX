@@ -6,7 +6,9 @@
 
 XX::Skybox::Skybox()
 {
-	XXVertex3D vertex[4];
+	std::vector<XXVertex3D> vertex(4);
+	std::vector<UINT> index(6);
+	index[0] = 0; index[1] = 1; index[2] = 2; index[3] = 2; index[4] = 1; index[5] = 3;
 	//top
 	{
 		vertex[0].position	= XXVector3(0.5f, 0.5f, 0.5f);
@@ -29,16 +31,7 @@ XX::Skybox::Skybox()
 		vertex[3].diffuse	= XXVector4(1.0f, 1.0f, 1.0f, 1.0f);
 		vertex[3].tex_coord = XXVector2(1.0f, 1.0f);
 
-		D3D11_BUFFER_DESC bd{};
-		bd.Usage = D3D11_USAGE_DYNAMIC;
-		bd.ByteWidth = sizeof(XXVertex3D) * 4;
-		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-
-		D3D11_SUBRESOURCE_DATA sd{};
-		sd.pSysMem = vertex;
-
-		ExtraX::graphics.device->CreateBuffer(&bd, &sd, _vertex_buffer[0].GetAddressOf());
+		_mesh[0] = MeshPtr(new Mesh(vertex, index));
 	}
 
 	//bottom
@@ -63,16 +56,7 @@ XX::Skybox::Skybox()
 		vertex[3].diffuse	= XXVector4(1.0f, 1.0f, 1.0f, 1.0f);
 		vertex[3].tex_coord = XXVector2(1.0f, 1.0f);
 
-		D3D11_BUFFER_DESC bd{};
-		bd.Usage = D3D11_USAGE_DYNAMIC;
-		bd.ByteWidth = sizeof(XXVertex3D) * 4;
-		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-
-		D3D11_SUBRESOURCE_DATA sd{};
-		sd.pSysMem = vertex;
-
-		ExtraX::graphics.device->CreateBuffer(&bd, &sd, _vertex_buffer[1].GetAddressOf());
+		_mesh[1] = MeshPtr(new Mesh(vertex, index));
 	}
 
 	//left
@@ -97,16 +81,7 @@ XX::Skybox::Skybox()
 		vertex[3].diffuse =		XXVector4(1.0f, 1.0f, 1.0f, 1.0f);
 		vertex[3].tex_coord =	XXVector2(1.0f, 1.0f);
 
-		D3D11_BUFFER_DESC bd{};
-		bd.Usage = D3D11_USAGE_DYNAMIC;
-		bd.ByteWidth = sizeof(XXVertex3D) * 4;
-		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-
-		D3D11_SUBRESOURCE_DATA sd{};
-		sd.pSysMem = vertex;
-
-		ExtraX::graphics.device->CreateBuffer(&bd, &sd, _vertex_buffer[2].GetAddressOf());
+		_mesh[2] = MeshPtr(new Mesh(vertex, index));
 	}
 
 	//right
@@ -131,16 +106,7 @@ XX::Skybox::Skybox()
 		vertex[3].diffuse	= XXVector4(1.0f, 1.0f, 1.0f, 1.0f);
 		vertex[3].tex_coord = XXVector2(1.0f, 1.0f);
 
-		D3D11_BUFFER_DESC bd{};
-		bd.Usage = D3D11_USAGE_DYNAMIC;
-		bd.ByteWidth = sizeof(XXVertex3D) * 4;
-		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-
-		D3D11_SUBRESOURCE_DATA sd{};
-		sd.pSysMem = vertex;
-
-		ExtraX::graphics.device->CreateBuffer(&bd, &sd, _vertex_buffer[3].GetAddressOf());
+		_mesh[3] = MeshPtr(new Mesh(vertex, index));
 	}
 
 	//front
@@ -165,16 +131,7 @@ XX::Skybox::Skybox()
 		vertex[3].diffuse	= XXVector4(1.0f, 1.0f, 1.0f, 1.0f);
 		vertex[3].tex_coord = XXVector2(1.0f, 1.0f);
 
-		D3D11_BUFFER_DESC bd{};
-		bd.Usage = D3D11_USAGE_DYNAMIC;
-		bd.ByteWidth = sizeof(XXVertex3D) * 4;
-		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-
-		D3D11_SUBRESOURCE_DATA sd{};
-		sd.pSysMem = vertex;
-
-		ExtraX::graphics.device->CreateBuffer(&bd, &sd, _vertex_buffer[4].GetAddressOf());
+		_mesh[4] = MeshPtr(new Mesh(vertex, index));
 	}
 
 	//back
@@ -199,26 +156,14 @@ XX::Skybox::Skybox()
 		vertex[3].diffuse	= XXVector4(1.0f, 1.0f, 1.0f, 1.0f);
 		vertex[3].tex_coord = XXVector2(1.0f, 1.0f);
 
-		D3D11_BUFFER_DESC bd{};
-		bd.Usage = D3D11_USAGE_DYNAMIC;
-		bd.ByteWidth = sizeof(XXVertex3D) * 4;
-		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-
-		D3D11_SUBRESOURCE_DATA sd{};
-		sd.pSysMem = vertex;
-
-		ExtraX::graphics.device->CreateBuffer(&bd, &sd, _vertex_buffer[5].GetAddressOf());
+		_mesh[5] = MeshPtr(new Mesh(vertex, index));
 	}
 
 
-	for (int i = 0; i < 6; i++){
-		_texture[i] = Texture::Load(DEFAULT_TEXTRUE);
-	}
+
 
 	_vertex_shader = VertexShader::Load("Assets\\Shaders\\unlitTextureVS.cso");
 	_pixel_shader = PixelShader::Load("Assets\\Shaders\\unlitTexturePS.cso");
-
 	_adj_matrix = DirectX::XMMatrixScaling(5000.0f, 5000.0f, 5000.0f);
 }
 
@@ -230,15 +175,8 @@ void XX::Skybox::Render3D()
 	_vertex_shader->Apply();
 	_pixel_shader->Apply();
 
-	for (int i = 0; i < 6; i++){
-
-		_texture[i]->Apply();
-
-		UINT stride = sizeof(XXVertex3D);
-		UINT offset = 0;
-		ExtraX::graphics.device_context->IASetVertexBuffers(0, 1, _vertex_buffer[i].GetAddressOf(), &stride, &offset);
-		ExtraX::graphics.device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-		ExtraX::graphics.device_context->Draw(4, 0);
+	for (auto& m:_mesh){
+		m->Apply();
 	}
 
 
@@ -246,11 +184,11 @@ void XX::Skybox::Render3D()
 
 void XX::Skybox::SetTexture(const std::string top, const std::string bottom, const std::string left, const std::string right, const std::string front, const std::string back)
 {
-	_texture[0] = Texture::Load(top);
-	_texture[1] = Texture::Load(bottom);
-	_texture[2] = Texture::Load(left);
-	_texture[3] = Texture::Load(right);
-	_texture[4] = Texture::Load(front);
-	_texture[5] = Texture::Load(back);
+	_mesh[0]->SetTexture(Texture::Load(top));
+	_mesh[1]->SetTexture(Texture::Load(bottom));
+	_mesh[2]->SetTexture(Texture::Load(left));
+	_mesh[3]->SetTexture(Texture::Load(right));
+	_mesh[4]->SetTexture(Texture::Load(front));
+	_mesh[5]->SetTexture(Texture::Load(back));
 }
 

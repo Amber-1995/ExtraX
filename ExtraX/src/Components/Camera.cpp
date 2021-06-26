@@ -30,7 +30,7 @@ void XX::Camera::Update()
 	XMVECTOR eye = DirectX::XMLoadFloat3(&e);
 	XMFLOAT3 f = game_object->transform->position + game_object->transform->Forward();
 	XMVECTOR focus = DirectX::XMLoadFloat3(&f);
-	XMFLOAT3 u(0.0f, 1.0f, 0.0f);
+	XMFLOAT3 u = game_object->transform->Up();
 	XMVECTOR up = DirectX::XMLoadFloat3(&u);
 
 	_view_matrix = DirectX::XMMatrixLookAtLH(

@@ -32,6 +32,8 @@ int XX::Game::Run()
 			}
 		}
 		else {
+			
+			XX::ExtraX::input.Update();
 
 			XX::ExtraX::updater.Update();
 

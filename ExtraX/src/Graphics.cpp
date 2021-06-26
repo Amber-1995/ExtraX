@@ -189,7 +189,7 @@ void XX::Graphics::Init(HWND window, int width, int height)
 	light.enable = true;
 	light.direction = XXVector4(1.0f, -1.0f, 1.0f, 0.0f);
 	light.direction.Normalize();
-	light.ambient = XXColor(0.2f, 0.2f, 0.2f, 1.0f);
+	light.ambient = XXColor(1.0f, 1.0f, 1.0f, 1.0f);
 	light.diffuse = XXColor(1.0f, 1.0f, 1.0f, 1.0f);
 	SetLight(light);
 	SetMaterial();
@@ -309,9 +309,9 @@ void XX::Graphics::SetFullscreenState(bool state)
 }
 
 
-const XX::XXMaterial XX::Graphics::_defualt_material =
+const XX::XXMaterial XX::Graphics::defualt_material =
 {
-	{1.0f,1.0f,1.0f,1.0f},
+	{0.2f,0.2f,0.2f,1.0f},
 	{1.0f,1.0f,1.0f,1.0f},
 	{0.0f,0.0f,0.0f,0.0f},
 	{0.0f,0.0f,0.0f,0.0f},
@@ -319,7 +319,7 @@ const XX::XXMaterial XX::Graphics::_defualt_material =
 	{0.0f,0.0f,0.0f},
 };
 
-const D3D11_INPUT_ELEMENT_DESC XX::Graphics::_defualt_layout[4] =
+const D3D11_INPUT_ELEMENT_DESC XX::Graphics::defualt_layout[4] =
 {
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 4 * 3, D3D11_INPUT_PER_VERTEX_DATA, 0 },

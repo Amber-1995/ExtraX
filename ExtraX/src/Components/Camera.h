@@ -13,22 +13,30 @@ namespace XX
 {
 	class Camera : public Component
 	{
+	/*====================コンストラクターとデストラクター====================*/
 	public:
-		static Camera* const& main_camera;
-
-		void Update();
-
+		virtual ~Camera() = default;
 	private:
-		static Camera* _main_camera;
-
-		XMMATRIX _view_matrix;
-
-		XMMATRIX _projection_matrix;
-
 		Camera();
 		Camera(const Camera&) = delete;
 		Camera& operator=(const Camera&) = delete;
 
+	/*==========================スタティックメンバー==========================*/
+	public:
+		static Camera* const& main_camera;
+	private:
+		static Camera* _main_camera;
+	
+	/*================================メンバー================================*/
+	private:
+		XMMATRIX _view_matrix;
+		XMMATRIX _projection_matrix;
+
+	/*================================メソッド================================*/
+	public:
+		void Update();
+
+	/*================================フレンド================================*/
 		friend class Component;
 	};
 	typedef std::shared_ptr<Camera> CameraPtr;

@@ -9,9 +9,23 @@ namespace XX
 {
 	class Skybox : public Component , public IRender3D
 	{
+	/*====================コンストラクターとデストラクター====================*/
+	public:
+		virtual ~Skybox() = default;
+	private:
+		Skybox();
+		Skybox(const Skybox&) = delete;
+		Skybox& operator=(Skybox&) = delete;
+	/*================================メンバー================================*/
+	private:
+		VertexShaderPtr _vertex_shader;
+		PixelShaderPtr _pixel_shader;
+		MeshPtr _mesh[6];
+		DirectX::XMMATRIX _adj_matrix;
+
+	/*================================メソッド================================*/
 	public:
 		void Render3D() override;
-
 		void SetTexture(
 			const std::string top,
 			const std::string bottom,
@@ -21,21 +35,7 @@ namespace XX
 			const std::string back
 		);
 
-	private:
-		ID3D11BufferPtr _vertex_buffer[6];
-
-		TexturePtr _texture[6];
-
-		VertexShaderPtr _vertex_shader;
-
-		PixelShaderPtr _pixel_shader;
-
-		DirectX::XMMATRIX _adj_matrix;
-
-		Skybox();
-		Skybox(const Skybox&) = delete;
-		Skybox& operator=(Skybox&) = delete;
-
+	/*================================フレンド================================*/
 		friend class Component;
 	};
 }

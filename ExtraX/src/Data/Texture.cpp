@@ -29,7 +29,8 @@ XX::Texture::Texture(const std::string& file_name):
 		);
 	}
 	else {
-		throw std::exception("Textrue load failure!");
+		MessageBox(nullptr, "Textrue load failure!", "error", MB_OK);
+		exit(-1);
 	}
 
 	D3D11_SHADER_RESOURCE_VIEW_DESC desc = {};

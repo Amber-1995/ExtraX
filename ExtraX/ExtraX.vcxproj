@@ -47,21 +47,21 @@
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)\bin\int\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)\bin\out\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\lib\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\include;C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\Assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\lib\Debug;$(LibraryPath);C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\Assimp\lib\x64</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(SolutionDir)\bin\int\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)\bin\out\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\lib\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\include;C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\Assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\DirectXTex\lib\Release;$(LibraryPath);C:\Users\Amber\Desktop\Github\ExtraX\ExtraX\Assimp\lib\x64</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;;NOMINMAX</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -69,7 +69,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>winmm.lib;d3d11.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;d3d11.lib;DirectXTex.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -78,7 +78,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;;NOMINMAX</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -88,7 +88,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>winmm.lib;d3d11.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;d3d11.lib;DirectXTex.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -101,7 +101,7 @@
     <ClCompile Include="src\Components\Camera.cpp" />
     <ClCompile Include="src\Components\Component.cpp" />
     <ClCompile Include="src\Components\Field.cpp" />
-    <ClCompile Include="src\Components\Mesh.cpp">
+    <ClCompile Include="src\Components\Model.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -112,7 +112,7 @@
     <ClCompile Include="src\Components\Sprite.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
     <ClCompile Include="src\Data\Color.cpp" />
-    <ClCompile Include="src\Data\Model.cpp">
+    <ClCompile Include="src\Data\Mesh.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -125,6 +125,10 @@
     <ClCompile Include="src\GameObjects\GameObject.cpp" />
     <ClCompile Include="src\GameWindow.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
+    <ClCompile Include="src\Helper.cpp" />
+    <ClCompile Include="src\Input\Input.cpp" />
+    <ClCompile Include="src\Input\Keyboard.cpp" />
+    <ClCompile Include="src\Input\Mouse.cpp" />
     <ClCompile Include="src\Scenes\Scene.cpp" />
     <ClCompile Include="src\Scenes\TestScene.cpp" />
     <ClCompile Include="src\Scripts\BulletController.cpp" />
@@ -142,7 +146,7 @@
     <ClInclude Include="src\Components\Component.h" />
     <ClInclude Include="src\Components\Components.h" />
     <ClInclude Include="src\Components\Field.h" />
-    <ClInclude Include="src\Components\Mesh.h">
+    <ClInclude Include="src\Components\Model.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -155,7 +159,7 @@
     <ClInclude Include="src\Data\Color.h" />
     <ClInclude Include="src\Data\Data.h" />
     <ClInclude Include="src\Data\ExtraXType.h" />
-    <ClInclude Include="src\Data\Model.h">
+    <ClInclude Include="src\Data\Mesh.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -173,12 +177,16 @@
     <ClInclude Include="src\GameObjects\GameObject.h" />
     <ClInclude Include="src\GameWindow.h" />
     <ClInclude Include="src\Graphics.h" />
+    <ClInclude Include="src\Input\Input.h" />
+    <ClInclude Include="src\Input\Keyboard.h" />
+    <ClInclude Include="src\Input\Mouse.h" />
     <ClInclude Include="src\Scenes\Scene.h" />
     <ClInclude Include="src\Scenes\TestScene.h" />
     <ClInclude Include="src\Scripts\BulletController.h" />
     <ClInclude Include="src\Scripts\CameraController.h" />
     <ClInclude Include="src\Scripts\PlayerController.h" />
     <ClInclude Include="src\Scripts\Scripts.h" />
+    <ClInclude Include="src\Helper.h" />
     <ClInclude Include="src\XX.h" />
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +218,9 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Assets\Shaders\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Assets\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Assets\1.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

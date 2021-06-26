@@ -36,7 +36,7 @@ void XX::GameObject::SetActive(bool active)
 
 void XX::GameObject::AddComponent(ComponentPtr component)
 {
-	component->SetGameObject(this);
+	component->_SetGameObject(this);
 
 	_components.push_front(component);
 

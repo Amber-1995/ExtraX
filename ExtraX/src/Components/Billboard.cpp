@@ -17,17 +17,8 @@ void XX::Billboard::Render3D()
 
 	_vertex_shader->Apply();
 	_pixel_shader->Apply();
-	_texture->Apply();
-
-
-	UINT stride = sizeof(XXVertex3D);
-	UINT offset = 0;
-	ExtraX::graphics.device_context->IASetVertexBuffers(0, 1, _vertex_buffer.GetAddressOf(), &stride, &offset);
-	ExtraX::graphics.device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	ExtraX::graphics.SetMaterial();
-
-	
-	ExtraX::graphics.device_context->Draw(4, 0);
+	_mesh->Apply();
 }
 
 XX::Billboard::Billboard(float width, float height, const std::string& texture_file):

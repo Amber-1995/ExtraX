@@ -38,7 +38,7 @@ void XX::Component::SetActive(bool active)
 
 
 
-void XX::Component::SetGameObject(GameObject* game_object)
+void XX::Component::_SetGameObject(GameObject* game_object)
 {
 	_game_object = game_object;
 }

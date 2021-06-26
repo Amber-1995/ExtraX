@@ -12,7 +12,7 @@ namespace XX
 		float speed;
 
 		void Update() override;
-		void OnDestroy()	override;
+		void OnDestroy()override;
 
 	private:
 		int _life = 200;

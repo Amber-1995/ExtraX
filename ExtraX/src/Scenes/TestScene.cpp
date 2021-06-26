@@ -7,25 +7,14 @@
 
 XX::TestScene::TestScene()
 {
-	//=============================================================================
+	
 	auto camera = GameObject::Create();
-	auto ground = GameObject::Create();
-	auto player = GameObject::Create();
-
-
-
-
-
-	//=============================================================================
 	{
 		camera->transform->position = XXVector3(0, 10, -15);
-		camera->transform->rotation = XXVector3(0.5f, 0, 0);
-
 		auto c = Component::Create<Camera>();
 		camera->AddComponent(c);
 
 		auto cc = Component::Create <CameraController>();
-		cc->target = player;
 		camera->AddComponent(cc);
 
 		auto skybox = Component::Create<Skybox>();
@@ -39,36 +28,27 @@ XX::TestScene::TestScene()
 		);
 		camera->AddComponent(skybox);
 	}
-	
-
-	
-	{
-		auto field = Component::Create<Field>(40, 40);
-		ground->AddComponent(field);
-	}
-	
-
-	
-	{
-		auto cannon = Component::Create<Mesh>("Assets\\models\\tank0001\\tank0001-0.obj");
-		cannon->AdjustTransform({ 0.0f,0.0f,0.0f }, { 0.0f,-DirectX::XM_PIDIV2,0.0f }, { 1.0f,1.0f,1.0f });
-		player->AddComponent(cannon);
-
-		auto tank = Component::Create<Mesh>("Assets\\models\\tank0001\\tank0001-1.obj");
-		tank->AdjustTransform({ 0.0f,0.0f,0.0f }, { 0.0f,-DirectX::XM_PIDIV2,0.0f }, { 1.0f,1.0f,1.0f });
-		player->AddComponent(tank);
-
-		auto pc = Component::Create<PlayerController>();
-		player->AddComponent(pc);
-
-	}
-
-
-
-	//=========================================================================
 	AddGameObject(camera);
-	AddGameObject(ground);
-	AddGameObject(player);
+	
 
+	auto ground = GameObject::Create();
+	{
+		auto f = Component::Create<Field>(40.0f, 40.0f);
+		ground->AddComponent(f);
+	}
+	AddGameObject(ground);
+
+	auto billboard = GameObject::Create();
+	{
+		auto b = Component::Create<Billboard>(10.0f, 10.0f, "Assets\\Textures\\transparent.png");
+		billboard->AddComponent(b);
+		auto a2d = Component::Create<Animation2D>();
+		a2d->SetTarget(b);
+		a2d->AddAnimationClip("Assets\\Textures\\explosion.png", 4, 4, "explosion", 0, 15, true, "explosion");
+		a2d->SetEnterAnimation("explosion");
+		a2d->AddAnimationEvent("explosion", 15, [billboard]() {billboard->transform->position += {0.0f, 1.0f, 0.0f}; });
+		billboard->AddComponent(a2d);
+	}
+	AddGameObject(billboard);
 
 }

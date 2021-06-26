@@ -40,11 +40,11 @@ namespace XX
 
 		void SetProjectionMatrix(const DirectX::XMMATRIX& projection_matrix) const;
 
-		void SetMaterial(XXMaterial material = _defualt_material) const;
+		void SetMaterial(XXMaterial material = defualt_material) const;
 
 		void SetLight(XXLight light) const;
 
-		void CreateVertexShader(ID3D11VertexShader** vertex_shader, ID3D11InputLayout** vertex_layout, const char* file_name, const D3D11_INPUT_ELEMENT_DESC* layout = _defualt_layout, UINT elements_num = 4) const;
+		void CreateVertexShader(ID3D11VertexShader** vertex_shader, ID3D11InputLayout** vertex_layout, const char* file_name, const D3D11_INPUT_ELEMENT_DESC* layout = defualt_layout, UINT elements_num = 4) const;
 
 		void CreatePixelShader(ID3D11PixelShader** pixel_shader, const char* file_name) const;
 
@@ -87,10 +87,10 @@ namespace XX
 		Graphics(const Graphics&) = delete;
 		Graphics& operator=(const Graphics&) = delete;
 
-	private:
-		static const XXMaterial _defualt_material;
+	public:
+		static const XXMaterial defualt_material;
 
-		static const D3D11_INPUT_ELEMENT_DESC _defualt_layout[4];
+		static const D3D11_INPUT_ELEMENT_DESC defualt_layout[4];
 
 		
 	};

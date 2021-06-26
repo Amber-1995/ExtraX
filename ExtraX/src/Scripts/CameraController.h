@@ -9,9 +9,8 @@ namespace XX
 	class CameraController : public Component, public IUpdate
 	{
 	public:
-		GameObjectPtr target;
-
 		void Update() override;
+		void Start() override;
 	};
 	typedef std::shared_ptr<CameraController> CameraControllerPtr;
 }
