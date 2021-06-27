@@ -13,11 +13,10 @@ void XX::Texture::Apply()
 XX::Texture::Texture(const std::string& file_name):
 	_texture(nullptr)
 {
-	wchar_t w_file_name[1024];
-	mbstowcs_s(nullptr, w_file_name, file_name.c_str(), _TRUNCATE);
+	std::wstring w_file_name = StringHelper::ToWide(file_name);
 
 	DirectX::ScratchImage image_data;
-	HRESULT ret = DirectX::LoadFromWICFile(w_file_name, DirectX::WIC_FLAGS_NONE, nullptr, image_data);
+	HRESULT ret = DirectX::LoadFromWICFile(w_file_name.c_str(), DirectX::WIC_FLAGS_NONE, nullptr, image_data);
 
 	if (SUCCEEDED(ret)) {
 		ret = DirectX::CreateTexture(

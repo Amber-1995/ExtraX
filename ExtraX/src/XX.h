@@ -2,6 +2,7 @@
 #ifndef _XX_H_
 #define _XX_H_
 #include "Graphics.h"
+#include "Game.h"
 #include "Events/Events.h"
 #include "Input/Input.h"
 
@@ -11,12 +12,11 @@ namespace XX
 	{
 	public:
 		static Graphics graphics;
+		static Game game;
 		static Updater updater;
 		static Renderer3D renderer3d;
 		static Renderer2D renderer2d;
 		static Input input;
-		
-
 	};
 }
 #endif	/!_XX_H_

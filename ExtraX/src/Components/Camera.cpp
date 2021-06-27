@@ -13,7 +13,7 @@ XX::Camera* XX::Camera::_main_camera = nullptr;
 
 XX::Camera::Camera()
 {
-	_main_camera = !_main_camera ? this : _main_camera;
+	_main_camera = this;
 
 	_view_matrix = DirectX::XMMatrixIdentity();
 

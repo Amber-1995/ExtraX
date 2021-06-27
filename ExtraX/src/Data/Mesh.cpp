@@ -30,6 +30,7 @@ XX::Mesh::Mesh(std::vector<XXVertex3D>& vertices, std::vector<UINT>& indices, co
 	isd.pSysMem = indices.data();
 	ExtraX::graphics.device->CreateBuffer(&ibd, &isd, _index_buffer.GetAddressOf());
 
+	_material = Graphics::defualt_material;
 }
 
 void XX::Mesh::Edit(const XXVertex3D* new_vertices, const UINT* new_indices)
@@ -54,10 +55,17 @@ void XX::Mesh::SetTexture(TexturePtr texture)
 	_texture = texture;
 }
 
+void XX::Mesh::SetMaterial(XXMaterial material)
+{
+	_material = material;
+}
+
 
 void XX::Mesh::Apply()
 {
 	_texture->Apply();
+
+	ExtraX::graphics.SetMaterial(_material);
 
 	UINT stride = sizeof(XXVertex3D);
 	UINT offset = 0;
@@ -83,7 +91,7 @@ XX::Meshes::Meshes(std::string file_name)
 	this->ProcessNode(pScene->mRootNode, pScene);
 }
 
-std::unordered_map<std::string, XX::MeshesPtr> XX::Meshes::_resources;
+
 
 void XX::Meshes::Apply()
 {
@@ -94,6 +102,7 @@ void XX::Meshes::Apply()
 
 void XX::Meshes::ProcessNode(aiNode* node, const aiScene* scene)
 {
+
 	for (UINT i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
@@ -114,6 +123,7 @@ void XX::Meshes::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 	
 	for (UINT i = 0; i < mesh->mNumVertices; i++){
 		XXVertex3D vertex;
+
 
 		vertex.position.x = mesh->mVertices[i].x;
 		vertex.position.y = mesh->mVertices[i].y;
@@ -142,14 +152,28 @@ void XX::Meshes::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 	}
 
 	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-	std::string texture_file;
-	if (material) {
+	std::string texture_file = DEFAULT_TEXTRUE;
+	if (material->GetTextureCount(aiTextureType_DIFFUSE) != 0) {
 		aiString f;
 		material->GetTexture(aiTextureType::aiTextureType_DIFFUSE, 0,&f);
 		texture_file =_directory + "\\" +f.C_Str();
-		aiColor4D color(0.0f, 0.0f, 0.0f, 0.0f);
 	}
+
+	XXMaterial m{};
+	aiColor4D color{};
+	aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &color);
+	m.diffuse = { color.r,color.g,color.b,color.a };
+	aiGetMaterialColor(material, AI_MATKEY_COLOR_AMBIENT, &color);
+	m.ambient = { color.r,color.g,color.b,color.a };
+	aiGetMaterialColor(material, AI_MATKEY_COLOR_SPECULAR, &color);
+	m.specular = { color.r,color.g,color.b,color.a };
+	aiGetMaterialColor(material, AI_MATKEY_COLOR_EMISSIVE, &color);
+	m.emission = { color.r,color.g,color.b,color.a };
 	
-	_meshes_vector.push_back(MeshPtr(new Mesh(vertices, indices, texture_file)));
+
+	MeshPtr ret(new Mesh(vertices, indices, texture_file));
+	ret->SetMaterial(m);
+
+	_meshes_vector.push_back(ret);
 }
 

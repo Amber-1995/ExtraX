@@ -10,34 +10,33 @@
 
 
 
-static float cd = 0;
 
 void XX::PlayerController::Update()
 {
 
-	if (ExtraX::input.GetKey(KK_W))
+	if (ExtraX::input.GetKey(KK_UP))
 	{
 		game_object->transform->position += game_object->transform->Forward() *0.1f;
 		
 	}
 
-	if (ExtraX::input.GetKey(KK_S))
+	if (ExtraX::input.GetKey(KK_DOWN))
 	{
 		game_object->transform->position -= game_object->transform->Forward() * 0.1f;
 		
 	}
 
-	if (ExtraX::input.GetKey(KK_A))
+	if (ExtraX::input.GetKey(KK_LEFT))
 	{
 		game_object->transform->rotation -= XXVector3(0.0f, 0.02f, 0.0f);
 	}
 
-	if (ExtraX::input.GetKey(KK_D))
+	if (ExtraX::input.GetKey(KK_RIGHT))
 	{
 		game_object->transform->rotation += XXVector3(0.0f, 0.02f, 0.0f);
 	}
 
-	if (ExtraX::input.GetKey(KK_J) && cd <= 0)
+	if (ExtraX::input.GetKeyDown(KK_SPACE))
 	{
 		GameObjectPtr bullet = GameObject::Create();
 		{
@@ -55,9 +54,33 @@ void XX::PlayerController::Update()
 		}
 		game_object->scene->AddGameObject(bullet);
 		
-		cd = 10;
 	}
-	cd--;
 
-	
+
+	if (game_object->transform->position.x > 19)
+	{
+		XXVector3 temp = game_object->transform->position;
+		temp.x = 19;
+		game_object->transform->position = temp;
+	}
+	if (game_object->transform->position.x < -19)
+	{
+		XXVector3 temp = game_object->transform->position;
+		temp.x = -19;
+		game_object->transform->position = temp;
+	}
+	if (game_object->transform->position.z > 19)
+	{
+		XXVector3 temp = game_object->transform->position;
+		temp.z = 19;
+		game_object->transform->position = temp;
+	}
+	if (game_object->transform->position.z < -19)
+	{
+		XXVector3 temp = game_object->transform->position;
+		temp.z = -19;
+		game_object->transform->position = temp;
+	}
+
+
 }

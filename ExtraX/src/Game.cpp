@@ -16,8 +16,9 @@ XX::Game::~Game()
 
 int XX::Game::Run()
 {
-	TestScene* s = new TestScene();
-	s->Spawn();
+	_scene = ScenePtr(new TestScene01());
+	_next_scene = _scene;
+	_scene->Spawn();
 	
 
 	MSG msg{};
@@ -33,9 +34,11 @@ int XX::Game::Run()
 		}
 		else {
 			
-			XX::ExtraX::input.Update();
+		
 
 			XX::ExtraX::updater.Update();
+
+			XX::ExtraX::input.Update();
 
 			XX::ExtraX::graphics.Begin();
 
@@ -44,7 +47,19 @@ int XX::Game::Run()
 			XX::ExtraX::renderer2d.Render();
 
 			XX::ExtraX::graphics.End();
+
+			if (_scene != _next_scene)
+			{
+				_scene->Destroy();
+				_scene = _next_scene;
+				_scene->Spawn();
+			}
 		}
 	}
 	return (int)msg.wParam;
+}
+
+void XX::Game::NextScene(ScenePtr scene)
+{
+	_next_scene = scene;
 }

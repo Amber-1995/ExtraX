@@ -9,14 +9,14 @@ void XX::BulletController::Update()
 {
 	game_object->transform->position += dir *speed;
 
-
-
-	if (_life < 0)
+	if (game_object->transform->position.x>19||
+		game_object->transform->position.x<-19||
+		game_object->transform->position.z>19||
+		game_object->transform->position.z<-19)
 	{
 		game_object->Destroy();
 		return;
 	}
-	_life--;
 
 	for (GameObjectPtr i : game_object->scene->game_objects)
 	{

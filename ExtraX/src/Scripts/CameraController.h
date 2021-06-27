@@ -9,6 +9,8 @@ namespace XX
 	class CameraController : public Component, public IUpdate
 	{
 	public:
+		GameObjectPtr player;
+
 		void Update() override;
 		void Start() override;
 	};

@@ -16,7 +16,7 @@ void XX::CameraController::Start()
 void XX::CameraController::Update()
 {
 
-	if (ExtraX::input.GetKey(KK_W))
+	/*if (ExtraX::input.GetKey(KK_W))
 	{
 		game_object->transform->position += game_object->GetComponent<Transform>()->Forward() * 0.1f;
 	}
@@ -65,6 +65,12 @@ void XX::CameraController::Update()
 	if (ExtraX::input.GetKey(KK_C))
 	{
 		game_object->transform->position -= XXVector3(0.0f, 0.1f, 0.0f);
-	}
+	}*/
 	
+
+	game_object->transform->rotation = player->transform->rotation;
+	game_object->transform->position = player->transform->position;
+
+	game_object->transform->rotation += XXVector3(0.5f, 0.0f, 0.0f);
+	game_object->transform->position -= player->transform->Forward() * 5 - XXVector3(0.0f, 5.0f, 0.0f);
 }

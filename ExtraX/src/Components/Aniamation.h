@@ -63,6 +63,7 @@ namespace XX
 	/*================================ƒtƒŒƒ“ƒh================================*/
 		friend class Component;
 	};
+	typedef std::shared_ptr<Animation2D> Animation2DPtr;
 }
 
 #endif // !_ANIMATION_H_

@@ -7,10 +7,17 @@
 
 namespace XX
 {
-	class TestScene : public Scene
+	class TestScene01 : public Scene
 	{
 	public:
-		TestScene();
+		TestScene01();
+
+	};
+
+	class TestScene02 : public Scene
+	{
+	public:
+		TestScene02();
 
 	};
 }

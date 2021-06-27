@@ -27,11 +27,13 @@ namespace XX
 		UINT _indices_num;
 		ID3D11BufferPtr _index_buffer;
 		TexturePtr _texture;
+		XXMaterial _material;
 		
 	/*================================ÉÅÉ\ÉbÉh================================*/
 	public:
 		void Edit(const XXVertex3D* new_vertices, const UINT* new_indices);
 		void SetTexture(TexturePtr texture);
+		void SetMaterial(XXMaterial material);
 		void Apply();
 	};
 	typedef std::shared_ptr<Mesh> MeshPtr;
@@ -66,7 +68,7 @@ namespace XX
 	};
 	typedef std::shared_ptr<Meshes> MeshesPtr;
 
-
+	std::unordered_map<std::string, XX::MeshesPtr> XX::Meshes::_resources;
 	
 }
 

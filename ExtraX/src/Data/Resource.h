@@ -9,6 +9,8 @@
 #include <filesystem>
 #include <memory>
 
+#include "../Helper.h"
+
 namespace XX
 {
 	template<class T>
@@ -27,9 +29,7 @@ namespace XX
 	inline std::shared_ptr<T> Resource<T>::Load(std::string file_name)
 	{
 		std::wstring wide = std::filesystem::absolute(file_name);
-		char narrow[1024];
-		wcstombs_s(nullptr, narrow, wide.c_str(), _TRUNCATE);
-		std::string full_path = narrow;
+		std::string full_path = StringHelper::ToNarrow(wide);
 
 		auto target = _resources.find(full_path);
 		if (target != _resources.end()){

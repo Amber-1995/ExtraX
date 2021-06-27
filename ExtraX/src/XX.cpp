@@ -4,6 +4,7 @@
 namespace XX
 {
 	Graphics	ExtraX::graphics;
+	Game		ExtraX::game;
 	Updater		ExtraX::updater;
 	Renderer3D	ExtraX::renderer3d;
 	Renderer2D	ExtraX::renderer2d;

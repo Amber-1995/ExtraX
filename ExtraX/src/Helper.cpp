@@ -36,3 +36,18 @@ std::string XX::StringHelper::GetFileExtension(const std::string& filename)
 	}
 	return std::string(filename.substr(off + 1));
 }
+
+
+std::wstring XX::StringHelper::ToWide(const std::string& narrow)
+{
+	wchar_t wide[512];
+	mbstowcs_s(nullptr, wide, narrow.c_str(), _TRUNCATE);
+	return wide;
+}
+
+std::string XX::StringHelper::ToNarrow(const std::wstring& wide)
+{
+	char narrow[512];
+	wcstombs_s(nullptr, narrow, wide.c_str(), _TRUNCATE);
+	return narrow;
+}

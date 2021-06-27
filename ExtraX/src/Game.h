@@ -1,7 +1,7 @@
 #pragma once
 #ifndef _GAME_H_
 #define _GAME_H_
-
+#include "Scenes/Scene.h"
 
 namespace XX
 {
@@ -15,6 +15,11 @@ namespace XX
 
 		int Run();
 
+		void NextScene(ScenePtr scene);
+
+	private:
+		ScenePtr _scene;
+		ScenePtr _next_scene;
 	};
 }
 

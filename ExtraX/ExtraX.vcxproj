@@ -134,6 +134,7 @@
     <ClCompile Include="src\Scripts\BulletController.cpp" />
     <ClCompile Include="src\Scripts\CameraController.cpp" />
     <ClCompile Include="src\Scripts\PlayerController.cpp" />
+    <ClCompile Include="src\Scripts\StartButton.cpp" />
     <ClCompile Include="src\XX.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +188,7 @@
     <ClInclude Include="src\Scripts\PlayerController.h" />
     <ClInclude Include="src\Scripts\Scripts.h" />
     <ClInclude Include="src\Helper.h" />
+    <ClInclude Include="src\Scripts\StartButton.h" />
     <ClInclude Include="src\XX.h" />
   </ItemGroup>
   <ItemGroup>
