@@ -24,5 +24,6 @@ void XX::Billboard::Render3D()
 XX::Billboard::Billboard(float width, float height, const std::string& texture_file):
 	Sprite3D(width,height,texture_file)
 {
-
+	_vertex_shader = VertexShader::Load("Assets\\Shaders\\unlitTextureVS.cso");
+	_pixel_shader = PixelShader::Load("Assets\\Shaders\\unlitTexturePS.cso");
 }
