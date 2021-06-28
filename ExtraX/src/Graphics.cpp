@@ -195,6 +195,7 @@ void XX::Graphics::Init(HWND window, int width, int height)
 	SetMaterial();
 }
 
+
 void XX::Graphics::Begin() const
 {
 	float clearColor[4] = { 0.3f, 0.2f, 0.6f, 1.0f };
@@ -214,6 +215,7 @@ void XX::Graphics::SetDepthEnable(bool enable) const
 	else
 		_device_context->OMSetDepthStencilState(_depth_state_disable.Get(), NULL);
 }
+
 
 void XX::Graphics::SetWorldViewProjection2D() const
 {
@@ -299,10 +301,13 @@ void XX::Graphics::CreatePixelShader(ID3D11PixelShader** pixel_shader, const cha
 	delete[] buffer;
 }
 
+
+
 void XX::Graphics::SetFullscreenState(bool state)
 {
 	_swap_chain->SetFullscreenState(state, nullptr);
 }
+
 
 const XX::XXMaterial XX::Graphics::defualt_material =
 {

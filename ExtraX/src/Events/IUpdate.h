@@ -3,7 +3,6 @@
 #define _IUPDATE_H_
 
 #include <list>
-#include <thread>
 #include "Event.h"
 namespace XX
 {
@@ -21,19 +20,11 @@ namespace XX
 		void Update();
 
 	private:
-
-		int _num_of_processors; 
-		std::atomic<UINT> _start_symble;
-		UINT _start_mask;
-		std::thread* _update_thread;
-
-		Updater();
+		Updater() = default;
 		Updater(const Updater&) = delete;
 		Updater& operator=(const Updater&) = delete;
 
 		friend class ExtraX;
-
-		void _Update(int num);
 	};
 }
 

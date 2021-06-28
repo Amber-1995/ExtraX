@@ -99,7 +99,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\Components\Camera.cpp" />
-    <ClCompile Include="src\Components\Collider.cpp" />
     <ClCompile Include="src\Components\Component.cpp" />
     <ClCompile Include="src\Components\Field.cpp" />
     <ClCompile Include="src\Components\Model.cpp">
@@ -145,7 +144,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="src\Components\Camera.h" />
-    <ClInclude Include="src\Components\Collider.h" />
     <ClInclude Include="src\Components\Component.h" />
     <ClInclude Include="src\Components\Components.h" />
     <ClInclude Include="src\Components\Field.h" />
