@@ -25,15 +25,15 @@ namespace XX
 		int _num_of_processors; 
 		std::atomic<UINT> _start_symble;
 		UINT _start_mask;
-		std::thread* _update_thread;
+		std::thread** _update_thread;
+		void _Update(int num);
 
 		Updater();
 		Updater(const Updater&) = delete;
 		Updater& operator=(const Updater&) = delete;
+		
 
 		friend class ExtraX;
-
-		void _Update(int num);
 	};
 }
 
