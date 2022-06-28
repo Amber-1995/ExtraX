@@ -20,12 +20,6 @@ int main()
 
 	Scene s;
 
-	GameObject* g = s.AddGameObject<GameObject>();
-
-	g->AddComponent<Transform>();
-	g->AddComponent<Rect2D>();
-
-
 	// メッセージループ
 	MSG msg;
 	while (1)

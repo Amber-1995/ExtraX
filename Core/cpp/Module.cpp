@@ -7,15 +7,15 @@ namespace XX::Game
 {
 	void Scene::_SubProcess(size_t thread)
 	{
-		while (ExtraX::running)
-		{
+		//while (ExtraX::running)
+		//{
 			//_thread_manager.WaitBeginSignal(thread);
 			Event::IUpdate::FrameProcess(thread);
 			Event::IRender3D::FrameProcess(thread);
 			Event::IRender2D::FrameProcess(thread);
 			ExtraX::graphics->FinishCommandList(thread);
 			//_thread_manager.SendCompletionSignal(thread);
-		}
+		//}
 	}
 
 	Scene::Scene()

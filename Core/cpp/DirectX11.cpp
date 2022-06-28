@@ -355,6 +355,7 @@ namespace XX
 		for (auto& i : command_list)
 		{
 			immediate_context->ExecuteCommandList(i.Get(), FALSE);
+			i->Release();
 		}
 		swap_chain->Present(1, 0);
 	}
@@ -513,7 +514,7 @@ namespace XX
 	void ExtraX::Initialize(const std::string& title)
 	{
 		_input = new Input();
-		_window = new Window(WINDOW_WIDTH,WINDOW_HEIGHT, title);
+		_window = new Window(WINDOW_WIDTH, WINDOW_HEIGHT, title);
 		InitialzeDX11();
 		_graphics = new Graphics();
 		_asset_importer = new AssetImporter();
