@@ -2,7 +2,7 @@
 #include "Common/Graphics.h"
 
 
-namespace XX::Game
+namespace XX::Game::Components
 {
 	using namespace DirectX;
 	using namespace Math;

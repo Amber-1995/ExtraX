@@ -1,22 +1,22 @@
 #include "Common.hlsl"
 
 
-cbuffer LightBuffer : register(b7)
+cbuffer LightBuffer : register(b6)
 {
 	LIGHT Light;
 }
 
-cbuffer MaterialBuffer : register(b8)
+cbuffer MaterialBuffer : register(b7)
 {
 	MATERIAL Material;
 }
 
-cbuffer CameraParameterBuffer : register(b9)
+cbuffer CameraParameterBuffer : register(b8)
 {
 	CameraParameter Camera;
 }
 
-cbuffer ExtraParameterBuffer : register(b10)
+cbuffer ExtraParameterBuffer : register(b9)
 {
 	ExtraParameter Extra;
 }

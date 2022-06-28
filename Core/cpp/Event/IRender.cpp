@@ -50,7 +50,7 @@ namespace XX::Game::Event
 
 	void IRender3D::FrameProcess(size_t thread)
 	{
-		Camera::Set(thread);
+		Components::Camera::Set(thread);
 		auto i = _current_list.begin();
 		auto end = _current_list.end();
 		Helper::Next(i, end, thread);

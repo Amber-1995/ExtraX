@@ -7,7 +7,7 @@
 #include "Game/Module.h"
 
 
-namespace XX::Game
+namespace XX::Game::Components
 {
 	enum class MATRIX_TYPE
 	{

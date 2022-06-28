@@ -18,11 +18,6 @@ namespace XX::Game
 		//}
 	}
 
-	Scene::Scene()
-	{
-		GameObject::_SetCurrentScene(this);
-	}
-
 	Scene::~Scene()
 	{
 		for (auto& i : _new_game_objects)
@@ -68,18 +63,6 @@ namespace XX::Game
 		}
 	}
 
-	void GameObject::_SetCurrentScene(Scene* scene)
-	{
-		_current_scene = scene;
-	}
-
-	GameObject::GameObject()
-	{
-		scene->_new_game_objects.push_front(this);
-		_self = scene->_new_game_objects.begin();
-		Component::_SetCurrentSceneAndGameObject(scene, this);
-	}
-
 	GameObject::~GameObject()
 	{
 		for (auto& i : _new_components)
@@ -113,18 +96,6 @@ namespace XX::Game
 	void GameObject::Destroy()
 	{
 		scene->_deleted_game_objects.push_front(this);
-	}
-
-	void Component::_SetCurrentSceneAndGameObject(Scene* scene, GameObject* game_object)
-	{
-		_current_scene = scene;
-		_current_game_object = game_object;
-	}
-
-	Component::Component()
-	{
-		game_object->_new_components.push_front(this);
-		_self = game_object->_new_components.begin();
 	}
 
 	std::list<Component*>& Component::GetComponents()

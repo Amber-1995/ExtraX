@@ -7,7 +7,7 @@
 #include "Game/Event/Event.h"
 #include "Transform.h"
 
-namespace XX::Game
+namespace XX::Game::Components
 {
 	XXAPI class Camera : public Component, public Event::IOnStart, public Event::IOnTransform
 	{

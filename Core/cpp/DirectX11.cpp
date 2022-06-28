@@ -56,17 +56,15 @@ static ComPtr<ID3D11DepthStencilState> depth_state_disable;
 
 static ComPtr<ID3D11SamplerState> sampler_state;
 
-static ComPtr<ID3D11Buffer> world_buffer_2d;
-
 static ComPtr<ID3D11Buffer> view_buffer_2d;
 
 static ComPtr<ID3D11Buffer> projection_buffer_2d;
 
-static ComPtr<ID3D11Buffer> world_buffer;
-
 static ComPtr<ID3D11Buffer> view_buffer;
 
 static ComPtr<ID3D11Buffer> projection_buffer;
+
+static ComPtr<ID3D11Buffer> world_buffer;
 
 static ComPtr<ID3D11Buffer> texcoord_offset_buffer;
 
@@ -237,47 +235,39 @@ void InitialzeDX11()
 	buffer_desc.MiscFlags = 0;
 	buffer_desc.StructureByteStride = sizeof(float);
 
-	device->CreateBuffer(&buffer_desc, NULL, world_buffer_2d.GetAddressOf());
-	immediate_context->VSSetConstantBuffers(0, 1, world_buffer_2d.GetAddressOf());
-
 	device->CreateBuffer(&buffer_desc, NULL, view_buffer_2d.GetAddressOf());
-	immediate_context->VSSetConstantBuffers(1, 1, view_buffer_2d.GetAddressOf());
+	immediate_context->VSSetConstantBuffers(0, 1, view_buffer_2d.GetAddressOf());
 
 	device->CreateBuffer(&buffer_desc, NULL, projection_buffer_2d.GetAddressOf());
-	immediate_context->VSSetConstantBuffers(2, 1, projection_buffer_2d.GetAddressOf());
-
-	device->CreateBuffer(&buffer_desc, NULL, world_buffer.GetAddressOf());
-	immediate_context->VSSetConstantBuffers(3, 1, world_buffer.GetAddressOf());
+	immediate_context->VSSetConstantBuffers(1, 1, projection_buffer_2d.GetAddressOf());
 
 	device->CreateBuffer(&buffer_desc, NULL, view_buffer.GetAddressOf());
-	immediate_context->VSSetConstantBuffers(4, 1, view_buffer.GetAddressOf());
+	immediate_context->VSSetConstantBuffers(2, 1, view_buffer.GetAddressOf());
 
 	device->CreateBuffer(&buffer_desc, NULL, projection_buffer.GetAddressOf());
-	immediate_context->VSSetConstantBuffers(5, 1, projection_buffer.GetAddressOf());
+	immediate_context->VSSetConstantBuffers(3, 1, projection_buffer.GetAddressOf());
+
+	device->CreateBuffer(&buffer_desc, NULL, world_buffer.GetAddressOf());
+	immediate_context->VSSetConstantBuffers(4, 1, world_buffer.GetAddressOf());
 
 	buffer_desc.ByteWidth = 16; //sizeof(XX::Math::Float2);
 	device->CreateBuffer(&buffer_desc, NULL, texcoord_offset_buffer.GetAddressOf());
 	immediate_context->VSSetConstantBuffers(6, 1, texcoord_offset_buffer.GetAddressOf());
-	immediate_context->PSSetConstantBuffers(6, 1, texcoord_offset_buffer.GetAddressOf());
 
 	buffer_desc.ByteWidth = 16; //sizeof(XX::Material);
 	device->CreateBuffer(&buffer_desc, NULL, material_buffer.GetAddressOf());
-	immediate_context->VSSetConstantBuffers(7, 1, material_buffer.GetAddressOf());
 	immediate_context->PSSetConstantBuffers(7, 1, material_buffer.GetAddressOf());
 
 	buffer_desc.ByteWidth = 16; //sizeof(XX::Light);
 	device->CreateBuffer(&buffer_desc, NULL, light_buffer.GetAddressOf());
-	immediate_context->VSSetConstantBuffers(8, 1, light_buffer.GetAddressOf());
 	immediate_context->PSSetConstantBuffers(8, 1, light_buffer.GetAddressOf());
 
 	buffer_desc.ByteWidth = 16; //sizeof(XX::CameraParameter);
 	device->CreateBuffer(&buffer_desc, NULL, camera_parameter_buffer.GetAddressOf());
-	immediate_context->VSSetConstantBuffers(9, 1, camera_parameter_buffer.GetAddressOf());
 	immediate_context->PSSetConstantBuffers(9, 1, camera_parameter_buffer.GetAddressOf());
 
 	buffer_desc.ByteWidth = 16; //sizeof(XX::ExtraParameter);
 	device->CreateBuffer(&buffer_desc, NULL, extra_parameter_buffer.GetAddressOf());
-	immediate_context->VSSetConstantBuffers(10, 1, extra_parameter_buffer.GetAddressOf());
 	immediate_context->PSSetConstantBuffers(10, 1, extra_parameter_buffer.GetAddressOf());
 
 	//定数バッファ初期値を設定
@@ -381,15 +371,12 @@ namespace XX
 		deferred_context[thread]->FinishCommandList(FALSE, command_list[thread].GetAddressOf());
 	}
 
-	void Graphics::SetDepthEnable(bool Enable, size_t thread) const
+	void Graphics::SetDepthEnable(bool enable, size_t thread) const
 	{
-
-	}
-
-	void  Graphics::SetWorldMatrix2D(const Math::Matrix* world_matrix_2d, size_t thread) const
-	{
-		Matrix matrix = XMMatrixTranspose(*world_matrix_2d);
-		deferred_context[thread]->UpdateSubresource(world_buffer_2d.Get(), 0, NULL, &matrix, 0, 0);
+		if (enable)
+			deferred_context[thread]->OMSetDepthStencilState(depth_state_enable.Get(), NULL);
+		else
+			deferred_context[thread]->OMSetDepthStencilState(depth_state_disable.Get(), NULL);
 	}
 
 	void Graphics::SetWorldMatrix(const Matrix* world_matrix, size_t thread) const

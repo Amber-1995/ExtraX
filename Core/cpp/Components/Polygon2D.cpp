@@ -3,7 +3,7 @@
 
 
 
-namespace XX::Game
+namespace XX::Game::Components
 {
 	using namespace Math;
 

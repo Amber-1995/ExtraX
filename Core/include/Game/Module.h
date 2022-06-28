@@ -18,6 +18,8 @@ namespace XX::Game
 		friend class Component;
 
 	private:
+		inline static std::mutex _mutex;
+
 		std::list<GameObject*> _new_game_objects;
 
 		std::list<GameObject*> _current_game_objects;
@@ -29,8 +31,6 @@ namespace XX::Game
 		//inline static ThreadManager _thread_manager = { _SubProcess , THREAD_NUM };
 
 	public:
-		Scene();
-		
 		virtual ~Scene();
 
 		void FramePreprocess();
@@ -47,6 +47,8 @@ namespace XX::Game
 		friend class Component;
 
  	private:
+		inline static std::mutex _mutex;
+
 		inline static Scene* _current_scene;
 
 		std::list<Component*> _new_components;
@@ -57,14 +59,11 @@ namespace XX::Game
 
 		std::list<GameObject*>::iterator _self;
 
-		static void _SetCurrentScene(Scene* scene);
 
 		void _FramePreprocess();
 
 	public:
 		Scene* const scene = _current_scene;
-
-		GameObject();
 	
 		virtual ~GameObject();
 
@@ -87,14 +86,10 @@ namespace XX::Game
 
 		std::list<Component*>::iterator _self;
 
-		inline static void _SetCurrentSceneAndGameObject(Scene* scene, GameObject* game_object);
-
 	public:
 		Scene* const scene = _current_scene;
 
 		GameObject* const game_object = _current_game_object;
-
-		Component();
 
 		virtual ~Component() {}
 
@@ -123,16 +118,28 @@ namespace XX::Game
 	template<class T, class... ARGS>
 	inline T* Scene::AddGameObject(ARGS... args)
 	{
-		GameObject::_SetCurrentScene(this);
-
-		return new T(args...);
+		_mutex.lock();
+		GameObject::_current_scene = this;
+		T* t = new T(args...);
+		GameObject* new_game_object = t;
+		_new_game_objects.push_front(new_game_object);
+		new_game_object->_self = _new_game_objects.begin();
+		_mutex.unlock();
+		return t;
 	}
 
 	template<class T, class ...ARGS>
 	inline T* GameObject::AddComponent(ARGS ...args)
 	{
-		Component::_SetCurrentSceneAndGameObject(scene, this);
-		return new T(args...);
+		_mutex.lock();
+		Component::_current_scene = scene;
+		Component::_current_game_object = this;
+		T* t = new T(args...);
+		Component* new_component = t;
+		_new_components.push_front(new_component);
+		new_component->_self = _new_components.begin();
+		_mutex.unlock();
+		return t;
 	}
 
 }

@@ -66,14 +66,6 @@ namespace XX
 		return narrow;
 	}
 
-	bool ThreadManager::_GetCompletionSignal()
-	{
-		for (int i = 0; i < _thread_num; ++i)
-		{
-			if (!_signal[i]) return false;
-		}
-		return true;
-	}
 
 	ThreadManager::ThreadManager(void(*func)(size_t n), size_t thread_num):
 		_thread_num(thread_num)
@@ -119,10 +111,14 @@ namespace XX
 
 	void ThreadManager::WaitCompletionSignal()
 	{
-		while(_GetCompletionSignal())
+		for (size_t i = 0; i < _thread_num; ++i)
 		{
-			std::this_thread::yield();
+			while (_signal[i])
+			{
+				std::this_thread::yield();
+			}
 		}
+		
 	}
 
 	void ThreadManager::WaitBeginSignal(size_t n)

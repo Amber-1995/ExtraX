@@ -41,6 +41,13 @@ struct MATERIAL
 	float3 Dummy;
 };
 
+struct TexcoordOffset
+{
+	float x;
+	float y;
+	float dummy[2];
+};
+
 
 struct CameraParameter
 {
@@ -49,5 +56,5 @@ struct CameraParameter
 
 struct ExtraParameter
 {
-
+	float dummy[4];
 };

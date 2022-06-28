@@ -89,8 +89,6 @@ namespace XX
 
 		std::thread** _thread;
 
-		bool _GetCompletionSignal();
-
 	public:
 		ThreadManager(void(*fun)(size_t n), size_t thread_num);
 

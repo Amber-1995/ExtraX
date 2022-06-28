@@ -2,7 +2,7 @@
 #include "Game/Event/IOnTransform.h"
 #include "Common/Graphics.h"
 
-namespace XX::Game
+namespace XX::Game::Components
 {
 	using namespace DirectX;
 	using namespace Math;
@@ -469,16 +469,16 @@ namespace XX::Game
 	{
 		switch (matrix_type)
 		{
-		case XX::Game::MATRIX_TYPE::WORLD_MATRIX:
+		case MATRIX_TYPE::WORLD_MATRIX:
 			return _matrix_w;
 			break;
-		case XX::Game::MATRIX_TYPE::TRANSLATE_MATRIX:
+		case MATRIX_TYPE::TRANSLATE_MATRIX:
 			return _matrix_t;
 			break;
-		case XX::Game::MATRIX_TYPE::ROTATE_MATRIX:
+		case MATRIX_TYPE::ROTATE_MATRIX:
 			return _matrix_r;
 			break;
-		case XX::Game::MATRIX_TYPE::SCALE_MATRIX:
+		case MATRIX_TYPE::SCALE_MATRIX:
 			return _matrix_s;
 			break;
 		default:

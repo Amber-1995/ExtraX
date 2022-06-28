@@ -1,36 +1,31 @@
 #include "Common.hlsl"
 
-cbuffer WorldBuffer2D : register(b0)
-{
-	matrix World2D;
-}
-
-cbuffer ViewBuffer2D : register(b1)
+cbuffer ViewBuffer2D : register(b0)
 {
 	matrix View2D;
 }
 
-cbuffer ProjectionBuffer2D : register(b2)
+cbuffer ProjectionBuffer2D : register(b1)
 {
 	matrix Projection2D;
 }
 
-cbuffer WorldBuffer : register(b3)
-{
-	matrix World;
-}
-
-cbuffer ViewBuffer : register(b4)
+cbuffer ViewBuffer : register(b2)
 {
 	matrix View;
 }
 
-cbuffer ProjectionBuffer : register(b5)
+cbuffer ProjectionBuffer : register(b3)
 {
 	matrix Projection;
 }
 
-cbuffer TexCoordOffsetBuffer : register(b6)
+cbuffer WorldBuffer : register(b4)
 {
-	float2 TexCoordOffset;
+	matrix World;
+}
+
+cbuffer TexcoordOffsetBuffer : register(b5)
+{
+	TexcoordOffset Offset;
 }

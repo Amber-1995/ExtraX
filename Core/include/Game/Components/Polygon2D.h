@@ -7,7 +7,7 @@
 #include "Common/Asset.h"
 #include "Transform.h"
 
-namespace XX::Game
+namespace XX::Game::Components
 {
 	class Rect2D : public Component, public Event::IRender2D, public Event::IOnStart
 	{

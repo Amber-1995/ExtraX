@@ -73,13 +73,11 @@ namespace XX
 
 		void SetDepthEnable(bool Enable, size_t thread) const;
 
-		void SetWorldMatrix2D(const Math::Matrix* world_matrix_2d, size_t thread) const;
-
-		void SetWorldMatrix(const Math::Matrix* world_matrix, size_t thread) const;
-
 		void SetViewMatrix(const Math::Matrix* view_matrix, size_t thread) const;
 
 		void SetProjectionMatrix(const Math::Matrix* projection_matrix, size_t thread) const;
+
+		void SetWorldMatrix(const Math::Matrix* world_matrix, size_t thread) const;
 
 		Mesh CreateMesh(std::vector<Vertex>& vertices, std::vector<Index>& indices) const;
 
