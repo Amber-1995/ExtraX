@@ -14,7 +14,7 @@ XX::Game::~Game()
 
 
 
-int XX::Game::Run()
+int XX::Game::Run(HWND window)
 {
 	_scene = ScenePtr(new TestScene01());
 	_next_scene = _scene;
@@ -23,7 +23,7 @@ int XX::Game::Run()
 
 	MSG msg{};
 	while (1) {
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+		if (PeekMessage(&msg, window, 0, 0, PM_REMOVE)) {
 			if (msg.message == WM_QUIT) {
 				break;
 			}

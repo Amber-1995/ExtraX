@@ -10,24 +10,7 @@ XX::Animation2D::Animation2D() :
 
 void XX::Animation2D::Update()
 {
-	Animation2DClip& cc = _animation_clips_map[_current_clip];
-
-	if (cc.next_clip_name == _next_clip || cc.has_exit_time) {
-		_SetAnimation();
-	}
-	else {
-		_NextClip();
-		_SetAnimation();
-	}
-	_current_grid += _rate * _rate_scale * 0.017f;
-	if (_current_grid > cc.end_grid - cc.start_grid + 1) {
-		_NextClip();
-	}
-
-	auto e = _animation_events_map[_current_clip].find((int)_current_grid);
-	if (e != _animation_events_map[_current_clip].end()) {
-		(*e).second();
-	}
+	
 }
 
 void XX::Animation2D::SetTarget(SpritePtr target)

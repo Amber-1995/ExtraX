@@ -30,15 +30,15 @@ XX::Sprite::Sprite(float width, float height, const std::string& texture_file) :
 	vertex[3].diffuse = XXVector4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[3].tex_coord = XXVector2(1.0f, 1.0f);
 		
-	std::vector<UINT> index(6);
-	index[0] = 0;
-	index[1] = 1;
-	index[2] = 2;
-	index[3] = 2;
-	index[4] = 1;
-	index[5] = 3;
+	std::vector<UINT> indices(6);
+	indices[0] = 0;
+	indices[1] = 1;
+	indices[2] = 2;
+	indices[3] = 2;
+	indices[4] = 1;
+	indices[5] = 3;
 		
-	_mesh = MeshPtr(new Mesh(vertex, index, texture_file));
+	_mesh = MeshPtr(new Mesh(vertex, indices, texture_file));
 
 	
 	_vertex_shader = VertexShader::Load("Assets\\Shaders\\unlitTextureVS.cso");

@@ -13,7 +13,7 @@ namespace XX
 		Game& operator=(const Game&) = delete;
 		virtual ~Game();
 
-		int Run();
+		int Run(HWND window);
 
 		void NextScene(ScenePtr scene);
 

@@ -212,7 +212,7 @@ void XX::Graphics::SetDepthEnable(bool enable) const
 {
 	if (enable)
 		_device_context->OMSetDepthStencilState(_depth_state_enable.Get(), NULL);
-	else
+	else 
 		_device_context->OMSetDepthStencilState(_depth_state_disable.Get(), NULL);
 }
 
