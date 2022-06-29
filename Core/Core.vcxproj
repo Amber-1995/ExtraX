@@ -92,18 +92,17 @@
     <ClCompile Include="cpp\ExtraX.cpp" />
     <ClCompile Include="cpp\Event\IRender.cpp" />
     <ClCompile Include="cpp\Event\IUpdate.cpp" />
-    <ClCompile Include="cpp\GameObjects\CameraObj.cpp" />
     <ClCompile Include="cpp\Module.cpp" />
     <ClCompile Include="cpp\Timer.cpp" />
     <ClCompile Include="cpp\Components\Transform.cpp" />
     <ClCompile Include="cpp\Win32Window.cpp" />
     <ClCompile Include="cpp\Components\Camera.cpp" />
-    <ClCompile Include="cpp\Components\Polygon2D.cpp" />
+    <ClCompile Include="cpp\Components\Polygon.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game\Components\Camera.h" />
-    <ClInclude Include="include\Game\Components\Polygon2D.h" />
+    <ClInclude Include="include\Game\Components\Polygon.h" />
     <ClInclude Include="include\Game\Event\Event.h" />
     <ClInclude Include="include\Game\Event\IOnStart.h" />
     <ClInclude Include="include\Game\Event\IOnTransform.h" />
@@ -111,7 +110,6 @@
     <ClInclude Include="include\Game\Event\IRender.h" />
     <ClInclude Include="include\Game\Game.h" />
     <ClInclude Include="include\Common\Asset.h" />
-    <ClInclude Include="include\Game\GameObjects\CameraObj.h" />
     <ClInclude Include="include\Game\Module.h" />
     <ClInclude Include="include\Game\Components\Transform.h" />
     <ClInclude Include="include\Core.h" />

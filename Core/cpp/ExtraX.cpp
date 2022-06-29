@@ -123,7 +123,7 @@ namespace XX
 
 	void ThreadManager::WaitBeginSignal(size_t n)
 	{
-		while (!_signal[n])
+		while (!_signal[n] && ExtraX::running)
 		{            
 			std::this_thread::yield();
 		}

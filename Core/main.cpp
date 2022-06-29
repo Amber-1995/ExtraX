@@ -9,7 +9,7 @@
 #include <Windows.h>
 
 
-#include "Game/Components/Polygon2D.h"
+#include "Game/Components/Polygon.h"
 #include "Game/Components/Transform.h"
 using namespace XX;
 using namespace XX::Game;
@@ -19,6 +19,10 @@ int main()
     ExtraX::Initialize("2333");
 
 	Scene s;
+
+	GameObject* g = s.AddGameObject<GameObject>();
+	g->AddComponent<Components::Transform>();
+	g->AddComponent<Components::Rect2D>();
 
 	// メッセージループ
 	MSG msg;

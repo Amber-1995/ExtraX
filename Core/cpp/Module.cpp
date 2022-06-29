@@ -7,9 +7,10 @@ namespace XX::Game
 {
 	void Scene::_SubProcess(size_t thread)
 	{
-		//while (ExtraX::running)
+		//while (true)
 		//{
 			//_thread_manager.WaitBeginSignal(thread);
+			if (!ExtraX::running) return;
 			Event::IUpdate::FrameProcess(thread);
 			Event::IRender3D::FrameProcess(thread);
 			Event::IRender2D::FrameProcess(thread);
@@ -87,10 +88,14 @@ namespace XX::Game
 
 		for (auto i : _new_components)
 		{
+			_current_components.push_back(i);
+		}
+		for (auto i : _new_components)
+		{
 			Event::IOnStart* p = dynamic_cast<Event::IOnStart*>(i);
 			if (p) { p->OnStart(); }
 		}
-		_current_components.splice(_current_components.end(), _new_components);
+		_new_components.clear();
 	}
 
 	void GameObject::Destroy()
