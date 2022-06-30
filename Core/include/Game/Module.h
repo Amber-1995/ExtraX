@@ -22,6 +22,8 @@ namespace XX::Game
 
 		std::list<GameObject*> _new_game_objects;
 
+		std::list<GameObject*> _new_game_objects_copy;
+
 		std::list<GameObject*> _current_game_objects;
 
 		std::list<GameObject*> _deleted_game_objects;
@@ -52,6 +54,8 @@ namespace XX::Game
 		inline static Scene* _current_scene;
 
 		std::list<Component*> _new_components;
+
+		std::list<Component*> _new_components_copy;
 
 		std::list<Component*> _current_components;
 
@@ -122,6 +126,7 @@ namespace XX::Game
 		GameObject::_current_scene = this;
 		T* t = new T(args...);
 		GameObject* new_game_object = t;
+		_new_game_objects_copy.push_front(new_game_object);
 		_new_game_objects.push_front(new_game_object);
 		new_game_object->_self = _new_game_objects.begin();
 		_mutex.unlock();
@@ -136,6 +141,7 @@ namespace XX::Game
 		Component::_current_game_object = this;
 		T* t = new T(args...);
 		Component* new_component = t;
+		_new_components_copy.push_front(new_component);
 		_new_components.push_front(new_component);
 		new_component->_self = _new_components.begin();
 		_mutex.unlock();

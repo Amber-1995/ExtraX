@@ -105,7 +105,7 @@ namespace XX::Game::Components
 		_OnUpdate();
 	}
 
-	void Transform::Position::Translate(const Math::Float3& other)
+	void Transform::Position::Translate(const Float3& other)
 	{
 		_vector += XMVectorSet(other.x, other.y, other.z, 0.0f);
 		_OnUpdate();
@@ -136,14 +136,14 @@ namespace XX::Game::Components
 		return *this;
 	}
 
-	Transform::Position& Transform::Position::operator=(const Math::Float3& other)
+	Transform::Position& Transform::Position::operator=(const Float3& other)
 	{
 		_vector = XMVectorSet(other.x, other.y, other.z, 0.0f);
 		_OnUpdate();
 		return *this;
 	}
 
-	Transform::Position& Transform::Position::operator+=(const Math::Vector& other)
+	Transform::Position& Transform::Position::operator+=(const Vector& other)
 	{
 		_vector += other;
 		_OnUpdate();
@@ -151,7 +151,7 @@ namespace XX::Game::Components
 
 	}
 
-	Transform::Position& Transform::Position::operator+=(const Math::Float3& other)
+	Transform::Position& Transform::Position::operator+=(const Float3& other)
 	{
 		_vector += XMVectorSet(other.x, other.y, other.z, 0.0f);
 		_OnUpdate();
@@ -165,7 +165,7 @@ namespace XX::Game::Components
 		return *this;
 	}
 
-	Transform::Position& Transform::Position::operator-=(const Math::Float3& other)
+	Transform::Position& Transform::Position::operator-=(const Float3& other)
 	{
 		_vector -= XMVectorSet(other.x, other.y, other.z, 0.0f);
 		_OnUpdate();
@@ -191,7 +191,7 @@ namespace XX::Game::Components
 		return _vector + other;
 	}
 
-	Math::Vector Transform::Position::operator+(const Math::Float3& other) const
+	Vector Transform::Position::operator+(const Float3& other) const
 	{
 		return _vector + XMVectorSet(other.x, other.y, other.z, 0.0f);
 	}
@@ -201,7 +201,7 @@ namespace XX::Game::Components
 		return _vector - other;
 	}
 
-	Math::Vector Transform::Position::operator-(const Math::Float3& other) const
+	Vector Transform::Position::operator-(const Float3& other) const
 	{
 		return _vector - XMVectorSet(other.x, other.y, other.z, 0.0f);
 	}
@@ -218,7 +218,7 @@ namespace XX::Game::Components
 
 	void Transform::Rotation::_OnUpdate()
 	{
-		_transform->_matrix_t = XMMatrixRotationQuaternion(_quaternion);
+		_transform->_matrix_r = XMMatrixRotationQuaternion(_quaternion);
 		_transform->_OnTranslate();
 	}
 
@@ -226,13 +226,14 @@ namespace XX::Game::Components
 		_transform(transform)
 	{
 		_quaternion = XMQuaternionIdentity();
-		_transform->_matrix_t = XMMatrixRotationQuaternion(_quaternion);
+		_transform->_matrix_r = XMMatrixRotationQuaternion(_quaternion);
 	}
 
 	void Transform::Rotation::Rotate(const Vector& rotation)
 	{
 		Vector vec = DirectX::XMQuaternionRotationRollPitchYawFromVector(rotation);
 		_quaternion = DirectX::XMQuaternionMultiply(_quaternion, vec);
+		_OnUpdate();
 	}
 
 	void Transform::Rotation::Rotate(const Math::Float3& rotation)
@@ -249,7 +250,7 @@ namespace XX::Game::Components
 		_quaternion = DirectX::XMQuaternionMultiply(_quaternion, vec);
 	}
 
-	Transform::Rotation::operator Math::Quaternion()
+	Transform::Rotation::operator Quaternion()
 	{
 		return _quaternion;
 	}
@@ -318,7 +319,7 @@ namespace XX::Game::Components
 		_transform(transform)
 	{
 		_vector = XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f);
-		_transform->_matrix_t = XMMatrixScalingFromVector(_vector);
+		_transform->_matrix_s = XMMatrixScalingFromVector(_vector);
 	}
 
 	Transform::Scale::operator Math::Vector()

@@ -43,10 +43,8 @@ int main()
 		}
 		else
 		{
-			ExtraX::graphics->Begin();
 			s.FramePreprocess();
 			s.FrameProcess();
-			ExtraX::graphics->End();
 		}
 	}
 

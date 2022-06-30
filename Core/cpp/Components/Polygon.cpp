@@ -16,6 +16,9 @@ namespace XX::Game::Components
 	void Rect2D::OnStart()
 	{
 		_transform = GetComponent<Transform>();
+		_transform->position = Float3(100.0f, 100.0f, 0.0f);
+		_transform->rotation.Rotate(0.0f, 0.0f, 0.0f);
+		_transform->scale = Float3(1.0f, 1.0f, 1.0f);
 	}
 	Rect2D::Rect2D()
 	{

@@ -42,6 +42,7 @@ namespace XX::Game
 		_deleted_game_objects.clear();
 
 		_current_game_objects.splice(_current_game_objects.end(), _new_game_objects);
+		_new_game_objects_copy.clear();
 
 		for (auto& i : _current_game_objects)
 		{
@@ -55,6 +56,7 @@ namespace XX::Game
 
 	void Scene::FrameProcess()
 	{
+		ExtraX::graphics->Begin();
 		//_thread_manager.SendBeginSignal();
 		//_thread_manager.WaitCompletionSignal();
 
@@ -62,6 +64,8 @@ namespace XX::Game
 		{
 			_SubProcess(i);
 		}
+
+		ExtraX::graphics->End();
 	}
 
 	GameObject::~GameObject()
@@ -86,16 +90,15 @@ namespace XX::Game
 		}
 		_deleted_components.clear();
 
-		for (auto i : _new_components)
+
+		_current_components.splice(_current_components.end(), _new_components);
+
+		for (auto& i : _new_components_copy)
 		{
-			_current_components.push_back(i);
+			Event::IOnStart* on_start = dynamic_cast<Event::IOnStart*>(i);
+			if (on_start) on_start->OnStart();
 		}
-		for (auto i : _new_components)
-		{
-			Event::IOnStart* p = dynamic_cast<Event::IOnStart*>(i);
-			if (p) { p->OnStart(); }
-		}
-		_new_components.clear();
+		_new_components_copy.clear();
 	}
 
 	void GameObject::Destroy()
