@@ -19,6 +19,7 @@ int main()
     ExtraX::Initialize("2333");
 
 	Scene s;
+	s.Start();
 
 	GameObject* g = s.AddGameObject<GameObject>();
 	g->AddComponent<Components::Transform>();
@@ -26,7 +27,7 @@ int main()
 
 	// メッセージループ
 	MSG msg;
-	while (1)
+	while (true)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
@@ -43,8 +44,7 @@ int main()
 		}
 		else
 		{
-			s.FramePreprocess();
-			s.FrameProcess();
+			s.Run();
 		}
 	}
 

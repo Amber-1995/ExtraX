@@ -12,32 +12,56 @@ namespace XX::Game
 	class GameObject;
 	class Component;
 
-	class Scene
+	XXAPI class Scene
 	{
 		friend class GameObject;
 		friend class Component;
 
 	private:
-		inline static std::mutex _mutex;
+		class GameObjectsManager
+		{
+		private:
+			Scene* const _scene;
 
-		std::list<GameObject*> _new_game_objects;
+			inline static  std::mutex _mutex;
 
-		std::list<GameObject*> _new_game_objects_copy;
+			std::list<GameObject*> _new_game_objects;
 
-		std::list<GameObject*> _current_game_objects;
+			std::list<GameObject*> _current_game_objects;
 
-		std::list<GameObject*> _deleted_game_objects;
+			std::list<GameObject*> _deleted_game_objects;
 
-		static void _SubProcess(size_t thread);
+		public:
+			GameObjectsManager(Scene* scene);
 
-		//inline static ThreadManager _thread_manager = { _SubProcess , THREAD_NUM };
+			virtual ~GameObjectsManager();
+
+			void Lock();
+
+			void Unlock();
+
+			void Add(GameObject* game_object);
+
+			void Remove(GameObject* game_object);
+
+			void Update();
+
+		} _game_objects_manager = { this };
+
+		inline static Scene* _focus_scene = nullptr;
+
+		void _ProcessPerThread(size_t thread);
+
+		void _Preprocess();
+
+		void _Process();
+
+		ThreadManager _thread_manager = { THREAD_NUM };
 
 	public:
-		virtual ~Scene();
+		void Start();
 
-		void FramePreprocess();
-
-		void FrameProcess();
+		void Run();
 
 		template<class T, class... ARGS> 
 		T* AddGameObject(ARGS... args);
@@ -49,27 +73,51 @@ namespace XX::Game
 		friend class Component;
 
  	private:
-		inline static std::mutex _mutex;
+		class ComponentsManager
+		{
+			friend class Component;
+		private:
+			Scene* const _scene;
 
-		inline static Scene* _current_scene;
+			GameObject* const _game_object;
 
-		std::list<Component*> _new_components;
+			inline static std::mutex _mutex;
 
-		std::list<Component*> _new_components_copy;
+			std::list<Component*> _new_components;
 
-		std::list<Component*> _current_components;
+			std::list<Component*> _new_components_copy;
 
-		std::list<Component*> _deleted_components;
+			std::list<Component*> _current_components;
+
+			std::list<Component*> _deleted_components;
+
+		public:
+			ComponentsManager(Scene* scene, GameObject* game_object);
+
+			virtual ~ComponentsManager();
+
+			void Lock();
+
+			void Unlock();
+
+			void Add(Component* component);
+
+			void Remove(Component* component);
+
+			void Update();
+
+		} _components_manager = { Scene::_focus_scene, this };
+
+		inline static Scene* _focus_scene = nullptr;
+
+		inline static GameObject* _focus_game_object = nullptr;
 
 		std::list<GameObject*>::iterator _self;
-
 
 		void _FramePreprocess();
 
 	public:
-		Scene* const scene = _current_scene;
-	
-		virtual ~GameObject();
+		Scene* const scene = Scene::_focus_scene;
 
 		void Destroy();
 
@@ -84,16 +132,12 @@ namespace XX::Game
 		friend class GameObject;
 
 	private:
-		inline static Scene* _current_scene;
-
-		inline static GameObject* _current_game_object;
-
 		std::list<Component*>::iterator _self;
 
 	public:
-		Scene* const scene = _current_scene;
+		Scene* const scene = GameObject::_focus_scene;
 
-		GameObject* const game_object = _current_game_object;
+		GameObject* const game_object = GameObject::_focus_game_object;
 
 		virtual ~Component() {}
 
@@ -108,13 +152,10 @@ namespace XX::Game
 	template<class T>
 	inline T* Component::GetComponent()
 	{
-		for (auto& i : game_object->_current_components)
+		for (auto& i : game_object->_components_manager._current_components)
 		{
 			T* t = dynamic_cast<T*>(i);
-			if (t)
-			{
-				return t;
-			}
+			if (t) return t;
 		}
 		return nullptr;
 	}
@@ -122,29 +163,20 @@ namespace XX::Game
 	template<class T, class... ARGS>
 	inline T* Scene::AddGameObject(ARGS... args)
 	{
-		_mutex.lock();
-		GameObject::_current_scene = this;
+		_game_objects_manager.Lock();
 		T* t = new T(args...);
-		GameObject* new_game_object = t;
-		_new_game_objects_copy.push_front(new_game_object);
-		_new_game_objects.push_front(new_game_object);
-		new_game_object->_self = _new_game_objects.begin();
-		_mutex.unlock();
+		_game_objects_manager.Add(t);
+		_game_objects_manager.Unlock();
 		return t;
 	}
 
 	template<class T, class ...ARGS>
 	inline T* GameObject::AddComponent(ARGS ...args)
 	{
-		_mutex.lock();
-		Component::_current_scene = scene;
-		Component::_current_game_object = this;
+		_components_manager.Lock();
 		T* t = new T(args...);
-		Component* new_component = t;
-		_new_components_copy.push_front(new_component);
-		_new_components.push_front(new_component);
-		new_component->_self = _new_components.begin();
-		_mutex.unlock();
+		_components_manager.Add(t);
+		_components_manager.Unlock();
 		return t;
 	}
 

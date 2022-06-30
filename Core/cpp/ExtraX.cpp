@@ -4,6 +4,7 @@
 #include "Common/Input.h"
 #include "Common/Window.h"
 #include "Common/Timer.h"
+#include "Game/Module.h"
 
 
 namespace XX
@@ -66,39 +67,58 @@ namespace XX
 		return narrow;
 	}
 
-
-	ThreadManager::ThreadManager(void(*func)(size_t n), size_t thread_num):
-		_thread_num(thread_num)
+	void ThreadManager::_SendCompletionSignal(size_t n)
 	{
-		_signal = new std::atomic<bool>[_thread_num];
-		for (int i = 0; i < _thread_num; ++i)
-		{
-			_signal[i] = false;
-		}
-		 
-		_thread = new std::thread * [_thread_num];
-		for (int i = 0; i < _thread_num; ++i)
-		{
-			_thread[i] = new std::thread(func, i);
-		}
+		_signal[n] = false;
+	}
 
+	void ThreadManager::_WaitBeginSignal(size_t n)
+	{
+		while (!_signal[n] && ExtraX::running)
+		{            
+			std::this_thread::yield();
+		}
+	}
+
+	void ThreadManager::_ProcessPerThread(ThreadManager* thread_manager, Game::Scene* scene, void(Game::Scene::*Process)(size_t thread_num), size_t thread_num)
+	{
+		while (true)
+		{
+			thread_manager->_WaitBeginSignal(thread_num);
+			if (!ExtraX::running) return;
+			(scene->*Process)(thread_num);
+			thread_manager->_SendCompletionSignal(thread_num);
+
+		}
+	}
+
+	ThreadManager::ThreadManager(size_t thread_num) :
+		_thread_num(thread_num),
+		_signal(thread_num),
+		_thread(thread_num)
+	{
+		for (auto& i : _signal)
+		{
+			i = false;
+		}
 	}
 
 	ThreadManager::~ThreadManager()
 	{
-		delete[] _signal;
 
-		for (int i = 0; i < _thread_num; ++i)
+		for (auto& i : _thread)
 		{
-			_thread[i]->join();
-			delete _thread[i];
+			i->join();
+			delete i;
 		}
-		delete _thread;
 	}
 
-	void ThreadManager::SendCompletionSignal(size_t n)
+	void ThreadManager::Start(Game::Scene* scene, void(Game::Scene::* ProcessPerThread)(size_t thread_num))
 	{
-		_signal[n] = false;
+		for (size_t i = 0; i < _thread_num; ++i)
+		{
+			_thread[i] = new std::thread(_ProcessPerThread, this, scene, ProcessPerThread, i);
+		}
 	}
 
 	void ThreadManager::SendBeginSignal()
@@ -118,14 +138,7 @@ namespace XX
 				std::this_thread::yield();
 			}
 		}
-		
-	}
 
-	void ThreadManager::WaitBeginSignal(size_t n)
-	{
-		while (!_signal[n] && ExtraX::running)
-		{            
-			std::this_thread::yield();
-		}
 	}
 }
+

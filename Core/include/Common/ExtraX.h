@@ -80,28 +80,37 @@ namespace XX
 		static void Next(IT& it, IT end, size_t n);
 	};
 
+	namespace Game
+	{
+		class Scene;
+	}
+	
+
 	XXAPI class ThreadManager
 	{
 	private:
 		size_t _thread_num;
 
-		std::atomic<bool>* _signal;
+		std::vector<std::atomic<bool>> _signal;
 
-		std::thread** _thread;
+		std::vector<std::thread*> _thread;
+
+		void _SendCompletionSignal(size_t n);
+
+		void _WaitBeginSignal(size_t n);
+
+		static  void _ProcessPerThread(ThreadManager* thread_manager, Game::Scene* scene, void(Game::Scene::* Process)(size_t thread_num), size_t thread_num);
 
 	public:
-		ThreadManager(void(*fun)(size_t n), size_t thread_num);
+		ThreadManager(size_t thread_num);
 
 		virtual ~ThreadManager();
 
-		void SendCompletionSignal(size_t n);
+		void Start(Game::Scene* scene, void(Game::Scene::* ProcessPerThread)(size_t thread_num));
 
 		void SendBeginSignal();
 
 		void WaitCompletionSignal();
-
-		void WaitBeginSignal(size_t n);
-
 
 	};
 
