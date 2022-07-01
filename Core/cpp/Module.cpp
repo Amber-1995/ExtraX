@@ -6,19 +6,19 @@
 namespace XX::Game
 {
 	Scene::GameObjectsManager::GameObjectsManager(Scene* scene):
-		_scene(scene)
+		scene(scene)
 	{
 
 	}
 
 	Scene::GameObjectsManager::~GameObjectsManager()
 	{
-		for (auto& i : _new_game_objects)
+		for (auto& i : new_game_objects)
 		{
 			delete i;
 		}
 
-		for (auto& i : _current_game_objects)
+		for (auto& i : current_game_objects)
 		{
 			delete i;
 		}
@@ -26,42 +26,48 @@ namespace XX::Game
 
 	void Scene::GameObjectsManager::Lock()
 	{
-		_mutex.lock();
-		Scene::_focus_scene = _scene;
+		mutex.lock();
+		Scene::_focus_scene = scene;
 	}
 
 	void Scene::GameObjectsManager::Unlock()
 	{
-		_mutex.unlock();
+		mutex.unlock();
 	}
 
 	void Scene::GameObjectsManager::Add(GameObject* game_object)
 	{
 		
-		_new_game_objects.push_front(game_object);
-		game_object->_self = _new_game_objects.begin();
+		new_game_objects.push_front(game_object);
+		game_object->_self = new_game_objects.begin();
 	}
 
 	void Scene::GameObjectsManager::Remove(GameObject* game_object)
 	{
-		_mutex.lock();
-		_deleted_game_objects.push_front(game_object);
-		_mutex.unlock();
+		mutex.lock();
+		deleted_game_objects.push_front(game_object);
+		mutex.unlock();
 	}
 
 	void Scene::GameObjectsManager::Update()
 	{
-		for (auto& i : _deleted_game_objects)
+		for (auto& i : deleted_game_objects)
 		{
-			_current_game_objects.erase(i->_self);
+			current_game_objects.erase(i->_self);
 			delete i;
 		}
-		_current_game_objects.splice(_current_game_objects.end(), _new_game_objects);
-		for (auto& i : _current_game_objects)
+		current_game_objects.splice(current_game_objects.end(), new_game_objects);
+		for (auto& i : current_game_objects)
 		{
 			i->_FramePreprocess();
 		}
 
+	}
+
+	void Scene::UpdateManager::Add(Component* component)
+	{
+		Event::IUpdate* update = dynamic_cast<Event::IUpdate*>(component);
+		if (update) update_list.push_front(update);
 	}
 
 	void Scene::_ProcessPerThread(size_t thread)
@@ -186,5 +192,8 @@ namespace XX::Game
 	{
 		game_object->_components_manager.Remove(this);
 	}
+
+
+
 
 }
