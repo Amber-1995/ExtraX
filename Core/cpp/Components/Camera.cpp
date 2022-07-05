@@ -5,7 +5,6 @@
 namespace XX::Game::Components
 {
 	using namespace DirectX;
-	using namespace Math;
 
 	void Camera::OnStart()
 	{

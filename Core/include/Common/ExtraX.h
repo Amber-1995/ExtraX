@@ -25,8 +25,6 @@
 	#endif // XXCORE_DLL_IMPORT
 #endif // XXCORE_DLL_EXPORT
 
-
-#define THREAD_NUM (6)
 #define WINDOW_WIDTH (1280)
 #define WINDOW_HEIGHT (720)
 
@@ -40,9 +38,17 @@ namespace XX
 	class Window;
 	class Timer;
 
+	using Float2 = DirectX::XMFLOAT2;
+	using Float3 = DirectX::XMFLOAT3;
+	using Float4 = DirectX::XMFLOAT4;
+	using Vector = DirectX::XMVECTOR;
+	using Quaternion = DirectX::XMVECTOR;
+	using Matrix = DirectX::XMMATRIX;
+
 	XXAPI class ExtraX
 	{
 	private:
+		inline static size_t _thread_num;
 		inline static bool _running = true;
 		inline static Graphics* _graphics = nullptr;
 		inline static AssetImporter* _asset_importer = nullptr;
@@ -52,6 +58,7 @@ namespace XX
 
 		ExtraX() = delete;
 	public:
+		inline static const size_t& thread_num = _thread_num;
 		inline static const bool& running = _running;
 		inline static Graphics* const& graphics = _graphics;
 		inline static AssetImporter* const& asset_importer = _asset_importer;
@@ -61,7 +68,7 @@ namespace XX
 
 		static void Exit();
 
-		static void Initialize(const std::string& title);
+		static void Initialize(const std::string& title, size_t thread_num);
 
 		static void UnInitialize();
 	};
@@ -91,9 +98,11 @@ namespace XX
 	private:
 		size_t _thread_num;
 
+		bool _running = true;
+
 		std::vector<std::atomic<bool>> _signal;
 
-		std::vector<std::thread*> _thread;
+		std::vector<std::thread> _thread;
 
 		void _SendCompletionSignal(size_t n);
 
@@ -104,9 +113,9 @@ namespace XX
 	public:
 		ThreadManager(size_t thread_num);
 
-		virtual ~ThreadManager();
-
 		void Start(Game::Scene* scene, void(Game::Scene::* ProcessPerThread)(size_t thread_num));
+
+		void Stop();
 
 		void SendBeginSignal();
 

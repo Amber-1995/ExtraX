@@ -3,8 +3,7 @@
 
 
 #include "Common/ExtraX.h"
-
-
+#include "Event.h"
 
 namespace XX::Game
 {
@@ -52,45 +51,39 @@ namespace XX::Game
 
 			void Update();
 
-		} _game_objects_manager = { this };
+		} *_game_objects_manager = new GameObjectsManager(this);
 
-		class UpdateManager
+		class UpdateManager : public Event::EventManager<Event::IUpdate>
 		{
 		public:
-			std::list<Event::IUpdate*> update_list;
-			void Add(Component* component);
-			void Remove(Component* component);
 			void ProcessPerThread(size_t thread_num);
-		} _update_manager;
+		} *_update_manager = new UpdateManager;
 
-		class Render2DManager
+		class Render3DManager : public Event::EventManager<Event::IRender3D>
 		{
 		public:
-			std::list<Event::IRender2D*> render2d_list;
-			void Add(Component* component);
-			void Remove(Component* component);
 			void ProcessPerThread(size_t thread_num);
-		} _render2d_manager;
+		} *_render3d_manager = new Render3DManager;
 		
-		class Render3DManager
+		class Render2DManager : public Event::EventManager<Event::IRender2D>
 		{
 		public:
-			std::list<Event::IRender3D*> update_list;
-			void Add(Component* component);
-			void Remove(Component* component);
-			void ProcessPerThread();
-		} _render3d_manager;
+			void ProcessPerThread(size_t thread_num);
+		} *_render2d_manager = new Render2DManager;
+
 		inline static Scene* _focus_scene = nullptr;
 
-		void _ProcessPerThread(size_t thread);
+		void _ProcessPerThread(size_t thread_num);
 
 		void _Preprocess();
 
 		void _Process();
 
-		ThreadManager _thread_manager = { THREAD_NUM };
+		ThreadManager _thread_manager = { ExtraX::thread_num };
 
 	public:
+		virtual ~Scene();
+
 		void Start();
 
 		void Run();
@@ -99,7 +92,7 @@ namespace XX::Game
 		T* AddGameObject(ARGS... args);
 	};
 
-	class GameObject
+	XXAPI class GameObject
 	{
 		friend class Scene;
 		friend class Component;
@@ -116,8 +109,6 @@ namespace XX::Game
 			inline static std::mutex _mutex;
 
 			std::list<Component*> _new_components;
-
-			std::list<Component*> _new_components_copy;
 
 			std::list<Component*> _current_components;
 
@@ -138,7 +129,37 @@ namespace XX::Game
 
 			void Update();
 
-		} _components_manager = { Scene::_focus_scene, this };
+		} *_components_manager = new ComponentsManager(Scene::_focus_scene, this);
+
+		class OnStartManager : public Event::EventManager<Event::IOnStart>
+		{
+		public:
+			void OnStart();
+		} *_onstart_manager = new OnStartManager;
+
+		class OnTansformManager : public Event::EventManager<Event::IOnTransform>
+		{
+		public:
+			void OnTansform();
+		} *_ontransform_manager = new OnTansformManager;
+
+		class OnTranslateManager : public Event::EventManager<Event::IOnTranslate>
+		{
+		public:
+			void OnOnTranslate();
+		} *_ontranslate_manager = new OnTranslateManager;
+
+		class OnRotateManager : public Event::EventManager<Event::IOnRotate>
+		{
+		public:
+			void  OnRotate();
+		} *_onrotate_manager = new OnRotateManager;
+
+		class OnScaleManager : public Event::EventManager<Event::IOnScale>
+		{
+		public:
+			void OnOnScale();
+		}*_onscale_manager = new OnScaleManager;
 
 		inline static Scene* _focus_scene = nullptr;
 
@@ -149,6 +170,8 @@ namespace XX::Game
 		void _FramePreprocess();
 
 	public:
+		virtual ~GameObject();
+
 		Scene* const scene = Scene::_focus_scene;
 
 		void Destroy();
@@ -158,7 +181,7 @@ namespace XX::Game
 		
 	};
 
-	class Component
+	XXAPI class Component
 	{
 		friend class Scene;
 		friend class GameObject;
@@ -184,7 +207,7 @@ namespace XX::Game
 	template<class T>
 	inline T* Component::GetComponent()
 	{
-		for (auto& i : game_object->_components_manager._current_components)
+		for (auto& i : game_object->_components_manager->_current_components)
 		{
 			T* t = dynamic_cast<T*>(i);
 			if (t) return t;
@@ -195,20 +218,20 @@ namespace XX::Game
 	template<class T, class... ARGS>
 	inline T* Scene::AddGameObject(ARGS... args)
 	{
-		_game_objects_manager.Lock();
+		_game_objects_manager->Lock();
 		T* t = new T(args...);
-		_game_objects_manager.Add(t);
-		_game_objects_manager.Unlock();
+		_game_objects_manager->Add(t);
+		_game_objects_manager->Unlock();
 		return t;
 	}
 
 	template<class T, class ...ARGS>
 	inline T* GameObject::AddComponent(ARGS ...args)
 	{
-		_components_manager.Lock();
+		_components_manager->Lock();
 		T* t = new T(args...);
-		_components_manager.Add(t);
-		_components_manager.Unlock();
+		_components_manager->Add(t);
+		_components_manager->Unlock();
 		return t;
 	}
 

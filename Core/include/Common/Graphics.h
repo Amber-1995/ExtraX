@@ -3,8 +3,6 @@
 
 
 #include "ExtraX.h"
-#include "Math.h"
-
 
 
 namespace XX
@@ -13,10 +11,10 @@ namespace XX
 
 	struct Vertex
 	{
-		Math::Float3 position;
-		Math::Float3 normal;
-		Math::Float4 diffuse;
-		Math::Float2 tex_coord;
+		Float3 position;
+		Float3 normal;
+		Float4 diffuse;
+		Float2 tex_coord;
 	};
 
 	struct Material
@@ -73,11 +71,11 @@ namespace XX
 
 		void SetDepthEnable(bool Enable, size_t thread) const;
 
-		void SetViewMatrix(const Math::Matrix* view_matrix, size_t thread) const;
+		void SetViewMatrix(const Matrix* view_matrix, size_t thread) const;
 
-		void SetProjectionMatrix(const Math::Matrix* projection_matrix, size_t thread) const;
+		void SetProjectionMatrix(const Matrix* projection_matrix, size_t thread) const;
 
-		void SetWorldMatrix(const Math::Matrix* world_matrix, size_t thread) const;
+		void SetWorldMatrix(const Matrix* world_matrix, size_t thread) const;
 
 		Mesh CreateMesh(std::vector<Vertex>& vertices, std::vector<Index>& indices) const;
 

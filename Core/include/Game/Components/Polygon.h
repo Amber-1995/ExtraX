@@ -2,7 +2,7 @@
 #define CORE_POLYGON2D_H
 
 #include "Game/Module.h"
-#include "Game/Event/Event.h"
+#include "Game/Event.h"
 #include "Common/Graphics.h"
 #include "Common/Asset.h"
 #include "Transform.h"

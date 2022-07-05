@@ -1,11 +1,8 @@
 #include "Game/Components/Polygon.h"
-#include "Common/Math.h"
-
 
 
 namespace XX::Game::Components
 {
-	using namespace Math;
 
 	void Rect2D::Render2D(size_t thread)
 	{

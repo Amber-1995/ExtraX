@@ -8,14 +8,11 @@
 #include "Common/Input.h"
 #include "Common/Window.h"
 #include "Common/Timer.h"
-#include "Common/Math.h"
 
 #include <wrl.h>
 #include <d3d11.h>
 #include <dxgi1_6.h>
 #include <windows.h>
-
-using namespace XX::Math;
 
 using namespace DirectX;
 
@@ -32,9 +29,9 @@ static ComPtr<ID3D11Device> device;
 
 static ComPtr<ID3D11DeviceContext> immediate_context;
 
-static ComPtr<ID3D11DeviceContext> deferred_context[THREAD_NUM];
+static std::vector<ComPtr<ID3D11DeviceContext>> deferred_context;
 
-static ComPtr<ID3D11CommandList> command_list[THREAD_NUM];
+static std::vector<ComPtr<ID3D11CommandList>> command_list;
 
 static ComPtr<IDXGISwapChain> swap_chain;
 
@@ -98,10 +95,13 @@ void InitialzeDX11()
 	);
 
 	//クリエイト遅延コンテキスト
+	deferred_context.resize(XX::ExtraX::thread_num);
 	for (auto& i : deferred_context)
 	{
 		device->CreateDeferredContext(0, i.GetAddressOf());
 	}
+
+	command_list.resize(XX::ExtraX::thread_num);
 
 	//クリエイトスワップチェーン
 	DXGI_SWAP_CHAIN_DESC1 swap_chain_desc = {};
@@ -228,7 +228,7 @@ void InitialzeDX11()
 
 	// 定数バッファ生成
 	D3D11_BUFFER_DESC buffer_desc;
-	buffer_desc.ByteWidth = sizeof(Matrix);
+	buffer_desc.ByteWidth = sizeof(XX::Matrix);
 	buffer_desc.Usage = D3D11_USAGE_DEFAULT;
 	buffer_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	buffer_desc.CPUAccessFlags = 0;
@@ -271,7 +271,7 @@ void InitialzeDX11()
 	immediate_context->PSSetConstantBuffers(10, 1, extra_parameter_buffer.GetAddressOf());
 
 	//定数バッファ初期値を設定
-	XX::Math::Matrix view2d = XMMatrixIdentity();
+	XX::Matrix view2d = XMMatrixIdentity();
 	view2d = DirectX::XMMatrixTranspose(view2d);
 	immediate_context->UpdateSubresource(view_buffer_2d.Get(), 0, NULL, &view2d, 0, 0);
 
@@ -280,7 +280,7 @@ void InitialzeDX11()
 	projection2d = DirectX::XMMatrixTranspose(projection2d);
 	immediate_context->UpdateSubresource(projection_buffer_2d.Get(), 0, NULL, &projection2d, 0, 0);
 
-	Float2 offset(0.0f, 0.0f);
+	XX::Float2 offset(0.0f, 0.0f);
 	immediate_context->UpdateSubresource(texcoord_offset_buffer.Get(), 0, NULL, &offset, 0, 0);
 		
 }
@@ -498,8 +498,9 @@ namespace XX
 
 	//===========================================================================================================//
 
-	void ExtraX::Initialize(const std::string& title)
+	void ExtraX::Initialize(const std::string& title, size_t thread_num)
 	{
+		_thread_num = thread_num;
 		_input = new Input();
 		_window = new Window(WINDOW_WIDTH, WINDOW_HEIGHT, title);
 		InitialzeDX11();

@@ -1,8 +1,9 @@
 #ifdef WINDOWS
 
 #include "Common/Window.h"
-#include <Windows.h>
+#include "Game/Module.h"
 
+#include <Windows.h>
 
 std::unordered_map<XX::Window*, HWND> win_hwnd;
 
@@ -129,6 +130,37 @@ namespace XX
 	void Window::SetFullScreen(bool enalbe)
 	{
 
+	}
+
+	void Window::BindScene(Game::Scene* scene)
+	{
+		_scene = scene;
+		_scene->Start();
+	}
+
+	void Window::Run()
+	{
+		MSG msg;
+		while (true)
+		{
+			if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+			{
+				if (msg.message == WM_QUIT)
+				{// PostQuitMessage()が呼ばれたらループ終了
+					break;
+				}
+				else
+				{
+					// メッセージの翻訳とディスパッチ
+					TranslateMessage(&msg);
+					DispatchMessage(&msg);
+				}
+			}
+			else
+			{
+				_scene->Run();
+			}
+		}
 	}
 }
 

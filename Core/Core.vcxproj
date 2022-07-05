@@ -90,8 +90,6 @@
   <ItemGroup>
     <ClCompile Include="cpp\DirectX11.cpp" />
     <ClCompile Include="cpp\ExtraX.cpp" />
-    <ClCompile Include="cpp\Event\IRender.cpp" />
-    <ClCompile Include="cpp\Event\IUpdate.cpp" />
     <ClCompile Include="cpp\Module.cpp" />
     <ClCompile Include="cpp\Timer.cpp" />
     <ClCompile Include="cpp\Components\Transform.cpp" />
@@ -103,11 +101,7 @@
   <ItemGroup>
     <ClInclude Include="include\Game\Components\Camera.h" />
     <ClInclude Include="include\Game\Components\Polygon.h" />
-    <ClInclude Include="include\Game\Event\Event.h" />
-    <ClInclude Include="include\Game\Event\IOnStart.h" />
-    <ClInclude Include="include\Game\Event\IOnTransform.h" />
-    <ClInclude Include="include\Game\Event\IUpdate.h" />
-    <ClInclude Include="include\Game\Event\IRender.h" />
+    <ClInclude Include="include\Game\Event.h" />
     <ClInclude Include="include\Game\Game.h" />
     <ClInclude Include="include\Common\Asset.h" />
     <ClInclude Include="include\Game\Module.h" />
@@ -115,7 +109,6 @@
     <ClInclude Include="include\Core.h" />
     <ClInclude Include="include\Common\ExtraX.h" />
     <ClInclude Include="include\Common\Graphics.h" />
-    <ClInclude Include="include\Common\Math.h" />
     <ClInclude Include="include\Common\Property.h" />
     <ClInclude Include="include\Common\Timer.h" />
     <ClInclude Include="include\Common\Input.h" />

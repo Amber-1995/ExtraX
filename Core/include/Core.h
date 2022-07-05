@@ -2,7 +2,6 @@
 #define CORE_H
 
 #include "Common/ExtraX.h"
-#include "Common/Math.h"
 #include "Common/Property.h"
 #include "Common/Asset.h"
 #include "Common/Graphics.h"

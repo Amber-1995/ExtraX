@@ -2,7 +2,6 @@
 #define CORE_TRANSFORM_H
 
 #include "Common/ExtraX.h"
-#include "Common/Math.h"
 #include "Common/Property.h"
 #include "Game/Module.h"
 
@@ -20,13 +19,13 @@ namespace XX::Game::Components
 	XXAPI class Transform : public Component
 	{
 	private:
-		Math::Matrix _matrix_w = DirectX::XMMatrixIdentity();
+		Matrix _matrix_w = DirectX::XMMatrixIdentity();
 		
-		Math::Matrix _matrix_t = DirectX::XMMatrixIdentity();
+		Matrix _matrix_t = DirectX::XMMatrixIdentity();
 
-		Math::Matrix _matrix_r = DirectX::XMMatrixIdentity();
+		Matrix _matrix_r = DirectX::XMMatrixIdentity();
 
-		Math::Matrix _matrix_s = DirectX::XMMatrixIdentity();
+		Matrix _matrix_s = DirectX::XMMatrixIdentity();
 		
 		void _OnTransform();
 
@@ -43,7 +42,7 @@ namespace XX::Game::Components
 		private:
 			Transform* const _transform;
 
-			Math::Vector _vector;
+			Vector _vector;
 
 			void _OnUpdate();
 
@@ -68,43 +67,43 @@ namespace XX::Game::Components
 
 			Property<float, Position, &_SetZ, &_GetZ> z = { this };
 
-			void Translate(const Math::Vector& other);
+			void Translate(const Vector& other);
 
-			void Translate(const Math::Float3& other);
+			void Translate(const Float3& other);
 
 			void Translate(float x, float y, float z);
 
-			operator Math::Vector();
+			operator Vector();
 
 			Position& operator = (const Position& other);
 
-			Position& operator = (const Math::Vector& other);
+			Position& operator = (const Vector& other);
 			
-			Position& operator = (const Math::Float3& other);
+			Position& operator = (const Float3& other);
 
-			Position& operator += (const Math::Vector& other);
+			Position& operator += (const Vector& other);
 
-			Position& operator += (const Math::Float3& other);
+			Position& operator += (const Float3& other);
 
-			Position& operator -= (const Math::Vector& other);
+			Position& operator -= (const Vector& other);
 
-			Position& operator -= (const Math::Float3& other);
+			Position& operator -= (const Float3& other);
 
 			Position& operator *= (float times);
 
 			Position& operator /= (float times);
 
-			Math::Vector operator + (const Math::Vector& other) const;
+			Vector operator + (const Vector& other) const;
 
-			Math::Vector operator + (const Math::Float3& other) const;
+			Vector operator + (const Float3& other) const;
 
-			Math::Vector operator - (const Math::Vector& other) const;
+			Vector operator - (const Vector& other) const;
 
-			Math::Vector operator - (const Math::Float3& other) const;
+			Vector operator - (const Float3& other) const;
 
-			Math::Vector operator * (float times) const;
+			Vector operator * (float times) const;
 
-			Math::Vector operator / (float times) const;
+			Vector operator / (float times) const;
 
 		};
 
@@ -115,26 +114,26 @@ namespace XX::Game::Components
 		private:
 			Transform* const _transform;
 
-			Math::Quaternion _quaternion;
+			Quaternion _quaternion;
 
 			void _OnUpdate();
 
 		public:
 			Rotation(Transform* const transform);
 
-			void Rotate(const Math::Vector& rotation);
+			void Rotate(const Vector& rotation);
 
-			void Rotate(const Math::Float3& rotation);
+			void Rotate(const Float3& rotation);
 
 			void Rotate(float x, float y, float z);
 
-			operator Math::Quaternion();
+			operator Quaternion();
 
 			Rotation& operator=(const Rotation& other);
 
-			Rotation& operator=(const Math::Vector& other);
+			Rotation& operator=(const Vector& other);
 
-			Rotation& operator=(const Math::Float3& other);
+			Rotation& operator=(const Float3& other);
 		};
 
 		class Scale
@@ -144,7 +143,7 @@ namespace XX::Game::Components
 		private:
 			Transform* const _transform;
 
-			Math::Vector _vector;
+			Vector _vector;
 
 			void _OnUpdate();
 
@@ -169,37 +168,37 @@ namespace XX::Game::Components
 
 			Property<float, Scale, &_SetZ, &_GetZ> z = { this };
 
-			operator Math::Vector();
+			operator Vector();
 
 			Scale& operator=(const Scale& other);
 
-			Scale& operator=(const Math::Vector& other);
+			Scale& operator=(const Vector& other);
 
-			Scale& operator=(const Math::Float3& other);
+			Scale& operator=(const Float3& other);
 
-			Scale& operator += (const Math::Vector& other);
+			Scale& operator += (const Vector& other);
 
-			Scale& operator += (const Math::Float3& other);
+			Scale& operator += (const Float3& other);
 
-			Scale& operator -= (const Math::Vector& other);
+			Scale& operator -= (const Vector& other);
 
-			Scale& operator -= (const Math::Float3& other);
+			Scale& operator -= (const Float3& other);
 
 			Scale& operator *= (float times);
 
 			Scale& operator /= (float times);
 
-			Math::Vector operator + (const Math::Vector& other) const;
+			Vector operator + (const Vector& other) const;
 
-			Math::Vector operator + (const Math::Float3& other) const;
+			Vector operator + (const Float3& other) const;
 
-			Math::Vector operator - (const Math::Vector& other) const;
+			Vector operator - (const Vector& other) const;
 
-			Math::Vector operator - (const Math::Float3& other) const;
+			Vector operator - (const Float3& other) const;
 
-			Math::Vector operator * (float times) const;
+			Vector operator * (float times) const;
 
-			Math::Vector operator / (float times) const;
+			Vector operator / (float times) const;
 		};
 
 	public:
@@ -209,19 +208,19 @@ namespace XX::Game::Components
 
 		Scale scale = { this };
 
-		Math::Vector Right();
+		Vector Right();
 
-		Math::Vector Up();
+		Vector Up();
 
-		Math::Vector Forward();
+		Vector Forward();
 
-		void LookAt(const Math::Vector& target);
-
-		void LookAt(const Math::Float3& target);
+		void LookAt(const Vector& target);
+						  
+		void LookAt(const Float3& target);
 
 		void Set(size_t thread);
 
-		Math::Matrix GetMatrix(MATRIX_TYPE matrix_type);
+		Matrix GetMatrix(MATRIX_TYPE matrix_type);
 	};
 
 }

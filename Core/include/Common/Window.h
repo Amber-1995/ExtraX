@@ -5,12 +5,15 @@
 
 namespace XX
 {
+    class Game::Scene;
+
 	class Window
 	{
     private:
         uint32_t _width;
         uint32_t _height;
         std::string _title;
+        Game::Scene* _scene;
 
 
     public:
@@ -31,6 +34,10 @@ namespace XX
         void SetTitle(const std::string& title);
 
         void SetFullScreen(bool enalbe);
+
+        void BindScene(Game::Scene* scene);
+
+        void Run();
 	};
 }
 

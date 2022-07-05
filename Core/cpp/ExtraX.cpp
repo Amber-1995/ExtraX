@@ -103,22 +103,18 @@ namespace XX
 		}
 	}
 
-	ThreadManager::~ThreadManager()
-	{
-
-		for (auto& i : _thread)
-		{
-			i->join();
-			delete i;
-		}
-	}
-
 	void ThreadManager::Start(Game::Scene* scene, void(Game::Scene::* ProcessPerThread)(size_t thread_num))
 	{
 		for (size_t i = 0; i < _thread_num; ++i)
 		{
-			_thread[i] = new std::thread(_ProcessPerThread, this, scene, ProcessPerThread, i);
+			_thread[i] = std::thread(_ProcessPerThread, this, scene, ProcessPerThread, i);
+			_thread[i].detach();
 		}
+	}
+
+	void ThreadManager::Stop()
+	{
+		_running = false;
 	}
 
 	void ThreadManager::SendBeginSignal()

@@ -2,10 +2,10 @@
 #define CORE_CAMERA_H
 
 #include "Common/ExtraX.h"
-#include "Common/Math.h"
 #include "Game/Module.h"
-#include "Game/Event/Event.h"
 #include "Transform.h"
+#include "Game/Event.h"
+
 
 namespace XX::Game::Components
 {
@@ -14,9 +14,9 @@ namespace XX::Game::Components
 	private:
 		inline static Camera* _main_camera = nullptr;
 
-		Math::Matrix _view_matrix = DirectX::XMMatrixIdentity();
+		Matrix _view_matrix = DirectX::XMMatrixIdentity();
 
-		Math::Matrix _projection_matrix = DirectX::XMMatrixIdentity();
+		Matrix _projection_matrix = DirectX::XMMatrixIdentity();
 
 		Transform* _transform = nullptr;
 

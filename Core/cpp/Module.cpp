@@ -1,5 +1,4 @@
 #include "Game/Module.h"
-#include "Game/Event/Event.h"
 #include "Common/Graphics.h"
 
 
@@ -64,27 +63,55 @@ namespace XX::Game
 
 	}
 
-	void Scene::UpdateManager::Add(Component* component)
+	void Scene::UpdateManager::ProcessPerThread(size_t thread_num)
 	{
-		Event::IUpdate* update = dynamic_cast<Event::IUpdate*>(component);
-		if (update) update_list.push_front(update);
+		auto iter = _events_list.begin();
+		auto end = _events_list.end();
+		Helper::Next(iter, end, thread_num);
+		while (iter != end)
+		{
+			(*iter)->Update();
+			Helper::Next(iter, end, ExtraX::thread_num);
+		}
 	}
 
-	void Scene::_ProcessPerThread(size_t thread)
+	void Scene::Render2DManager::ProcessPerThread(size_t thread_num)
 	{
-		Event::IUpdate::FrameProcess(thread);
-		Event::IRender3D::FrameProcess(thread);
-		Event::IRender2D::FrameProcess(thread);
-		ExtraX::graphics->FinishCommandList(thread);
+		auto iter = _events_list.begin();
+		auto end = _events_list.end();
+		Helper::Next(iter, end, thread_num);
+		while (iter != end)
+		{
+			(*iter)->Render2D(thread_num);
+			Helper::Next(iter, end, ExtraX::thread_num);
+		}
+	}
+
+	void Scene::Render3DManager::ProcessPerThread(size_t thread_num)
+	{
+		auto iter = _events_list.begin();
+		auto end = _events_list.end();
+		Helper::Next(iter, end, thread_num);
+		while (iter != end)
+		{
+			(*iter)->Render3D(thread_num);
+			Helper::Next(iter, end, ExtraX::thread_num);
+		}
+	}
+
+	void Scene::_ProcessPerThread(size_t thread_num)
+	{
+		_update_manager->ProcessPerThread(thread_num);
+		_render3d_manager->ProcessPerThread(thread_num);
+		_render2d_manager->ProcessPerThread(thread_num);
+		ExtraX::graphics->FinishCommandList(thread_num);
 	}
 
 	void Scene::_Preprocess()
 	{
-		_game_objects_manager.Update();
+		_game_objects_manager->Update();
 
-		Event::IUpdate::FramePreprocess();
-		Event::IRender3D::FramePreprocess();
-		Event::IRender2D::FramePreprocess();
+		
 	}
 
 	void Scene::_Process()
@@ -93,6 +120,14 @@ namespace XX::Game
 		_thread_manager.SendBeginSignal();
 		_thread_manager.WaitCompletionSignal();
 		ExtraX::graphics->End();
+	}
+
+	Scene::~Scene()
+	{
+		delete _game_objects_manager;
+		delete _update_manager;
+		delete _render3d_manager;
+		delete _render2d_manager;
 	}
 
 	void Scene::Start()
@@ -126,6 +161,47 @@ namespace XX::Game
 		}
 	}
 
+	void GameObject::OnStartManager::OnStart()
+	{
+		for (auto& i : _events_list)
+		{
+			i->OnStart();
+		}
+		_events_list.clear();
+	}
+
+	void GameObject::OnTansformManager::OnTansform()
+	{
+		for (auto& i : _events_list)
+		{
+			i->OnTransform();
+		}
+	}
+
+	void GameObject::OnTranslateManager::OnOnTranslate()
+	{
+		for (auto& i : _events_list)
+		{
+			i->OnTranslate();
+		}
+	}
+
+	void GameObject::OnRotateManager::OnRotate()
+	{
+		for (auto& i : _events_list)
+		{
+			i->OnRotate();
+		}
+	}
+
+	void GameObject::OnScaleManager::OnOnScale()
+	{
+		for (auto& i : _events_list)
+		{
+			i->OnScale();
+		}
+	}
+
 	void GameObject::ComponentsManager::Lock()
 	{
 		_mutex.lock();
@@ -143,7 +219,6 @@ namespace XX::Game
 		
 		_new_components.push_front(component);
 		component->_self = _new_components.begin();
-		_new_components_copy.push_front(component);
 	}
 
 	void GameObject::ComponentsManager::Remove(Component* component)
@@ -163,37 +238,62 @@ namespace XX::Game
 		_deleted_components.clear();
 
 
+		for (auto& i : _new_components)
+		{
+			_scene->_update_manager->Add(i);
+			_scene->_render3d_manager->Add(i);
+			_scene->_render2d_manager->Add(i);
+			_game_object->_onstart_manager->Add(i);
+			_game_object->_ontransform_manager->Add(i);
+			_game_object->_ontranslate_manager->Add(i);
+			_game_object->_onrotate_manager->Add(i);
+			_game_object->_onscale_manager->Add(i);
+		}
+
+
 		_current_components.splice(_current_components.end(), _new_components);
 
-		for (auto& i : _new_components_copy)
-		{
-			Event::IOnStart* on_start = dynamic_cast<Event::IOnStart*>(i);
-			if (on_start) on_start->OnStart();
-		}
-		_new_components_copy.clear();
+		
 	}
 
 	void GameObject::_FramePreprocess()
 	{
-		_components_manager.Update();
+		_components_manager->Update();
+		_onstart_manager->OnStart();
+	}
+
+	GameObject::~GameObject()
+	{
+		delete _components_manager;
+		delete _onstart_manager;
+		delete _ontransform_manager;
+		delete _ontranslate_manager;
+		delete _onrotate_manager;
+		delete _onscale_manager;
 	}
 
 	void GameObject::Destroy()
 	{
-		scene->_game_objects_manager.Remove(this);
+		scene->_game_objects_manager->Remove(this);
 	}
 
 	std::list<Component*>& Component::GetComponents()
 	{
-		return game_object->_components_manager._current_components;
+		return game_object->_components_manager->_current_components;
 	}
 
 	void Component::Destroy()
 	{
-		game_object->_components_manager.Remove(this);
+		game_object->_components_manager->Remove(this);
 	}
 
 
+	
+
+
+	
+
+	
 
 
 }

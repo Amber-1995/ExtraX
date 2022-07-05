@@ -1,11 +1,10 @@
 #include "Game/Components/Transform.h"
-#include "Game/Event/IOnTransform.h"
 #include "Common/Graphics.h"
 
 namespace XX::Game::Components
 {
 	using namespace DirectX;
-	using namespace Math;
+
 
 	void Transform::_OnTransform()
 	{
@@ -236,7 +235,7 @@ namespace XX::Game::Components
 		_OnUpdate();
 	}
 
-	void Transform::Rotation::Rotate(const Math::Float3& rotation)
+	void Transform::Rotation::Rotate(const Float3& rotation)
 	{
 		Vector vec = XMVectorSet(rotation.x, rotation.y, rotation.z, 0.0f);
 		vec = XMQuaternionRotationRollPitchYawFromVector(vec);
@@ -269,7 +268,7 @@ namespace XX::Game::Components
 		return *this;
 	}
 
-	Transform::Rotation& Transform::Rotation::operator=(const Math::Float3& other)
+	Transform::Rotation& Transform::Rotation::operator=(const Float3& other)
 	{
 		_quaternion = XMQuaternionRotationRollPitchYawFromVector(XMVectorSet(other.x, other.y, other.z, 0.0f));
 		_OnUpdate();
@@ -322,7 +321,7 @@ namespace XX::Game::Components
 		_transform->_matrix_s = XMMatrixScalingFromVector(_vector);
 	}
 
-	Transform::Scale::operator Math::Vector()
+	Transform::Scale::operator Vector()
 	{
 		return _vector;
 	}
@@ -341,14 +340,14 @@ namespace XX::Game::Components
 		return *this;
 	}
 
-	Transform::Scale& Transform::Scale::operator=(const Math::Float3& other)
+	Transform::Scale& Transform::Scale::operator=(const Float3& other)
 	{
 		_vector = DirectX::XMVectorSet(other.x, other.y, other.z, 0.0f);
 		_OnUpdate();
 		return *this;
 	}
 
-	Transform::Scale& Transform::Scale::operator+=(const Math::Vector& other)
+	Transform::Scale& Transform::Scale::operator+=(const Vector& other)
 	{
 		_vector += other;
 		_OnUpdate();
@@ -356,7 +355,7 @@ namespace XX::Game::Components
 
 	}
 
-	Transform::Scale& Transform::Scale::operator+=(const Math::Float3& other)
+	Transform::Scale& Transform::Scale::operator+=(const Float3& other)
 	{
 		_vector += DirectX::XMVectorSet(other.x, other.y, other.z, 0.0f);
 		_OnUpdate();
@@ -370,7 +369,7 @@ namespace XX::Game::Components
 		return *this;
 	}
 
-	Transform::Scale& Transform::Scale::operator-=(const Math::Float3& other)
+	Transform::Scale& Transform::Scale::operator-=(const Float3& other)
 	{
 		_vector -= DirectX::XMVectorSet(other.x, other.y, other.z, 0.0f);
 		_OnUpdate();
@@ -396,7 +395,7 @@ namespace XX::Game::Components
 		return _vector + other;
 	}
 
-	Vector Transform::Scale::operator+(const Math::Float3& other) const
+	Vector Transform::Scale::operator+(const Float3& other) const
 	{
 		return _vector + XMVectorSet(other.x, other.y, other.z, 0.0f);
 	}
@@ -406,7 +405,7 @@ namespace XX::Game::Components
 		return _vector - other;
 	}
 
-	Vector Transform::Scale::operator-(const Math::Float3& other) const
+	Vector Transform::Scale::operator-(const Float3& other) const
 	{
 		return _vector - XMVectorSet(other.x, other.y, other.z, 0.0f);
 	}
