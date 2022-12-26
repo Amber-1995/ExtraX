@@ -1,0 +1,23 @@
+#pragma once
+#ifndef EXTRAX_DEFAULT_SETTINGS_H
+#define EXTRAX_DEFAULT_SETTINGS_H
+
+
+
+namespace ExtraX
+{
+	using DEFAULT_VECTOR_SCALAR_TYPE = float;
+	using DEFAULT_MATRIX_SCALAR_TYPE = float;
+	using DEFAULT_QUATERNION_SCALAR_TYPE = float;
+	using DEFAULT_COLOR_SCALAR_TYPE = float;
+
+	constexpr PLATFORM DEFAULT_PALTFORM = PLATFORM::Windows;
+	constexpr GRAPHICS_API DEFAULT_GRAPHICS_API = GRAPHICS_API::OpenGL;
+}
+
+
+
+
+
+
+#endif // !EXTRAX_DEFAULT_SETTINGS_H

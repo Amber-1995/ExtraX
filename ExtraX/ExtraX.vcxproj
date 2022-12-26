@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{cbe4d687-55c0-4ce5-accb-e81473821518}</ProjectGuid>
+    <ProjectGuid>{bbed6e82-332d-464c-a65d-6eb05cc317f5}</ProjectGuid>
     <RootNamespace>ExtraX</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -44,12 +44,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>..\bin\out\$(Platform)-$(Configuration)\</OutDir>
-    <IntDir>..\bin\int\$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>..\bin\out\$(Platform)\-(Configuration)\</OutDir>
+    <IntDir>..\bin\int\$(Platform)\-(Configuration)\</IntDir>
+    <ExternalIncludePath>..\library\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>..\library\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\bin\out\$(Platform)-$(Configuration)\</OutDir>
-    <IntDir>..\bin\int\$(Platform)-$(Configuration)\</IntDir>
+    <OutDir>..\bin\out\$(Platform)\-(Configuration)\</OutDir>
+    <IntDir>..\bin\int\$(Platform)\-(Configuration)\</IntDir>
+    <ExternalIncludePath>..\library\include;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>..\library\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -58,11 +62,17 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;glad.lib;zlibstaticd.lib;glfw3.lib;spdlog.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -74,15 +84,36 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>assimp-vc143-mt.lib;glad.lib;zlibstatic.lib;glfw3.lib;spdlog.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ExtraX\Common.h" />
+    <ClInclude Include="src\ExtraX\DefaultSettings.h" />
+    <ClInclude Include="src\ExtraX\ExtraX.h" />
+    <ClInclude Include="src\ExtraX\Graphics.h" />
+    <ClInclude Include="src\ExtraX\Graphics\Window.h" />
+    <ClInclude Include="src\ExtraX\Graphics\Window\GLFWWindow.h" />
+    <ClInclude Include="src\ExtraX\Graphics\Window\Win32Window.h" />
+    <ClInclude Include="src\ExtraX\Graphics\Window\WindowBase.h" />
+    <ClInclude Include="src\ExtraX\Input.h" />
+    <ClInclude Include="src\ExtraX\Log.h" />
+    <ClInclude Include="src\ExtraX\Mathematic\Color.h" />
+    <ClInclude Include="src\ExtraX\Mathematic\MathematicBase.h" />
+    <ClInclude Include="src\ExtraX\Mathematic\Matrix.h" />
+    <ClInclude Include="src\ExtraX\Mathematic\Quaternion.h" />
+    <ClInclude Include="src\ExtraX\Mathematic\Vector.h" />
+    <ClInclude Include="src\ExtraX\Mathematic.h" />
+    <ClInclude Include="src\ExtraX\ResourceManager.h" />
+    <ClInclude Include="src\ExtraX\Singleton.h" />
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
