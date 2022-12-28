@@ -13,8 +13,6 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <spdlog/spdlog.h>
-
 
 #include <type_traits>
 #include <memory>
@@ -36,17 +34,32 @@ namespace ExtraX
 		Linux,
 	};
 
-	enum class GRAPHICS_API
+	enum class GRAPHICS_LIB
 	{
 		DirectX11,
 		DirectX12,
 		OpenGL,
 		Vulkan,
 	};
+
+	enum class MATHEMATICS_LIB
+	{
+		GLM,
+	};
 }
 
 
-#ifdef EXTRAX_SETTINGS
+
+#ifdef _WIN32
+	#define XX_DEBUGBREAK() __debugbreak()
+#endif // _WIN32
+
+#define XX_EXPAND_MACRO(x) x
+#define XX_STRINGIFY_MACRO(x) #x
+
+
+
+#ifdef USE_EXTRAX_SETTINGS
 #include <ExtraXSettings.h>
 #else
 #include <ExtraX/DefaultSettings.h>

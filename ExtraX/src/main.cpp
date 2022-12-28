@@ -1,23 +1,12 @@
+#include <ExtraX/Mathematics.h>
 
-#include <ExtraX/Graphics/Window/GLFWWindow.h>
-#include <ExtraX/Input.h>
 
 using namespace ExtraX;
-using namespace ExtraX::Graphics::Base;
+using namespace ExtraX::Mathematics;
 
 int main()
 {
-	Window<PLATFORM::CrossPlatform,GRAPHICS_API::OpenGL> w;
-
+	Quaternion color = {1.0f,2.0f,3.0f,4.0f};
 	
-	while (!w.ShouldClose())
-	{
-		if (Input::GetKeyDown(KeyCode::A))
-		{
-			w.SetSize(1280, 720);
-		}
-
-		Input::Update();
-	}
-	
+	std::cout << color.x<<" " << color.y << " " << color.z << " " << color.w << " ";
 }

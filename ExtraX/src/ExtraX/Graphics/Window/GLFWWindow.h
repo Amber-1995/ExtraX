@@ -7,8 +7,8 @@
 
 namespace ExtraX::Graphics::Base
 {
-	template<>
-	class Window<PLATFORM::CrossPlatform,GRAPHICS_API::OpenGL> : public WindowBase
+	template<GRAPHICS_LIB GraphicsAPI>
+	class Window<PLATFORM::CrossPlatform, GraphicsAPI> : public WindowBase
 	{
 	private:
 		GLFWwindow* _window;
@@ -111,7 +111,6 @@ namespace ExtraX::Graphics::Base
 			glfwSetWindowPos(_window, x, y);
 		}
 
-		
 	};
 }
 

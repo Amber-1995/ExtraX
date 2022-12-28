@@ -9,7 +9,7 @@
 namespace ExtraX::Graphics::Base
 {
 
-	template<GRAPHICS_API GraphicsAPI>
+	template<GRAPHICS_LIB GraphicsAPI>
 	class Window<PLATFORM::Windows, GraphicsAPI> : public WindowBase
 	{
 	public:
@@ -215,8 +215,8 @@ namespace ExtraX::Graphics::Base
 				WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX ,
 				(GetSystemMetrics(SM_CXSCREEN) - WINDOW_WIDTH) / 2,
 				(GetSystemMetrics(SM_CYSCREEN) - WINDOW_HEIGHT) / 2,
-				WINDOW_WIDTH,
-				WINDOW_HEIGHT,
+				WINDOW_WIDTH + GetSystemMetrics(SM_CXDLGFRAME) * 2,
+				WINDOW_HEIGHT + GetSystemMetrics(SM_CXDLGFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION),
 				NULL,
 				NULL,
 				GetModuleHandle(NULL),
@@ -251,8 +251,8 @@ namespace ExtraX::Graphics::Base
 				WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
 				(GetSystemMetrics(SM_CXSCREEN) - WINDOW_WIDTH) / 2,
 				(GetSystemMetrics(SM_CYSCREEN) - WINDOW_HEIGHT) / 2,
-				WINDOW_WIDTH,
-				WINDOW_HEIGHT,
+				WINDOW_WIDTH + GetSystemMetrics(SM_CXDLGFRAME) * 2,
+				WINDOW_HEIGHT + GetSystemMetrics(SM_CYDLGFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION),
 				NULL,
 				NULL,
 				GetModuleHandle(NULL),
@@ -301,14 +301,14 @@ namespace ExtraX::Graphics::Base
 		{
 			RECT rect;
 			GetWindowRect(_hwnd, &rect);
-			return rect.right - rect.left;	
+			return rect.right - rect.left - GetSystemMetrics(SM_CXDLGFRAME) * 2;
 		}
 
 		int GetHeight() override
 		{
 			RECT rect;
 			GetWindowRect(_hwnd, &rect);
-			return rect.bottom - rect.top;
+			return rect.bottom - rect.top - GetSystemMetrics(SM_CYDLGFRAME) * 2 - GetSystemMetrics(SM_CYCAPTION);
 		}
 
 		int GetPositionX() override

@@ -12,16 +12,14 @@ namespace ExtraX
 	private:
 		std::unordered_map<std::string, RESOURCE> _resources;
 
-		void(*_release)(RESOURCE);
-
 	public:
-		ResourceManager(void(*release)(RESOURCE)) : _release(release)
-		{
-		}
+		ResourceManager() = default;
 
 		ResourceManager& operator=(const ResourceManager&) = delete;
 
 		virtual ~ResourceManager() = default;
+
+		virtual void Release(RESOURCE resource) = 0;
 
 		bool IsExist(const char* key) const
 		{
@@ -43,7 +41,7 @@ namespace ExtraX
 			auto temp = _resources.find(key);
 			if (temp != _resources.end())
 			{
-				_release(temp->second);
+				Release(temp->second);
 				_resources.erase(temp);
 			}
 		}
@@ -52,7 +50,7 @@ namespace ExtraX
 		{
 			for (auto& key_resource : _resources)
 			{
-				_release(key_resource.second);
+				Release(key_resource.second);
 			}
 			_resources.clear();
 		}

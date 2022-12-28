@@ -21,7 +21,7 @@
     <ClInclude Include="src\ExtraX\Graphics.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\ExtraX\Mathematic.h">
+    <ClInclude Include="src\ExtraX\Mathematics.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="src\ExtraX\Common.h">
@@ -30,19 +30,13 @@
     <ClInclude Include="src\ExtraX\Singleton.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\ExtraX\Mathematic\Vector.h">
+    <ClInclude Include="src\ExtraX\Mathematics\Matrix\MatrixBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\ExtraX\Mathematic\Matrix.h">
+    <ClInclude Include="src\ExtraX\Mathematics\GLMMathematics.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="src\ExtraX\Mathematic\MathematicBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ExtraX\Mathematic\Color.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ExtraX\Mathematic\Quaternion.h">
+    <ClInclude Include="src\ExtraX\Mathematics\Color\ColorBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="src\ExtraX\DefaultSettings.h">
@@ -67,6 +61,45 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="src\ExtraX\Input.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExtraX\Graphics\Context\ContextBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExtraX\Graphics\Context.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExtraX\Graphics\Context\OpenGL.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExtraX\Graphics\Shader\ShaderBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExtraX\Graphics\Shader\OpenGLShader.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExtraX\Graphics\Shader.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExtraX\Assert.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExtraX\Mathematics\Vector\VectorBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExtraX\Mathematics\Swizzle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExtraX\Mathematics\Vector\GLMVector.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExtraX\Mathematics\Quaternion\QuaternionBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExtraX\Mathematics\Matrix\GLMMatrix.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExtraX\Mathematics\Quaternion\GLMQuternion.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -36,7 +36,7 @@ namespace ExtraX
 	};
 
 	template<typename INSTANCE_TYPE>
-	INSTANCE_TYPE& singleton = *Singleton<INSTANCE_TYPE>::GetSingleton();
+	INSTANCE_TYPE* (*GetSingleton)() = ::ExtraX::Singleton<INSTANCE_TYPE>::GetSingleton;
 }
 
 

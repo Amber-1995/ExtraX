@@ -22,14 +22,14 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -68,7 +68,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>assimp-vc143-mtd.lib;glad.lib;zlibstaticd.lib;glfw3.lib;spdlog.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;glad.lib;zlibstaticd.lib;glfw3.lib;spdlog.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>
@@ -85,32 +85,44 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>assimp-vc143-mt.lib;glad.lib;zlibstatic.lib;glfw3.lib;spdlog.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc143-mt.lib;glad.lib;zlibstatic.lib;glfw3.lib;spdlog.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\ExtraX\Assert.h" />
     <ClInclude Include="src\ExtraX\Common.h" />
     <ClInclude Include="src\ExtraX\DefaultSettings.h" />
     <ClInclude Include="src\ExtraX\ExtraX.h" />
     <ClInclude Include="src\ExtraX\Graphics.h" />
+    <ClInclude Include="src\ExtraX\Graphics\Context.h" />
+    <ClInclude Include="src\ExtraX\Graphics\Context\ContextBase.h" />
+    <ClInclude Include="src\ExtraX\Graphics\Context\OpenGL.h" />
+    <ClInclude Include="src\ExtraX\Graphics\Shader.h" />
+    <ClInclude Include="src\ExtraX\Graphics\Shader\OpenGLShader.h" />
+    <ClInclude Include="src\ExtraX\Graphics\Shader\ShaderBase.h" />
     <ClInclude Include="src\ExtraX\Graphics\Window.h" />
     <ClInclude Include="src\ExtraX\Graphics\Window\GLFWWindow.h" />
     <ClInclude Include="src\ExtraX\Graphics\Window\Win32Window.h" />
     <ClInclude Include="src\ExtraX\Graphics\Window\WindowBase.h" />
     <ClInclude Include="src\ExtraX\Input.h" />
     <ClInclude Include="src\ExtraX\Log.h" />
-    <ClInclude Include="src\ExtraX\Mathematic\Color.h" />
-    <ClInclude Include="src\ExtraX\Mathematic\MathematicBase.h" />
-    <ClInclude Include="src\ExtraX\Mathematic\Matrix.h" />
-    <ClInclude Include="src\ExtraX\Mathematic\Quaternion.h" />
-    <ClInclude Include="src\ExtraX\Mathematic\Vector.h" />
-    <ClInclude Include="src\ExtraX\Mathematic.h" />
+    <ClInclude Include="src\ExtraX\Mathematics\Color\ColorBase.h" />
+    <ClInclude Include="src\ExtraX\Mathematics\GLMMathematics.h" />
+    <ClInclude Include="src\ExtraX\Mathematics\Matrix\GLMMatrix.h" />
+    <ClInclude Include="src\ExtraX\Mathematics\Matrix\MatrixBase.h" />
+    <ClInclude Include="src\ExtraX\Mathematics\Quaternion\GLMQuternion.h" />
+    <ClInclude Include="src\ExtraX\Mathematics\Quaternion\QuaternionBase.h" />
+    <ClInclude Include="src\ExtraX\Mathematics\Swizzle.h" />
+    <ClInclude Include="src\ExtraX\Mathematics.h" />
+    <ClInclude Include="src\ExtraX\Mathematics\Vector\GLMVector.h" />
+    <ClInclude Include="src\ExtraX\Mathematics\Vector\VectorBase.h" />
     <ClInclude Include="src\ExtraX\ResourceManager.h" />
     <ClInclude Include="src\ExtraX\Singleton.h" />
   </ItemGroup>
