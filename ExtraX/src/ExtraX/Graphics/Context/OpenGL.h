@@ -29,14 +29,14 @@ namespace ExtraX::Graphics::Base
 
 #ifdef _WIN32
 	template<>
-	class Context<PLATFORM::Windows, GRAPHICS_LIB::OpenGL> : public OpenGLContextBase
+	class Context<WINDOW_LIB::Win32, GRAPHICS_LIB::OpenGL> : public OpenGLContextBase
 	{
 	private:
-		Window<PLATFORM::Windows, GRAPHICS_LIB::OpenGL>* _window;
+		Window<WINDOW_LIB::Win32>* _window;
 		HDC _dc;
 		HGLRC _rc;
 	public:
-		Context(Window<PLATFORM::Windows, GRAPHICS_LIB::OpenGL>* window = GetSingleton<Window<PLATFORM::Windows, GRAPHICS_LIB::OpenGL>>())
+		Context(Window<WINDOW_LIB::Win32>* window = GetSingleton<Window<WINDOW_LIB::Win32>>())
 		{
 			_window = window;
 			_dc = GetDC(window->GetHandle());
@@ -74,16 +74,21 @@ namespace ExtraX::Graphics::Base
 			::SwapBuffers(_dc);
 		}
 
+		void MakeCurrent()
+		{
+			wglMakeCurrent(_dc, _rc);
+		}
+
 	};
 #endif
 
 	template<>
-	class Context<PLATFORM::CrossPlatform, GRAPHICS_LIB::OpenGL> : public OpenGLContextBase
+	class Context<WINDOW_LIB::GLFW, GRAPHICS_LIB::OpenGL> : public OpenGLContextBase
 	{
 	private:
-		Window<PLATFORM::CrossPlatform, GRAPHICS_LIB::OpenGL>* _window;
+		Window<WINDOW_LIB::GLFW>* _window;
 	public:
-		Context(Window<PLATFORM::CrossPlatform, GRAPHICS_LIB::OpenGL>* window = GetSingleton <Window<PLATFORM::CrossPlatform, GRAPHICS_LIB::OpenGL>>())
+		Context(Window<WINDOW_LIB::GLFW>* window = GetSingleton <Window<WINDOW_LIB::GLFW>>())
 		{
 			_window = window;
 			glfwMakeContextCurrent(_window->GetWindow());
@@ -99,6 +104,11 @@ namespace ExtraX::Graphics::Base
 		void SwapBuffers() override
 		{
 			glfwSwapBuffers(_window->GetWindow());
+		}
+
+		void MakeCurrent()
+		{
+			glfwMakeContextCurrent(_window->GetWindow());
 		}
 	};
 

@@ -14,10 +14,10 @@ namespace ExtraX::Graphics::Base
 		virtual void Apply() = 0;
 	};
 
-	template<PLATFORM,GRAPHICS_LIB> 
+	template<GRAPHICS_LIB> 
 	class ShaderResourceManager;
 
-	template<PLATFORM, GRAPHICS_LIB>
+	template<GRAPHICS_LIB>
 	class Shader;
 }
 #endif // !EXTRAX_SHADER_BASE_H

@@ -7,7 +7,7 @@
 
 namespace ExtraX::Graphics
 {
-	using Context = Base::Context<DEFAULT_PALTFORM, DEFAULT_GRAPHICS_API>;
+	using Context = Base::Context<DEFAULT_WINDOW_LIB, DEFAULT_GRAPHICS_LIB>;
 }
 
 

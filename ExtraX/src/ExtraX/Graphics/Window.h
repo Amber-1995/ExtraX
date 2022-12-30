@@ -9,7 +9,7 @@
 
 namespace ExtraX::Graphics
 {
-	using Window = Base::Window<DEFAULT_PALTFORM,DEFAULT_GRAPHICS_API>;
+	using Window = Base::Window<DEFAULT_WINDOW_LIB>;
 }
 
 #endif // !EXTRAX_WINDOW_H

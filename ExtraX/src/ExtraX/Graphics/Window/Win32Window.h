@@ -4,13 +4,12 @@
 #define EXTRAX_WIN32_WINDOW_H
 
 #include <ExtraX/Graphics/Window/WindowBase.h>
-
-
+#include <imgui/imgui_impl_win32.h>
 namespace ExtraX::Graphics::Base
 {
 
-	template<GRAPHICS_LIB GraphicsAPI>
-	class Window<PLATFORM::Windows, GraphicsAPI> : public WindowBase
+	template<>
+	class Window<WINDOW_LIB::Win32> : public WindowBase
 	{
 	public:
 		struct Descriptor
@@ -185,8 +184,23 @@ namespace ExtraX::Graphics::Base
 					break;
 				case WM_MOUSEMOVE:
 					Input::SetMousePosition(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-				}
 
+
+				case WM_DPICHANGED:
+					if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DpiEnableScaleViewports)
+					{
+						//const int dpi = HIWORD(wParam);
+						//printf("WM_DPICHANGED to %d (%.0f%%)\n", dpi, (float)dpi / 96.0f * 100.0f);
+						const RECT* suggested_rect = (RECT*)lParam;
+						::SetWindowPos(hWnd, NULL, suggested_rect->left, suggested_rect->top, suggested_rect->right - suggested_rect->left, suggested_rect->bottom - suggested_rect->top, SWP_NOZORDER | SWP_NOACTIVATE);
+					}
+					break;
+				}
+				if constexpr (DEFAULT_GUI_LIB == GUI_LIB::IMGUI)
+				{
+					LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+					ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam);
+				}
 				return DefWindowProc(hWnd, uMsg, wParam, lParam);
 			};
 #ifdef UNICODE

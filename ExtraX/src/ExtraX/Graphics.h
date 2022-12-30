@@ -6,4 +6,5 @@
 #include <ExtraX/Graphics/Shader.h>
 #include <ExtraX/Graphics/Window.h>
 
+
 #endif // !EXTRAX_GRAPHICS_H

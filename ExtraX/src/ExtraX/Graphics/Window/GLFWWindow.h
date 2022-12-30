@@ -7,8 +7,8 @@
 
 namespace ExtraX::Graphics::Base
 {
-	template<GRAPHICS_LIB GraphicsAPI>
-	class Window<PLATFORM::CrossPlatform, GraphicsAPI> : public WindowBase
+	template<>
+	class Window<WINDOW_LIB::GLFW> : public WindowBase
 	{
 	private:
 		GLFWwindow* _window;

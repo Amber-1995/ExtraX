@@ -27,11 +27,10 @@
 
 namespace ExtraX
 {
-	enum class PLATFORM
+	enum class WINDOW_LIB
 	{
-		CrossPlatform,
-		Windows,
-		Linux,
+		Win32,
+		GLFW,
 	};
 
 	enum class GRAPHICS_LIB
@@ -45,6 +44,11 @@ namespace ExtraX
 	enum class MATHEMATICS_LIB
 	{
 		GLM,
+	};
+
+	enum class GUI_LIB
+	{
+		IMGUI,
 	};
 }
 

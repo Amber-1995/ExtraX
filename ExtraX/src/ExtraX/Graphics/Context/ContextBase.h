@@ -14,7 +14,7 @@ namespace ExtraX::Graphics::Base
 		virtual ~ContextBase() = default;
 	};
 
-	template<PLATFORM,GRAPHICS_LIB>
+	template<WINDOW_LIB,GRAPHICS_LIB>
 	class Context;
 }
 

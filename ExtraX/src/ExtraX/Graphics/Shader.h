@@ -8,7 +8,7 @@
 
 namespace ExtraX::Graphics
 {
-	using Shader = Base::Shader<DEFAULT_PALTFORM, DEFAULT_GRAPHICS_API>;
+	using Shader = Base::Shader<DEFAULT_GRAPHICS_LIB>;
 }
 
 #endif // !EXTRAX_SHADER_H

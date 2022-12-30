@@ -7,8 +7,8 @@
 
 namespace ExtraX::Graphics::Base
 {
-	template<PLATFORM Platform>
-	class ShaderResourceManager<Platform,GRAPHICS_LIB::OpenGL> : public ResourceManager<unsigned int>
+	template<>
+	class ShaderResourceManager<GRAPHICS_LIB::OpenGL> : public ResourceManager<unsigned int>
 	{
 	public:
 		void Release(unsigned int resource) override
@@ -17,8 +17,8 @@ namespace ExtraX::Graphics::Base
 		}
 	};
 
-	template<PLATFORM Platform>
-	class Shader<Platform, GRAPHICS_LIB::OpenGL> : public ShaderBase
+	template<>
+	class Shader<GRAPHICS_LIB::OpenGL> : public ShaderBase
 	{
 	private:
 		unsigned int _shader_program;
@@ -38,7 +38,7 @@ namespace ExtraX::Graphics::Base
 			{
 				if (shader_path)
 				{
-					auto shader_resource_manager = GetSingleton<ShaderResourceManager<Platform, GRAPHICS_LIB::OpenGL>>();
+					auto shader_resource_manager = GetSingleton<ShaderResourceManager<GRAPHICS_LIB::OpenGL>>();
 					unsigned int shader;
 
 					std::string absolute_path = std::filesystem::absolute(std::filesystem::path(shader_path)).string().c_str();

@@ -28,7 +28,7 @@ namespace ExtraX::Graphics::Base
 		virtual void SetPosition(int x, int y) = 0;
 	};
 
-	template<PLATFORM, GRAPHICS_LIB>
+	template<WINDOW_LIB>
 	class Window;
 }
 
